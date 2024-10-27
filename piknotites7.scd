@@ -882,7 +882,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,pl2=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=64*(speed.reciprocal);
-	var freq,m=2,bank1=2,bank2=8,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=2,bank1=3,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -996,7 +996,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(180.neg,180,1,inf),
+	\angle_rot,Pbrown(360.neg,360,1,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ospace1,
@@ -1008,7 +1008,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(180.neg,180,1,inf),
+	\angle_rot,Pbrown(360.neg,360,1,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \ospace1,
@@ -1020,7 +1020,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(180.neg,180,1,inf),
+	\angle_rot,Pbrown(360.neg,360,1,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \ospace1,
@@ -1032,7 +1032,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(180.neg,180,1,inf),
+	\angle_rot,Pbrown(360.neg,360,1,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 e=Pdef(\5, Pbind(\instrument, \ospace1,
@@ -1044,7 +1044,7 @@ e=Pdef(\5, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(180.neg,180,1,inf),
+	\angle_rot,Pbrown(360.neg,360,1,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 f=Pdef(\6, Pbind(\instrument, \ospace1,
@@ -1056,11 +1056,11 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(180.neg,180,1,inf),
+	\angle_rot,Pbrown(360.neg,360,1,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(2);
+TempoClock.default.tempo_(1.5);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
