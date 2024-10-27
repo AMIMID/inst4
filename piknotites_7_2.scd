@@ -134,7 +134,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=3;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~az = (90*~time).collect{
+~az = (360*~time).collect{
 	pl1=pl1+1;
 
 		az1=(az1+(1)).wrap(180.neg,180);
@@ -145,7 +145,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 	};
 
-~el = (90*~time).collect{
+~el = (360*~time).collect{
 	pl2=pl2+1;
 
 		az2=(az2+(1)).wrap(180.neg,180);
@@ -156,7 +156,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 	};
 
-~magx = (90*~time).collect{
+~magx = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -175,7 +175,7 @@ pl3=pl3+1;
 
 };
 
-~magy = (90*~time).collect{
+~magy = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -192,7 +192,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz = (90*~time).collect{
+~magz = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -214,7 +214,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=1,m_y=1,m_z=1;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~magx1 = (90*~time).collect{
+~magx1 = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -233,7 +233,7 @@ pl3=pl3+1;
 
 };
 
-~magy1 = (90*~time).collect{
+~magy1 = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -250,7 +250,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz1 = (90*~time).collect{
+~magz1 = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -272,7 +272,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=2,m_y=2,m_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~magx2 = (90*~time).collect{
+~magx2 = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -291,7 +291,7 @@ pl3=pl3+1;
 
 };
 
-~magy2 = (90*~time).collect{
+~magy2 = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -308,7 +308,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz2 = (90*~time).collect{
+~magz2 = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -330,7 +330,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=3;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~magx3 = (90*~time).collect{
+~magx3 = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -349,7 +349,7 @@ pl3=pl3+1;
 
 };
 
-~magy3 = (90*~time).collect{
+~magy3 = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -366,7 +366,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz3 = (90*~time).collect{
+~magz3 = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -388,7 +388,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=4,m_y=4,m_z=4;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~magx4 = (90*~time).collect{
+~magx4 = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -407,7 +407,7 @@ pl3=pl3+1;
 
 };
 
-~magy4 = (90*~time).collect{
+~magy4 = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -424,7 +424,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz4 = (90*~time).collect{
+~magz4 = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -446,7 +446,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=5,m_y=5,m_z=5;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~magx5 = (90*~time).collect{
+~magx5 = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -465,7 +465,7 @@ pl3=pl3+1;
 
 };
 
-~magy5 = (90*~time).collect{
+~magy5 = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -482,7 +482,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz5 = (90*~time).collect{
+~magz5 = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -504,7 +504,7 @@ var  sph1,sph2,sph3,sph4,sph5,m_x=6,m_y=6,m_z=6;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
-~magx6 = (90*~time).collect{
+~magx6 = (360*~time).collect{
 pl3=pl3+1;
 	az3=(az3+(1)).wrap(180.neg,180);
 
@@ -523,7 +523,7 @@ pl3=pl3+1;
 
 };
 
-~magy6 = (90*~time).collect{
+~magy6 = (360*~time).collect{
 pl4=pl4+1;
 	az4=(az4+(1)).wrap(180.neg,180);
 
@@ -540,7 +540,7 @@ pl4=pl4+1;
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
 
-~magz6 = (90*~time).collect{
+~magz6 = (360*~time).collect{
 pl5=pl5+1;
 	az5=(az5+(1)).wrap(180.neg,180);
 
@@ -567,7 +567,7 @@ var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),
 var angle=(360-(360/1.6180339887499));
 var harm1,harn2,harm3;
 
-~az_x=(90*~time).collect{
+~az_x=(360*~time).collect{
 
 	az1=~az.[pl1];el1=~el.[pl1];
 	pl1=pl1+1;
@@ -585,7 +585,7 @@ v1=q1*v1*q1.conjugate;
 raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).theta.round(0.0000000000001);
 };
 
-~az_y=(90*~time).collect{
+~az_y=(360*~time).collect{
 
 	az2=~az.[pl2];el2=~el.[pl2];
 	pl2=pl2+1;
@@ -603,7 +603,7 @@ v2=q2*v2*q2.conjugate;
 raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).theta.round(0.0000000000001);
 };
 
-~az_z=(90*~time).collect{
+~az_z=(360*~time).collect{
 
 	az3=~az.[pl3];el3=~el.[pl3];
 	pl3=pl3+1;
@@ -631,7 +631,7 @@ var r1=[0,0,1],r2=[1,0,0],r3=[0,1,0];
 var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),v3=Quaternion(0,r3.[0],r3.[1],r3.[2]);
 var angle=(360-(360/1.6180339887499));
 
-~el_x=(90*~time).collect{
+~el_x=(360*~time).collect{
 
 	az1=~az.[pl1];el1=~el.[pl1];
 	pl1=pl1+1;
@@ -649,7 +649,7 @@ v1=q1*v1*q1.conjugate;
 rel1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).phi.round(0.0000000000001);
 };
 
-~el_y=(90*~time).collect{
+~el_y=(360*~time).collect{
 
 	az2=~az.[pl2];el2=~el.[pl2];
 	pl2=pl2+1;
@@ -667,7 +667,7 @@ v2=q2*v2*q2.conjugate;
 rel2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).phi.round(0.0000000000001);
 };
 
-~el_z=(90*~time).collect{
+~el_z=(360*~time).collect{
 
 	az3=~az.[pl3];el3=~el.[pl3];
 	pl3=pl3+1;
@@ -831,7 +831,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,pl2=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=64*(speed.reciprocal);
-	var freq,m=1,bank1=6,bank2=360,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=2,bank2=90,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1014,7 +1014,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 TempoClock.default.tempo_(0.01);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
-s.record(numChannels:4);
+//s.record(numChannels:4);
 	/////////////////////scales
 //Scale.directory;
 
@@ -1041,63 +1041,5 @@ f.play;
 //Tdef(\h).play;
 //Tdef(\h).clear;
 
-////////////////pattern for web of directions////////need correction
-	// (
-	// 	~phase2=~phase2.mirror;
-	// 	~n2=~n2.mirror.mirror;
-	// 	~phase3=~phase3.mirror
-	// 	~n3=~n3.mirror;
-	// 	~phase4=~phase4.mirror;
-	// 	~n4=~n4.mirror;
-	//
-	// 	~phase22=~phase2.reverse.mirror;
-	// 	~n22=~n2.reverse.mirror;
-	// 	~phase33=~phase3.reverse.mirror;
-	// 	~n33=~n3.reverse.mirror;
-	// 	~phase44=~phase4.reverse.mirror;
-	// 	~n44=~n4++~n4.reverse.mirror;
-	//
-	// 	~azz=~az.mirror;
-	// 	~ell=~el.mirror;
-	// 	~azzz=~az.reverse.mirror;
-	// 	~azzz=~az.reverse.mirror;
-	//
-	// 	~magxx=~magx.mirror;
-	// 	~magyy=~magy.mirror;
-	// 	~magzz=~magz.mirror;
-	// 	~magxxx=~magx.reverse.mirror;
-	// 	~magyyy=~magy.reverse.mirror;
-	// 	~magzzz=~magz.reverse.mirror;
-	//
-	// )
-	// (
-	// 	b=Pdef(\2, Pbind(\instrument, \ob,
-	// 		\dur,Ppatlace([Pseq(~phase2,1),Pseq(~phase22,1)],inf),
-	// 		\n1,PdegreeToKey(Ppatlace([Pseq(~n2,inf),Pseq(~n22,inf)],inf),Scale.phrygian),
-	// 		\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
-	// 		\cutt,Pbrown(220*2,220*8,100,inf),
-	// 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	// 		\decay,Pbrown(2,8,1,inf);
-	// 	));
-	// 	c=Pdef(\3, Pbind(\instrument, \oc,
-	// 		\dur,Ppatlace([Pseq(~phase3,1),Pseq(~phase33,1)],inf),
-	// 		\n1,PdegreeToKey(Ppatlace([Pseq(~n3,inf),Pseq(~n33,inf)],inf),Scale.phrygian),
-	// 		\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
-	// 		\cutt,Pbrown(220*2,220*8,100,inf),
-	// 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	// 		\decay,Pbrown(2,8,1,inf);
-	// 	));
-	// 	d=Pdef(\4, Pbind(\instrument, \od,
-	// 		\dur,Ppatlace([Pseq(~phase4,1),Pseq(~phase44,1)],inf),
-	// 		\n1,PdegreeToKey(Ppatlace([Pseq(~n4,inf),Pseq(~n44,inf)],inf),Scale.phrygian),
-	// 		\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
-	// 		\cutt,Pbrown(220*2,220*8,100,inf),
-	// 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	// 		\decay,Pbrown(2,8,1,inf);
-	// 	));
-	// )
-
-
-//s.record(numChannels:4)
 }
 )
