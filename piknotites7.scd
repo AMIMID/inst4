@@ -72,7 +72,7 @@ signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
 ~t.loadCollection(wt);
-//signal.plot;
+signal.plot;
 		}.value;
 
 		{
@@ -874,15 +874,25 @@ var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
 //~rot_speed=~rot_speed.scramble;
 	);
 
+	//////notes
+	({
+		var angle=0;
+		~angle=(45*~time).collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		}
+		}.value
+	);
+
+
+
 /////synths////
 (
-(
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=2,cutt=10,rpr=1,speed=10,decay=0.04444,pl1=0;
+	arg angle_rot=0,octave=2,cutt=10,rpr=1,speed=10,decay=0.04444,pl1=0,mult=24;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,pl2=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=64*(speed.reciprocal);
-	var freq,m=2,bank1=3,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=2,bank1=2,bank2=6,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -926,7 +936,7 @@ v=q*v*q.conjugate;
 
 	pitch=Cartesian(v.b,v.c,v.d);
 
-	n1=(pitch.x*10).round(1); n2=(pitch.y*10).round(1); n3=(pitch.z*10).round(1);
+	n1=(pitch.x*mult).round(1); n2=(pitch.y*mult).round(1); n3=(pitch.z*mult).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -950,19 +960,19 @@ env=EnvGen.ar(Env(~levels*sphere.rho,[decay],4.neg),doneAction:2,levelScale:1/10
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);
 
 osc1=VBAP.ar(4,
-				LeakDC.ar(Osc.ar(~t.bufnum,pitch1,mul:amp1,phase:(sphere.x*phase).mod(2pi))),
+				LeakDC.ar(Osc.ar(~w.bufnum,pitch1,mul:amp1,phase:(sphere.x*phase).mod(2pi))),
 ~b.bufnum,
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
-				LeakDC.ar(Osc.ar(~t.bufnum,pitch2,mul:amp2,phase:(sphere.y*phase).mod(2pi))),
+				LeakDC.ar(Osc.ar(~w.bufnum,pitch2,mul:amp2,phase:(sphere.y*phase).mod(2pi))),
 ~b.bufnum,
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
-				LeakDC.ar(Osc.ar(~t.bufnum,pitch3,mul:amp3,phase:(sphere.z*phase).mod(2pi))),
+				LeakDC.ar(Osc.ar(~w.bufnum,pitch3,mul:amp3,phase:(sphere.z*phase).mod(2pi))),
 ~b.bufnum,
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -982,7 +992,6 @@ Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 }).add;
 );
 
-);
 
 //////////pattern for mobius strib of sequential or parallel play of directions
 
@@ -996,7 +1005,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(360.neg,360,1,inf),
+	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ospace1,
@@ -1008,7 +1017,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(360.neg,360,1,inf),
+	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \ospace1,
@@ -1020,7 +1029,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(360.neg,360,1,inf),
+	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \ospace1,
@@ -1032,7 +1041,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(360.neg,360,1,inf),
+	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 e=Pdef(\5, Pbind(\instrument, \ospace1,
@@ -1044,7 +1053,7 @@ e=Pdef(\5, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(360.neg,360,1,inf),
+	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 f=Pdef(\6, Pbind(\instrument, \ospace1,
@@ -1056,14 +1065,14 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 		\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-	\angle_rot,Pbrown(360.neg,360,1,inf),
+	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(1.5);
+TempoClock.default.tempo_(1);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
-//s.record(numChannels:4);
+s.record(numChannels:4);
 	/////////////////////scales
 //Scale.directory;
 
