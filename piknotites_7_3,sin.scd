@@ -831,11 +831,12 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,pl2=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=64*(speed.reciprocal);
-	var freq,m=2,bank1=3,bank2=12,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=2,bank1=2,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
 	var n1,n2,n3;
+	var mag_x_angle,mag_y_angle,mag_z_angle;
 
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -861,14 +862,14 @@ bank2.do{
 	//sphere=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),~az_x.[pl1],~el_x.[pl1]);
 			sphere=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
-				xyz=Spherical(1,sphere.theta,sphere.phi);
+	xyz=Spherical(1,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v=Quaternion(0,1,1,1);
-
-i=Quaternion(0, xyz_array.[0], 0, 0); j=Quaternion(0, 0, xyz_array.[1], 0); k=Quaternion(0, 0, 0, xyz_array.[2]);
-
-	axis=(i+j+k);
+i=Quaternion(0, xyz_array.[0], 0, 0);
+j=Quaternion(0, 0, xyz_array.[1], 0);
+k=Quaternion(0, 0, 0, xyz_array.[2]);
+axis=(i+j+k);
 
 q=((axis*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
 
@@ -883,8 +884,10 @@ ton2=2.pow(n2/(2*6));
 ton3=2.pow(n3/(2*6));
 freq=(fundamental*octave);
 
-			//phase=(exp(Complex(0,1)*(mag_o.theta))*exp(Complex(0,1)*(mag_o.phi))).theta;
-phase=2pi;
+mag_x_angle=Complex(0,Select.kr(pl1,~magx_array.[pl2])).theta;
+	mag_y_angle=Complex(0,Select.kr(pl1,~magy_array.[pl2])).theta;
+	mag_z_angle=Complex(0,Select.kr(pl1,~magz_array.[pl2])).theta;
+
 	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp3=(ton3.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
@@ -900,19 +903,19 @@ env=EnvGen.ar(Env(~levels*sphere.rho,[decay],4.neg),doneAction:2,levelScale:1/10
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);
 
 osc1=VBAP.ar(4,
-				LeakDC.ar(Osc.ar(~w.bufnum,pitch1,mul:amp1,phase:(sphere.x*phase).mod(2pi))),
+				LeakDC.ar(Osc.ar(~w.bufnum,pitch1,mul:amp1,phase:mag_x_angle)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
-				LeakDC.ar(Osc.ar(~w.bufnum,pitch2,mul:amp2,phase:(sphere.y*phase).mod(2pi))),
+				LeakDC.ar(Osc.ar(~w.bufnum,pitch2,mul:amp2,phase:mag_y_angle)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
-				LeakDC.ar(Osc.ar(~w.bufnum,pitch3,mul:amp3,phase:(sphere.z*phase).mod(2pi))),
+				LeakDC.ar(Osc.ar(~w.bufnum,pitch3,mul:amp3,phase:mag_z_angle)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -941,12 +944,12 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 	\angle_rot,Pseq(~angle,inf),
-	//\speed,Prand([1,3/4,2/3,1/2],inf);
+	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur2.mirror,1),
@@ -1010,7 +1013,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(0.1);
+TempoClock.default.tempo_(1);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);

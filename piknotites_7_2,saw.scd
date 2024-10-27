@@ -831,7 +831,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=32*(speed.reciprocal);
-	var freq,m=1,bank2=24,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank2=12,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -899,30 +899,30 @@ env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1);
 osc1=VBAP.ar(4,
 				LeakDC.ar(Osc.ar(~t.bufnum,pitch1,mul:amp1,phase:mag_x_angle)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,2*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,2*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc2=VBAP.ar(4,
 				LeakDC.ar(Osc.ar(~t.bufnum,pitch2,mul:amp2,phase:mag_y_angle)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,2*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,2*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc3=VBAP.ar(4,
 				LeakDC.ar(Osc.ar(~t.bufnum,pitch3,mul:amp3,phase:mag_z_angle)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,2*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,2*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(LPF.ar(osc1,cutt_freq1),mul:env));
-		wrappedOut2.value(out2,LeakDC.ar(LPF.ar(osc2,cutt_freq2),mul:env));
-		wrappedOut3.value(out3,LeakDC.ar(LPF.ar(osc3,cutt_freq3),mul:env));
-		//	Out.ar(0,LeakDC.ar(LeakDC.ar(LPF.ar(osc1,cutt_freq1),mul:env)));
-		//	Out.ar(0,LeakDC.ar(LeakDC.ar(LPF.ar(osc2,cutt_freq2),mul:env)));
-		//	Out.ar(0,LeakDC.ar(LeakDC.ar(LPF.ar(osc3,cutt_freq3),mul:env)));
+		//wrappedOut1.value(out1,LeakDC.ar(LPF.ar(osc1,cutt_freq1),mul:env));
+		//wrappedOut2.value(out2,LeakDC.ar(LPF.ar(osc2,cutt_freq2),mul:env));
+		//wrappedOut3.value(out3,LeakDC.ar(LPF.ar(osc3,cutt_freq3),mul:env));
+			Out.ar(0,LeakDC.ar(LeakDC.ar(LPF.ar(osc1,cutt_freq1),mul:env)));
+			Out.ar(0,LeakDC.ar(LeakDC.ar(LPF.ar(osc2,cutt_freq2),mul:env)));
+			Out.ar(0,LeakDC.ar(LeakDC.ar(LPF.ar(osc3,cutt_freq3),mul:env)));
 			pl1=pl1+1;
 	};
 
