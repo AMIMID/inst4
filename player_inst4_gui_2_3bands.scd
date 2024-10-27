@@ -68,7 +68,7 @@ sig1=FreeVerb.ar(BPF.ar
 sig2=FreeVerb.ar(BPF.ar
 			(PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: inf, doneAction:2),
 				freq:pass2,rq:width2,mul:gain1),
-			mix:mix2,room:1,mul:1/width2.sqrt);
+			mix:mix1,room:1,mul:1/width2.sqrt);
 sig3=FreeVerb.ar(BPF.ar
 			(PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: inf, doneAction:2),
 				freq:pass3,rq:width3,mul:gain1),
@@ -82,7 +82,7 @@ sig4=FreeVerb.ar(BPF.ar
 sig5=FreeVerb.ar(BPF.ar
 			(PlayBuf.ar(2, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: inf, doneAction:2),
 				freq:pass5,rq:width5,mul:gain2),
-			mix:mix1,room:1,mul:1/width5.sqrt);
+			mix:mix2,room:1,mul:1/width5.sqrt);
 
 sig6=FreeVerb.ar(BPF.ar
 			(PlayBuf.ar(2, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: inf, doneAction:2),
