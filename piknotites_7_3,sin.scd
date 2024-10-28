@@ -884,13 +884,13 @@ freq=(fundamental*octave);
 	mag_y=(Complex(sphere.x,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magy_array)));
 	mag_z=(Complex(sphere.x,sphere.y)*Select.kr(pl1,Select.kr(pl2,~magz_array)));
 
-	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal*mag_x.rho).round(0.0000000000001);
-		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal*mag_y.rho).round(0.0000000000001);
-		amp3=(ton3.reciprocal*speed*octave.reciprocal*m.reciprocal*mag_z.rho).round(0.0000000000001);
+	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp3=(ton3.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 
-	pitch1=(freq*ton1*m*mag_x.rho.reciprocal).round(0.0000000000001);
-	pitch2=(freq*ton2*m*mag_y.rho.reciprocal).round(0.0000000000001);
-	pitch3=(freq*ton3*m*mag_z.rho.reciprocal).round(0.0000000000001);
+	pitch1=(freq*ton1*m).round(0.0000000000001);
+	pitch2=(freq*ton2*m).round(0.0000000000001);
+	pitch3=(freq*ton3*m).round(0.0000000000001);
 
 		/*cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
