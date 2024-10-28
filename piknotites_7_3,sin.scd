@@ -24,22 +24,6 @@ Buffer.freeAll;
 ~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 );
-////////////////////////////////////////////noisy sine
-/*(
-var env,sig,wt,angle=0,level,levels;
-
-~levelss=360.collect{
-
-	level=exp(Complex(0,1)*angle).imag;
-		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/5).degrad).imag);
-};
-env = Env(~levelss,[1]);
-sig=env.asSignal(1024);
-wt = sig.asWavetable;
-~w.loadCollection(wt);
-sig.plot;
-)*///;
 
 ////////////////////////////////////speaker setup///other
 /*(
@@ -48,13 +32,6 @@ sig.plot;
 //0 up fl, 1 up bl, 2 up br, 3 up fr, 4 down fl, 5 down bl, 6 down br, 7 down fr
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 ///furhter on speaker setup can be geodesic octahedron 2nd order torus with 16 channels, and Rhombic triacontahedron with 32 vertices as 32 speaker channels
-)
-
-/////////tetrahedron
-(
-// 3D
-~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
-~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 )
 
 (
@@ -66,7 +43,7 @@ sig.plot;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=1;
+		~time=2;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -827,7 +804,7 @@ sig.plot;
 	 	levels=level.rrand(exp(Complex(0,1)*ang+((360-(360/1.6180339887499))/100).degrad).imag);};
 }.value;
 
-//Env(~levels,[0.02222]).plot;
+//Env(~levels,[0.04444]).plot;
 
 	//////notes
 	({
@@ -841,7 +818,7 @@ sig.plot;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=2,cutt=440,rpr=1,speed=1,decay=0.04444,pl1=0,mult=12,pl2=0;
+	arg angle_rot=0,octave=2,cutt=440,rpr=1,speed=1,decay=0.02222,pl1=0,mult=12,pl2=0;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=32*(speed.reciprocal);
@@ -866,7 +843,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/10);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/2);
 				//env=EnvGen.ar(Env.perc(0.1,4),doneAction:2,levelScale:1/10);
 
 bank1.do{
@@ -971,7 +948,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\octave,Prand([1,2,4],inf),
 	///\rpr,Pseq(~rot_speed.mirror,inf),
-	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
+	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -984,7 +961,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace1,
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\octave,Prand([1,2,4],inf),
 		///\rpr,Pseq(~rot_speed.mirror,inf),
-	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
+	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -997,7 +974,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace1,
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\octave,Prand([1,2,4],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
-	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
+	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1010,7 +987,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\octave,Prand([1,2,4],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
-	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
+	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1023,7 +1000,7 @@ e=Pdef(\5, Pbind(\instrument, \ospace1,
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\octave,Prand([1,2,4],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
-	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
+	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1036,14 +1013,14 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\octave,Prand([1,2,4],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
-	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
+	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(0.8);
+TempoClock.default.tempo_(0.5);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
