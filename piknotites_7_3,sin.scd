@@ -752,7 +752,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad).imag);
 				//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag)*~magx_array.[1].[pl];
 };
 			env = Env(~levelsss,[1]);
@@ -769,7 +769,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad).imag);
 			//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag)*~magx_array.[1].[pl];
 };
 			env = Env(~levelssss,[1]);
@@ -786,7 +786,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad).imag);
 		//levels=level*~magz_array.[1].[pl];
 };
 			env = Env(~levelsssss,[1]);
@@ -815,6 +815,7 @@ sig.plot;
 		}.value
 	);
 
+~a=if(2%2==0,0.degrad,90.degrad)
 /////synths////
 (
 SynthDef.new(\ospace1, {
@@ -845,6 +846,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 
 env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/2);
 				//env=EnvGen.ar(Env.perc(0.1,4),doneAction:2,levelScale:1/10);
+
 
 bank1.do{
 
@@ -880,9 +882,9 @@ ton3=2.pow(n3/(2*6));
 
 freq=(fundamental*octave);
 
-	mag_x=(Complex(sphere.y,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magx_array)));
+	/*mag_x=(Complex(sphere.y,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magx_array)));
 	mag_y=(Complex(sphere.x,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magy_array)));
-	mag_z=(Complex(sphere.x,sphere.y)*Select.kr(pl1,Select.kr(pl2,~magz_array)));
+	mag_z=(Complex(sphere.x,sphere.y)*Select.kr(pl1,Select.kr(pl2,~magz_array)));*/
 
 	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
@@ -892,12 +894,15 @@ freq=(fundamental*octave);
 	pitch2=(freq*ton2*m).round(0.0000000000001);
 	pitch3=(freq*ton3*m).round(0.0000000000001);
 
+					///%2==0 simulates .even
+			phase=if(pl2%2==0,0.degrad,90.degrad);
+
 		/*cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 
 osc1=VBAP.ar(4,
-			Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:mag_x.theta),
+						Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),
 							phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -905,7 +910,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),
 							phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
-			Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:mag_y.theta),
+						Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array))
 							,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -913,7 +918,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),
 							phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
-			Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:mag_z.theta),
+						Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),
 							phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -936,7 +941,6 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array))
 			};
 }).add;
 );
-
 
 //////////pattern for mobius strib of sequential or parallel play of directions
 
