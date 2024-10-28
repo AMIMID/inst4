@@ -17,7 +17,6 @@ s.waitForBoot{
 Buffer.freeAll;
 
 (
-(
 ~w1= Buffer.alloc(s,2048);
 ~w2= Buffer.alloc(s,2048);
 ~w3= Buffer.alloc(s,2048);
@@ -767,11 +766,11 @@ wt = signal.asWavetable;
 ~t.loadCollection(wt);
 signal.plot;
 		}.value;
-
+(
 		{
 var env,sig,wt,angle=0,level,levels,pl=1.neg;
 
-~levelsss=720.collect{
+~levelsss=360.collect{
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
@@ -788,7 +787,7 @@ sig.plot;
 	{
 var env,sig,wt,angle=0,level,levels,pl=1.neg;
 
-~levelssss=720.collect{
+~levelssss=360.collect{
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
@@ -805,13 +804,13 @@ sig.plot;
 	{
 var env,sig,wt,angle=0,level,levels,pl=1.neg;
 
-~levelsssss=720.collect{
+~levelsssss=360.collect{
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
 	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag);
-		//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag)*~magz_array.[1].[pl];
+		//levels=level*~magz_array.[1].[pl];
 };
 			env = Env(~levelsssss,[1]);
 sig=env.asSignal(1024);
@@ -819,6 +818,7 @@ wt = sig.asWavetable;
 ~w3.loadCollection(wt);
 sig.plot;
 }.value;
+);
 
 /////////////////////////////////////////////wt envelope sine levels
 {
@@ -828,23 +828,6 @@ sig.plot;
 }.value;
 
 //Env(~levels,[0.02222]).plot;
-
-////////////////////////////////////////rotations
-/*{
-var freq=1,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3;
-var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
-
-
-~rot_speed = (45*~time).collect{
-	ph1=Cartesian((~magx/(2.sqrt)).[pl1],(~magy/(2.sqrt)).[pl1],(~magz/(2.sqrt)).[pl1]).rho/(2.sqrt);
-	pl1=pl1+1;
-	ph1=(ph1).round(0.0000000000001);
-
-	};
-
-}.value;*/
-//~rot_speed=~rot_speed.scramble;
-	);
 
 	//////notes
 	({
@@ -862,7 +845,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=32*(speed.reciprocal);
-	var freq,m=1,bank1=2,bank2=12,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=4,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -883,8 +866,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/10);
-				env=EnvGen.ar(Env.perc(0.1,4),doneAction:2,levelScale:1/10);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/10);
+				//env=EnvGen.ar(Env.perc(0.1,4),doneAction:2,levelScale:1/10);
 
 bank1.do{
 
@@ -990,7 +973,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 	///\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-			\pl2,Pbrown(0,3,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1003,7 +986,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace1,
 		///\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-			\pl2,Pbrown(0,3,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1016,7 +999,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace1,
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-			\pl2,Pbrown(0,3,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1029,7 +1012,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-			\pl2,Pbrown(0,3,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1042,7 +1025,7 @@ e=Pdef(\5, Pbind(\instrument, \ospace1,
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-			\pl2,Pbrown(0,3,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1055,12 +1038,12 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
-			\pl2,Pbrown(0,3,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(2);
+TempoClock.default.tempo_(0.8);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
@@ -1071,7 +1054,7 @@ TempoClock.default.tempo_(2);
 Tdef.new(\h,{
 //loop({
 a.play;
-//(120).wait;
+(120).wait;
 b.play;s.record(numChannels:4);
 (120).wait;
 c.play;
