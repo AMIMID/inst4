@@ -924,9 +924,9 @@ freq=(fundamental*octave);
 		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal*mag_y.rho).round(0.0000000000001);
 		amp3=(ton3.reciprocal*speed*octave.reciprocal*m.reciprocal*mag_z.rho).round(0.0000000000001);
 
-	pitch1=(freq*ton1*m).round(0.0000000000001);
-	pitch2=(freq*ton2*m).round(0.0000000000001);
-	pitch3=(freq*ton3*m).round(0.0000000000001);
+	pitch1=(freq*ton1*m*mag_x.rho.reciprocal).round(0.0000000000001);
+	pitch2=(freq*ton2*m*mag_y.rho.reciprocal).round(0.0000000000001);
+	pitch3=(freq*ton3*m*mag_z.rho.reciprocal).round(0.0000000000001);
 
 		cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
