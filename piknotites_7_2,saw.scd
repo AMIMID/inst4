@@ -830,13 +830,13 @@ SynthDef.new(\ospace1, {
 	arg angle_rot=0,octave=16,cutt=10,rpr=1,speed=1,decay=0.04444,pl1=0,pl2=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=32*(speed.reciprocal);
+	var fundamental=64*(speed.reciprocal);
 	var freq,m=1,bank2=12,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
 	var n1,n2,n3;
-	var mag_x_angle,mag_y_angle,mag_z_angle;
+	var mag_x_angle=0,mag_y_angle=0,mag_z_angle=0;
 
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -856,10 +856,6 @@ m=pl2+1;
 bank2.do{
 
 	mag_o=Cartesian(Select.kr(pl1,Select.kr(pl2,~magx_array)), Select.kr(pl1,Select.kr(pl2,~magy_array)),Select.kr(pl1,Select.kr(pl2,~magz_array)));
-	mag_x_angle=Complex(0,Select.kr(pl1,Select.kr(pl2,~magx_array))).theta;
-	mag_y_angle=Complex(0,Select.kr(pl1,Select.kr(pl2,~magy_array))).theta;
-	mag_z_angle=Complex(0,Select.kr(pl1,Select.kr(pl2,~magz_array))).theta;
-
 	//sphere=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),~az_x.[pl1],~el_x.[pl1]);
 	sphere=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
@@ -882,6 +878,11 @@ ton2=2.pow(n2/(2*6));
 ton3=2.pow(n3/(2*6));
 freq=(fundamental*octave);
 
+	mag_x_angle=(Complex(sphere.y,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magx_array))).theta;
+	mag_y_angle=(Complex(sphere.x,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magy_array))).theta;
+	mag_z_angle=(Complex(sphere.x,sphere.y)*Select.kr(pl1,Select.kr(pl2,~magz_array))).theta;
+
+
 	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp3=(ton3.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
@@ -899,22 +900,22 @@ env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1);
 osc1=VBAP.ar(4,
 				LeakDC.ar(Osc.ar(~t.bufnum,pitch1,mul:amp1,phase:mag_x_angle)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc2=VBAP.ar(4,
 				LeakDC.ar(Osc.ar(~t.bufnum,pitch2,mul:amp2,phase:mag_y_angle)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc3=VBAP.ar(4,
 				LeakDC.ar(Osc.ar(~t.bufnum,pitch3,mul:amp3,phase:mag_z_angle)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,0.5*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 		//wrappedOut1.value(out1,LeakDC.ar(LPF.ar(osc1,cutt_freq1),mul:env));
@@ -938,13 +939,13 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 	\rpr,Pseq(~rot_speed.mirror,inf),
 	\decay,Pbrown(0.04444,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*180,1,inf),
 			\pl2,Pbrown(0,5,1,inf),
 	\angle_rot,Pseq(~angle,inf),
-	//\speed,Prand([1,3/4,2/3,1/2],inf);
+	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur2.mirror,1),
@@ -1012,7 +1013,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(0.2);
+TempoClock.default.tempo_(0.5);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
