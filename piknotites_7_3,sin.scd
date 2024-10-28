@@ -711,6 +711,7 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.rou
 ~magy_array=[~magy1.round(0.00001),~magy2.round(0.00001),~magy3.round(0.00001),~magy4.round(0.00001),~magy5.round(0.00001)];
 ~magz_array=[~magz1.round(0.00001),~magz2.round(0.00001),~magz3.round(0.00001),~magz4.round(0.00001),~magz5.round(0.00001)];
 );
+
 ////////////////////////////////////////////////////////notes and durs
 {
 var dur=2,ph1,ph2,ph3,ph4,ph5,ph6,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0;
@@ -831,7 +832,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,pl2=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=64*(speed.reciprocal);
-	var freq,m=1,bank1=6,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=4,bank2=6,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -884,9 +885,9 @@ ton2=2.pow(n2/(2*6));
 ton3=2.pow(n3/(2*6));
 freq=(fundamental*octave);
 
-mag_x_angle=Complex(0,Select.kr(pl1,~magx_array.[pl2])).theta;
-	mag_y_angle=Complex(0,Select.kr(pl1,~magy_array.[pl2])).theta;
-	mag_z_angle=Complex(0,Select.kr(pl1,~magz_array.[pl2])).theta;
+	mag_x_angle=(Complex(sphere.y,sphere.z)*Select.kr(pl1,~magx_array.[pl2])).theta;
+	mag_y_angle=(Complex(sphere.x,sphere.z)*Select.kr(pl1,~magy_array.[pl2])).theta;
+	mag_z_angle=(Complex(sphere.x,sphere.y)*Select.kr(pl1,~magz_array.[pl2])).theta;
 
 	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
