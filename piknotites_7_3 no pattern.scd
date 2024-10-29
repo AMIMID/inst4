@@ -797,7 +797,7 @@ sig.plot;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=180,octave=2,cutt=440,rpr=1,speed=1,decay=0.02222,mult=12;
+	arg angle_rot=180,octave=2,cutt=440speed=1,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0,pl1=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=32*(speed.reciprocal);
@@ -828,10 +828,10 @@ bank2.do{
 
 	mag_o=Cartesian(~magx_array.[pl2].[pl1], ~magy_array.[pl2].[pl1], ~magz_array.[pl2].[pl1]);
 
-	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_x),Select.kr(pl1,~el_x));
-	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_y),Select.kr(pl1,~el_y));
-	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_z),Select.kr(pl1,~el_z));
-	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+					sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),~az_x.[pl1],~el_x.[pl1]);
+	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),~az_y.[pl1],~el_y.[pl1]);
+	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),~az_z.[pl1],~el_z.[pl1]);
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),~az.[pl1],~el.[pl1]);
 
 	xyz=Spherical(1,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
