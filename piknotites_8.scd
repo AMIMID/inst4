@@ -850,10 +850,10 @@ bank1.do{
 
 	mag_o=Cartesian(Select.kr(pl1,Select.kr(pl2,~magx_array)), Select.kr(pl1,Select.kr(pl2,~magy_array)), Select.kr(pl1,Select.kr(pl2,~magz_array)));
 
-	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_x),Select.kr(pl1,~el_x));
-	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_y),Select.kr(pl1,~el_y));
-	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_z),Select.kr(pl1,~el_z));
-	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~az_x),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~el_x));
+	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~az_y),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~el_y));
+	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~az_z),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~el_z));
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~az),Select.kr(LFNoise1.ar(0.01,mul:180,add:180).round(1),~el));
 
 	xyz=Spherical(1,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
@@ -901,22 +901,22 @@ osc1=VBAP.ar(4,
 						Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,Select.kr(WhiteNoise.ar(mul:180,add:180).round(1),Select.kr(pl2,~magx_array)),phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,Select.kr(WhiteNoise.ar(mul:180,add:180).round(1),Select.kr(pl2,~magx_array)),phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.krpl1,Select.kr(pl2,~magx_array)),phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
 						Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,Select.kr(WhiteNoise.ar(mul:180,add:180).round(1),Select.kr(pl2,~magy_array)),phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,Select.kr(WhiteNoise.ar(mul:180,add:180).round(1),Select.kr(pl2,~magy_array)),phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
 						Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,Select.kr(WhiteNoise.ar(mul:180,add:180).round(1),Select.kr(pl2,~magz_array)),phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,Select.kr(WhiteNoise.ar(mul:180,add:180).round(1),Select.kr(pl2,~magz_array)),phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,Select.krpl1,Select.kr(pl2,~magz_array)),phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 			wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
