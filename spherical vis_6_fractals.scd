@@ -45,7 +45,7 @@ z=Complex(0,0);
 
 ////////////////////az el mag arrays
 {
-var  sph1,sph2,sph3,sph4,sph5,m_x=1,m_y=1,m_z=1;
+var  sph1,sph2,sph3,sph4,sph5,m_x=5,m_y=3,m_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -56,7 +56,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph1=Spherical(1,az1.degrad*~h.[pl1],el1.degrad*~j.[pl1]).theta.round(0.00001);
+		sph1=Spherical(1,(az1.degrad*~h.[pl1]).wrap(pi.neg,pi),(el1.degrad*~j.[pl1]).wrap((pi/2).neg,(pi/2))).theta.round(0.00001);
 
 	};
 
@@ -67,7 +67,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 	el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph2=Spherical(1,az2.degrad*~h.[pl2],el2.degrad*~j.[pl2]).phi.round(0.00001);
+	sph2=Spherical(1,(az2.degrad*~h.[pl2]).wrap(pi.neg,pi),(el2.degrad*~j.[pl2]).wrap((pi/2).neg,(pi/2))).phi.round(0.00001);
 
 	};
 
@@ -77,7 +77,7 @@ pl3=pl3+1;
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph3=Spherical(1,az3.degrad*~h.[pl3],el3.degrad*~j.[pl3]);
+	sph3=Spherical(1,(az3.degrad*~h.[pl3]).wrap(pi.neg,pi),(el3.degrad*~j.[pl3]).wrap((pi/2).neg,(pi/2)));
 	 mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
 ////for in-between harmonics multiply sin(phi) after cos, when m is 2 then harm 3/2 is formed in oder 3, when m is 3 harm 4/3 is formed in oder 4 and when m is 3 for theta and 2 for phi harm 4/2 is formed for order4//////same for y axis
@@ -96,7 +96,7 @@ pl4=pl4+1;
 
 	el4=(el4+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph4=Spherical(1,az4.degrad*~h.[pl4],el4.degrad*~j.[pl4]);
+	sph4=Spherical(1,(az4.degrad*~h.[pl4]).wrap(pi.neg,pi),(el4.degrad*~j.[pl4]).wrap((pi/2).neg,(pi/2)));
 
 	mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),
 		sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
@@ -113,7 +113,7 @@ pl5=pl5+1;
 
 	el5=(el5+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph5=Spherical(1,az5.degrad*~h.[pl5],el5.degrad*~j.[pl5]);
+		sph5=Spherical(1,(az5.degrad*~h.[pl5]).wrap(pi.neg,pi),(el5.degrad*~j.[pl5]).wrap((pi/2).neg,(pi/2)));
 
 if(
 m_z.even,
@@ -142,7 +142,7 @@ data = (360*32).collect{
 	az=~az.[pl];
 	el=~el.[pl];
 	//mag=~magz.[pl];
-	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt);
+	mag=Cartesian(0,0,~magz.[pl]).rho/(2.sqrt);
 	pl=pl+1;
 
 	sph=Spherical(mag*800,az,el).asCartesian.asArray;
