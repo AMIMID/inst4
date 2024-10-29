@@ -732,8 +732,8 @@ rythm=[1,1/1,1,1,1/1];
 		{
 var signal,wt,m=0,amp;
 
-~level=45.round(1).collect{m=m+1;amp=m.reciprocal};
-~phase=45.collect{pi};
+~level=4.round(1).collect{m=m+1;amp=m.reciprocal};
+~phase=4.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
@@ -819,7 +819,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=32*(speed.reciprocal);
-	var freq,m=1,bank1=6,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=5,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -900,26 +900,23 @@ freq=(fundamental*octave);
 osc1=VBAP.ar(4,
 						Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
-Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),
-							phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),
-							phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+//~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
 						Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
-Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array))
-							,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),
-							phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+//~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
 						Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
-Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),
-							phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array))
-							,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+//~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 			wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
@@ -946,11 +943,11 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4,8],inf),
 	///\rpr,Pseq(~rot_speed.mirror,inf),
 	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			//\pl2,Pbrown(0,1,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -959,11 +956,11 @@ b=Pdef(\2, Pbind(\instrument, \ospace1,
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4,8],inf),
 		///\rpr,Pseq(~rot_speed.mirror,inf),
 	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			//\pl2,Pbrown(0,1,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -972,11 +969,11 @@ c=Pdef(\3, Pbind(\instrument, \ospace1,
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4,8],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			//\pl2,Pbrown(0,1,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -985,11 +982,11 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4,8],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			//\pl2,Pbrown(0,1,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -998,11 +995,11 @@ e=Pdef(\5, Pbind(\instrument, \ospace1,
 			\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4,8],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			//\pl2,Pbrown(0,1,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1011,11 +1008,11 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4,8],inf),
 	///	\rpr,Pseq(~rot_speed.mirror,inf),
 	//\decay,Pbrown(0.01111,0.04444,0.01111,inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			//\pl2,Pbrown(0,1,1,inf),
+			\pl2,Pbrown(0,1,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
