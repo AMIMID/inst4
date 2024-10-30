@@ -43,7 +43,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=1;
+		~time=2;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -1051,35 +1051,35 @@ f.play;
 	(
 Tdef.new(\h,{
 //loop({
-(1).wait;
+			(1).wait;
 s.record(numChannels:4);
 a.play;
-(160).wait;
-s.stopRecording
-(1).wait;
+(360).wait;
+s.stopRecording;
+			(1).wait;
 s.record(numChannels:4);
 b.play;
-(160).wait;
-s.stopRecording
-(1).wait;
+(360).wait;
+s.stopRecording;
+			(1).wait;
 s.record(numChannels:4);
 c.play;
-(160).wait;
-s.stopRecording
-(1).wait;
+(360).wait;
+s.stopRecording;
+			(1).wait;
 s.record(numChannels:4);
 d.play;
-(160).wait;
-s.stopRecording
-(1).wait;
+(360).wait;
+s.stopRecording;
+			(1).wait;
 s.record(numChannels:4);
 e.play;
-(160).wait;
-s.stopRecording
-(1).wait;
+(360).wait;
+s.stopRecording;
+			(1).wait;
 s.record(numChannels:4);
 f.play;
-(160).wait;
+(360).wait;
 s.stopRecording
 //	})
 })
@@ -1087,7 +1087,7 @@ s.stopRecording
 
 
 //Tdef(\h).stop;
-Tdef(\h).play;
+//Tdef(\h).play;
 //Tdef(\h).clear;
 
 }
