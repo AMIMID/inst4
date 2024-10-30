@@ -43,7 +43,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=2;
+		~time=1;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -798,7 +798,7 @@ sig.plot;
 {
 	 	var ang=0,level,levels,env,pl;
 	 	~levels=180.collect{ level=exp(Complex(0,1)*ang).imag; ang=ang+1.degrad;
-	 	levels=level.rrand(exp(Complex(0,1)*ang+((360-(360/1.6180339887499))/1000).degrad).imag);};
+	 	levels=level.rrand(exp(Complex(0,1)*ang+((360-(360/1.6180339887499))/100).degrad).imag);};
 }.value;
 
 Env(~levels,[0.04444]).plot;
@@ -1030,15 +1030,15 @@ TempoClock.default.tempo_(0.6666);
 Tdef.new(\h,{
 //loop({
 a.play;
-(120).wait;
-b.play;s.record(numChannels:4);
-(120).wait;
+(160).wait;
+b.play;
+(160).wait;
 c.play;
-(120).wait;
+(160).wait;
 d.play;
-(120).wait;
+(160).wait;
 e.play;
-(120).wait;
+(160).wait;
 f.play;
 //	})
 })
@@ -1046,7 +1046,7 @@ f.play;
 
 
 //Tdef(\h).stop;
-//Tdef(\h).play;
+//Tdef(\h).play;//s.record(numChannels:4);
 //Tdef(\h).clear;
 
 }
