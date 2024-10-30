@@ -17,7 +17,7 @@ s.record(numChannels:4)
 
 (
 ~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst-4/final/inst4_imag_version a_sequence.wav");
-~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst-4/final/rec real.wav");
+//~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst-4/final/rec real.wav");
 )
 (
 (
@@ -35,7 +35,7 @@ SynthDef.new(\inst4,
 		angle_cuttfreq1 = cutt1; angle_bandwidth1 =  band1;
 		angle_cuttfreq2 =  cutt2; angle_bandwidth2 = band2;
 
-		v1=Quaternion(0,1,0,0);v2=Quaternion(0,0,1,0);v3=Quaternion(0,1,0,0);v4=Quaternion(0,0,1,0);
+		v1=Quaternion(0,1,0,0);v2=Quaternion(0,1,0,0);v3=Quaternion(0,1,0,0);v4=Quaternion(0,1,0,0);
 
 	i=Quaternion(0, xyz.[0], 0, 0); j=Quaternion(0, 0, xyz.[1], 0); k=Quaternion(0, 0, 0, xyz.[2]);
 
@@ -83,24 +83,24 @@ sig3=FreeVerb.ar(BPF.ar
 				freq:pass3.lag(0.333),rq:width3.lag(0.333),mul:gain1.lag(0.333)),
 			mix:mix1.lag(0.333),room:1,mul:1/width1.lag(0.333).sqrt);
 
-sig4=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
-				freq:pass4.lag(0.333),rq:width4.lag(0.333),mul:gain2.lag(0.333)),
-			mix:mix2.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
-
-sig5=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
-				freq:pass5.lag(0.333),rq:width5.lag(0.333),mul:gain2.lag(0.333)),
-			mix:mix2.lag(0.333),room:1,mul:1/width1.lag(0.333).sqrt);
-
-sig6=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
-				freq:pass6.lag(0.333),rq:width6.lag(0.333),mul:gain2.lag(0.333)),
-			mix:mix2.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
+		// sig4=FreeVerb.ar(BPF.ar
+		// 	(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
+		// 	freq:pass4.lag(0.333),rq:width4.lag(0.333),mul:gain2.lag(0.333)),
+		// mix:mix2.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
+		//
+		// sig5=FreeVerb.ar(BPF.ar
+		// 	(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
+		// 	freq:pass5.lag(0.333),rq:width5.lag(0.333),mul:gain2.lag(0.333)),
+		// mix:mix2.lag(0.333),room:1,mul:1/width1.lag(0.333).sqrt);
+		//
+		// sig6=FreeVerb.ar(BPF.ar
+		// 	(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
+		// 	freq:pass6.lag(0.333),rq:width6.lag(0.333),mul:gain2.lag(0.333)),
+		// mix:mix2.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
 
 
 	Out.ar(0,sig1);Out.ar(0,sig2);Out.ar(0,sig3);
-    Out.ar(0,sig4);Out.ar(0,sig5);Out.ar(0,sig6);
+   // Out.ar(0,sig4);Out.ar(0,sig5);Out.ar(0,sig6);
 
 }).add;);
 (

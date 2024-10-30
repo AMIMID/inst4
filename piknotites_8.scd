@@ -859,7 +859,7 @@ bank1.do{
 	xyz=Spherical(1,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
-v=Quaternion(0,1,1,1);
+v=Quaternion(0,0.57735026918963,0.57735026918963,0.57735026918963);
 i=Quaternion(0, xyz_array.[0], 0, 0);
 j=Quaternion(0, 0, xyz_array.[1], 0);
 k=Quaternion(0, 0, 0, xyz_array.[2]);
