@@ -974,7 +974,7 @@ SynthDef.new(\o1, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=180;
+	bank2=360;
 
    bank2.do{
 
@@ -1018,7 +1018,7 @@ SynthDef.new(\o2, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=180;
+	bank2=360;
 
    bank2.do{
 
@@ -1061,7 +1061,7 @@ SynthDef.new(\o3, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=90;
+	bank2=360;
 
    bank2.do{
 
