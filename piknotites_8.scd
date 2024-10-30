@@ -858,7 +858,7 @@ bank1.do{
 	xyz=Spherical(1,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
-v=Quaternion(0,0.57735026918963,0.57735026918963,0.57735026918963);
+v=Quaternion(0,1,1,1);
 i=Quaternion(0, xyz_array.[0], 0, 0);
 j=Quaternion(0, 0, xyz_array.[1], 0);
 k=Quaternion(0, 0, 0, xyz_array.[2]);
@@ -867,6 +867,7 @@ axis=(i+j+k);
 q=((axis*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
 
 v=q*v*q.conjugate;
+
 	pitch=Cartesian(v.b,v.c,v.d);
 
 	n1=(pitch.x*mult).round(1); n2=(pitch.y*mult).round(1); n3=(pitch.z*mult).round(1);
@@ -877,9 +878,9 @@ ton3=2.pow(n3/(2*6));
 
 freq=(fundamental*octave);
 
-	/*mag_x=(Complex(sphere.y,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magx_array)));
+	mag_x=(Complex(sphere.y,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magx_array)));
 	mag_y=(Complex(sphere.x,sphere.z)*Select.kr(pl1,Select.kr(pl2,~magy_array)));
-	mag_z=(Complex(sphere.x,sphere.y)*Select.kr(pl1,Select.kr(pl2,~magz_array)));*/
+	mag_z=(Complex(sphere.x,sphere.y)*Select.kr(pl1,Select.kr(pl2,~magz_array)));
 
 	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
@@ -897,21 +898,21 @@ freq=(fundamental*octave);
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 
 osc1=VBAP.ar(4,
-						Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase),
+						Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:(phase+mag_x.theta).wrap(2pi.neg,2pi)),
 ~b.bufnum,
 //~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
-						Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase),
+					Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:(phase+mag_y.theta).wrap(2pi.neg,2pi)),
 ~b.bufnum,
 //~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
-						Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase),
+						Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:(phase+mag_z.theta).wrap(2pi.neg,2pi)),
 ~b.bufnum,
 //~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -933,6 +934,8 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 			};
 }).add;
 );
+
+
 
 //////////pattern for mobius strib of sequential or parallel play of directions
 
