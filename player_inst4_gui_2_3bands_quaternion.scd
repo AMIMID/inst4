@@ -15,8 +15,8 @@ s.waitForBoot
 Buffer.freeAll
 
 (
-~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme/askhsh1/askhsh_1_g_supercollider edit.wav");
-~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme/askhsh1/stereo 3d buf_voices_ksyme.wav");
+~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/Nisi Dominus - Cum Dederit de Antonio Vivaldi. Andreas Scholl.wav");
+~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/Nisi Dominus - Cum Dederit de Antonio Vivaldi. Andreas Scholl.wav");
 )
 
 (
