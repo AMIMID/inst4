@@ -4,7 +4,7 @@
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=2;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 s.options.memSize = 8192*8;
 //s.options.blockSize = 64/4;
@@ -13,12 +13,13 @@ s.waitForBoot
 )
 
 Buffer.freeAll
+s.record(numChannels:4)
 
 (
-~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav");
-~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav");
+~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst-4/final/inst4_imag_version a_sequence.wav");
+~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst-4/final/rec real.wav");
 )
-
+(
 (
 (
 SynthDef.new(\inst4,
@@ -69,37 +70,37 @@ q4=((axis*exp(Complex(0,1)*angle_bandwidth2).imag)+exp(Complex(0,1)*angle_bandwi
 
 
 sig1=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
 				freq:pass1.lag(0.333),rq:width1.lag(0.333),mul:gain1.lag(0.333)),
 			mix:mix1.lag(0.333),room:1,mul:1/width1.lag(0.333).sqrt);
 
 sig2=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
 				freq:pass2.lag(0.333),rq:width2.lag(0.333),mul:gain1.lag(0.333)),
 			mix:mix1.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
 sig3=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(2, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
 				freq:pass3.lag(0.333),rq:width3.lag(0.333),mul:gain1.lag(0.333)),
 			mix:mix1.lag(0.333),room:1,mul:1/width1.lag(0.333).sqrt);
 
 sig4=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(2, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
 				freq:pass4.lag(0.333),rq:width4.lag(0.333),mul:gain2.lag(0.333)),
 			mix:mix2.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
 
 sig5=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(2, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
 				freq:pass5.lag(0.333),rq:width5.lag(0.333),mul:gain2.lag(0.333)),
 			mix:mix2.lag(0.333),room:1,mul:1/width1.lag(0.333).sqrt);
 
 sig6=FreeVerb.ar(BPF.ar
-			(PlayBuf.ar(2, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 1, doneAction:2),
 				freq:pass6.lag(0.333),rq:width6.lag(0.333),mul:gain2.lag(0.333)),
 			mix:mix2.lag(0.333),room:1,mul:1/width2.lag(0.333).sqrt);
 
 
 	Out.ar(0,sig1);Out.ar(0,sig2);Out.ar(0,sig3);
-  // Out.ar(0,sig4);Out.ar(0,sig5);Out.ar(0,sig6);
+    Out.ar(0,sig4);Out.ar(0,sig5);Out.ar(0,sig6);
 
 }).add;);
 (
@@ -124,8 +125,8 @@ w=Window.new("gui",Rect.new(750,100,500,420)).front.alwaysOnTop_(true);
 	if(
 		obj.value==1,{~synth=Synth.new(\inst4,[
 \gain1,~gain1.value,\gain2,~gain2.value,\mix1,~reverb1.value,\mix2,~reverb2.value,
-\cutt1,~filter1.x.linlin(0,1,180.neg,180),\band1,~filter1.y.linlin(0,1,180.neg,180),
-	\cutt2,~filter2.x.linlin(0,1,180.neg,180),\band2,~filter2.y.linlin(0,1,180.neg,180)]).register;},
+\cutt1,~filter1.x.linlin(0,1,360.neg,360),\band1,~filter1.y.linlin(0,1,360.neg,360),
+	\cutt2,~filter2.x.linlin(0,1,360.neg,360),\band2,~filter2.y.linlin(0,1,360.neg,360)]).register;},
 		{~synth.free}
 )});
 (
@@ -184,8 +185,8 @@ f.string = "reverb2";
 ~filter1.x_(0).y_(0).action_({
 	arg obj;
 	var pass,width;
-	pass=obj.x.linlin(0,1,180.neg,180);
-	width=obj.y.linlin(0,1,180.neg,180);
+	pass=obj.x.linlin(0,1,360.neg,360);
+	width=obj.y.linlin(0,1,360.neg,360);
 	["pass1","widht1"].postln;
 	[pass.value,width.value].postln;
 	if(~synth.isPlaying,{~synth.set(\cutt1,pass,\band1,width)});
@@ -195,14 +196,14 @@ f.string = "reverb2";
 ~filter2.x_(0).y_(0).action_({
 	arg obj;
 	var pass,width;
-    pass=obj.x.linlin(0,1,180.neg,180);
-	width=obj.y.linlin(0,1,180.neg,180);
+    pass=obj.x.linlin(0,1,360.neg,360);
+	width=obj.y.linlin(0,1,360.neg,360);
 	["pass2","widht2"].postln;
 	[pass.value,width.value].postln;
 	if(~synth.isPlaying,{~synth.set(\cutt2,pass,\band2,width)});
 });
 )
-)
+);
 
 	(
 MIDIClient.init;
@@ -212,7 +213,7 @@ MIDIIn.connectAll;
 MIDIdef.cc(\midi1,{ |val, num, chan, src|
 		var pass;
 	//[val, num, chan, src].postln;
-	pass=val.linlin(0,127,180.neg,180);
+	pass=val.linlin(0,127,360.neg,360);
 		pass.postln;
 		if(~synth.isPlaying,{~synth.set(\cutt1,pass)});
 },25);
@@ -221,7 +222,7 @@ MIDIdef.cc(\midi1,{ |val, num, chan, src|
 MIDIdef.cc(\midi2,{ |val, num, chan, src|
 		var width;
 	//[val, num, chan, src].postln;
-	width=val.linlin(0,127,180.neg,180);
+	width=val.linlin(0,127,360.neg,360);
 		width.postln;
 		if(~synth.isPlaying,{~synth.set(\band1,width)});
 },24);
@@ -230,18 +231,18 @@ MIDIdef.cc(\midi2,{ |val, num, chan, src|
 MIDIdef.cc(\midi3,{ |val, num, chan, src|
 		var pass;
 	//[val, num, chan, src].postln;
-	pass=val.linlin(0,127,180.neg,180);
+	pass=val.linlin(0,127,0,1);
 		pass.postln;
-		if(~synth.isPlaying,{~synth.set(\cutt2,pass)});
+		if(~synth.isPlaying,{~synth.set(\gain1,pass)});
 },23);
 	);
 		(
 MIDIdef.cc(\midi4,{ |val, num, chan, src|
 		var width;
 	//[val, num, chan, src].postln;
-	width=val.linlin(0,127,180.neg,180);
+	width=val.linlin(0,127,0,1);
 		width.postln;
-		if(~synth.isPlaying,{~synth.set(\band2,width)});
+		if(~synth.isPlaying,{~synth.set(\gain2,width)});
 },22);
 	);
 	(
@@ -263,4 +264,5 @@ MIDIdef.cc(\midi6,{ |val, num, chan, src|
 },20);
 	);
 
+)
 )

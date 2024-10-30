@@ -888,11 +888,11 @@ var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=2,cutt=10,rpr=1,speed=10,decay=0.04444,pl1=0,mult=24;
+	arg angle_rot=0,octave=2,cutt=10,rpr=1,speed=10,decay=0.04444,pl1=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,pl2=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=64*(speed.reciprocal);
-	var freq,m=2,bank1=2,bank2=6,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=2,bank1=3,bank2=12,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -925,7 +925,8 @@ bank2.do{
 				xyz=Spherical(1,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
-v=Quaternion(0,0,0,mag_o.rho.round(0.0000000000001)/(2.sqrt));
+v=Quaternion(0,1,1,1);
+
 i=Quaternion(0, xyz_array.[0], 0, 0); j=Quaternion(0, 0, xyz_array.[1], 0); k=Quaternion(0, 0, 0, xyz_array.[2]);
 
 	axis=(i+j+k);
@@ -1069,7 +1070,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(1);
+TempoClock.default.tempo_(0.5);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 s.record(numChannels:4);

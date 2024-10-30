@@ -3,7 +3,7 @@ s.options.numWireBufs = 1024*4;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=2;
 TempoClock.default.tempo_(0.5);
-s.options.memSize = 8192*8;
+s.options.memSize = 8192*32;
 s.options.blockSize = 64/1;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 48000;
@@ -14,7 +14,7 @@ Buffer.freeAll
 
 
 //////////phase shift
-~c1 = Buffer.readChannel(s,,channels:0 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/My Movie.wav",channels:0 );
 (
 (
 SynthDef("help-phaseShift", { arg out=0;
@@ -30,8 +30,8 @@ SynthDef("help-phaseShift", { arg out=0;
 
 ////////////////buffers
 (
-~c1 = Buffer.readChannel(s,,channels:0 );
-~c2 = Buffer.readChannel(s,,channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/My Movie.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/My Movie.wav",channels:1 );
 //~c3 = Buffer.readChannel(s,,channels:0 );
 //~c4 = Buffer.readChannel(s,,channels:1 );
 //~c5 = Buffer.readChannel(s,,channels:0 );
@@ -79,6 +79,7 @@ signal.plot;
 )
 
 //////////arrays
+(
 		~time=8;
 {
 var c,cc,angle=0,c_real,c_imag,z;
@@ -698,6 +699,7 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.rou
 ~magy_array=[~magy1.round(0.00001),~magy2.round(0.00001),~magy3.round(0.00001),~magy4.round(0.00001),~magy5.round(0.00001)];
 ~magz_array=[~magz1.round(0.00001),~magz2.round(0.00001),~magz3.round(0.00001),~magz4.round(0.00001),~magz5.round(0.00001)];
 );
+)
 
 /*(
 (
