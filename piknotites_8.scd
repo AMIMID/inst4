@@ -1027,9 +1027,10 @@ TempoClock.default.tempo_(0.6666);
 	/////////////////////scales
 //Scale.directory;
 
-(
+/*(
 Tdef.new(\h,{
 //loop({
+			s.record(numChannels:4);
 a.play;
 (160).wait;
 b.play;
@@ -1041,13 +1042,52 @@ d.play;
 e.play;
 (160).wait;
 f.play;
+		(160).wait;
+			s.stopRecording
+//	})
+})
+);*/
+
+	(
+Tdef.new(\h,{
+//loop({
+(1).wait;
+s.record(numChannels:4);
+a.play;
+(160).wait;
+s.stopRecording
+(1).wait;
+s.record(numChannels:4);
+b.play;
+(160).wait;
+s.stopRecording
+(1).wait;
+s.record(numChannels:4);
+c.play;
+(160).wait;
+s.stopRecording
+(1).wait;
+s.record(numChannels:4);
+d.play;
+(160).wait;
+s.stopRecording
+(1).wait;
+s.record(numChannels:4);
+e.play;
+(160).wait;
+s.stopRecording
+(1).wait;
+s.record(numChannels:4);
+f.play;
+(160).wait;
+s.stopRecording
 //	})
 })
 );
 
 
 //Tdef(\h).stop;
-//Tdef(\h).play;//s.record(numChannels:4);
+Tdef(\h).play;
 //Tdef(\h).clear;
 
 }
