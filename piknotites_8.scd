@@ -898,21 +898,21 @@ freq=(fundamental*octave);
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 
 osc1=VBAP.ar(4,
-				Osc.ar(~w1.bufnum,pitch1+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal),mul:amp1,phase:phase),
+				Osc.ar(~w1.bufnum,pitch1+SinOsc.ar(mag_x.rho.reciprocal,mag_x.theta,mul:mag_x.rho),mul:amp1,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magx_array)),phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
-				Osc.ar(~w2.bufnum,pitch2+SinOsc.ar(mag_y.rho,mag_y.theta,mul:mag_y.rho.reciprocal),mul:amp2,phase:phase),
+				Osc.ar(~w2.bufnum,pitch2+SinOsc.ar(mag_y.rho.reciprocal,mag_y.theta,mul:mag_y.rho),mul:amp2,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magy_array)),phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
-				Osc.ar(~w3.bufnum,pitch3+SinOsc.ar(mag_z.rho,mag_z.theta,mul:mag_z.rho.reciprocal),mul:amp3,phase:phase),
+				Osc.ar(~w3.bufnum,pitch3+SinOsc.ar(mag_z.rho.reciprocal,mag_z.theta,mul:mag_z.rho),mul:amp3,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
