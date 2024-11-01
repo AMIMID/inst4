@@ -1123,7 +1123,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				//level=level;
 				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad).imag)+(~magx_array.[2].[pl]/10000);
-				levels=level+(Complex((~magy_array.[2].[pl]/100),(~magz_array.[2].[pl]/100)).rho);
+				//levels=level+(Complex((~magy_array.[2].[pl]/100),(~magz_array.[2].[pl]/100)).rho);
 };
 			env = Env(~levelsss,[1]);
 sig=env.asSignal(1024);
@@ -1195,8 +1195,8 @@ SynthDef.new(\ospace1, {
 	arg angle_rot=0,octave=2,cutt=440,speed=1,decay=0.02,pl1=0,mult=12,pl2=0;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=128*(speed.reciprocal);
-	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var fundamental=32*(speed.reciprocal);
+	var freq,m=1,bank1=6,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1384,7 +1384,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(1);
+	TempoClock.default.tempo_(1/5);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
