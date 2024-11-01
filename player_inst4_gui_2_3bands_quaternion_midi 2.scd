@@ -47,9 +47,9 @@ q2=((axis*exp(Complex(0,1)*angle_cuttfreq2).imag)+exp(Complex(0,1)*angle_cuttfre
 		cuttfreq1=Cartesian(v1.b,v1.c,v1.d);
 		cuttfreq2=Cartesian(v2.b,v2.c,v2.d);
 
-		lpass1=cuttfreq1.x.round(0.000001).abs.linlin(0,1,55,55*128);
-		lpass2=cuttfreq1.y.round(0.000001).abs.linlin(0,1,55,55*128);
-		lpass3=cuttfreq1.z.round(0.000001).abs.linlin(0,1,55,55*128);
+		lpass1=cuttfreq1.x.round(0.000001).abs.linlin(0,1,55,55*256);
+		lpass2=cuttfreq1.y.round(0.000001).abs.linlin(0,1,55,55*256);
+		lpass3=cuttfreq1.z.round(0.000001).abs.linlin(0,1,55,55*256);
 
 		hpass1=cuttfreq2.x.round(0.000001).abs.linlin(0,1,0.001,1);
 		hpass2=cuttfreq2.y.round(0.000001).abs.linlin(0,1,0.001,1);
@@ -58,18 +58,18 @@ q2=((axis*exp(Complex(0,1)*angle_cuttfreq2).imag)+exp(Complex(0,1)*angle_cuttfre
 
 sig1=FreeVerb.ar(LPF.ar
 			(HPF.ar
-			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2),
 				freq:lpass1.lag(0.333)),freq:hpass1.lag(0.333)),
 			mix:mix1.lag(0.333),room:1);
 
 sig2=FreeVerb.ar(LPF.ar
 			(HPF.ar
-			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
+			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2),
 				freq:lpass2.lag(0.333)),freq:hpass2.lag(0.333)),
 			mix:mix2.lag(0.333),room:1,mul:gain1.lag(0.333));
 sig3=FreeVerb.ar(LPF.ar
 			(HPF.ar
-				(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 1, doneAction:2),
+				(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2),
 				freq:lpass3.lag(0.333)),freq:hpass3.lag(0.333)),
 			mix:mix3.lag(0.333),room:1,mul:gain1.lag(0.333));
 
@@ -165,7 +165,7 @@ e.string = "reverb3";
 MIDIClient.init;
 MIDIIn.connectAll;
 
-/*	(
+	(
 MIDIdef.cc(\midi1,{ |val, num, chan, src|
 		var pass;
 	//[val, num, chan, src].postln;
@@ -176,13 +176,13 @@ MIDIdef.cc(\midi1,{ |val, num, chan, src|
 	);
 		(
 MIDIdef.cc(\midi2,{ |val, num, chan, src|
-		var width;
+		var pass;
 	//[val, num, chan, src].postln;
-	width=val.linlin(0,127,360.neg,360);
-		width.postln;
-		if(~synth.isPlaying,{~synth.set(\band1,width)});
+	pass=val.linlin(0,127,360.neg,360);
+		pass.postln;
+		if(~synth.isPlaying,{~synth.set(\cutt2,pass)});
 },24);
-	);*/
+	);
 	(
 MIDIdef.cc(\midi3,{ |val, num, chan, src|
 		var pass;
