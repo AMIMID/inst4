@@ -946,7 +946,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 //////////pattern for mobius strib of sequential or parallel play of directions
 
 (
-a=Pdef(\1, Pbind(\instrument, \ospace1,
+~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1.mirror,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -958,7 +958,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
-b=Pdef(\2, Pbind(\instrument, \ospace1,
+~bb=Pdef(\2, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur2.mirror,1),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -970,7 +970,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace1,
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
-c=Pdef(\3, Pbind(\instrument, \ospace1,
+~cc=Pdef(\3, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur3.mirror,1),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -982,7 +982,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace1,
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
-d=Pdef(\4, Pbind(\instrument, \ospace1,
+~dd=Pdef(\4, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur4.mirror,1),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -994,7 +994,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
-e=Pdef(\5, Pbind(\instrument, \ospace1,
+~ee=Pdef(\5, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur5.mirror,1),
 			\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -1006,7 +1006,7 @@ e=Pdef(\5, Pbind(\instrument, \ospace1,
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
-f=Pdef(\6, Pbind(\instrument, \ospace1,
+~ff=Pdef(\6, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur6.mirror,1),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -1019,7 +1019,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace1,
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(0.16);
+TempoClock.default.tempo_(0.3333);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
@@ -1040,36 +1040,36 @@ Tdef.new(\h,{
 			(1).wait;
 s.record(numChannels:4);
 			(1).wait;
-a.play;
+~aa.play;
 (180).wait;
 s.stopRecording;
 			(1).wait;
 s.record(numChannels:4);
-b.play;
-(180).wait;
-s.stopRecording;
-			(1).wait;
-s.record(numChannels:4);
-			(1).wait;
-c.play;
+~bb.play;
 (180).wait;
 s.stopRecording;
 			(1).wait;
 s.record(numChannels:4);
 			(1).wait;
-d.play;
+~cc.play;
 (180).wait;
 s.stopRecording;
 			(1).wait;
 s.record(numChannels:4);
 			(1).wait;
-e.play;
+~dd.play;
 (180).wait;
 s.stopRecording;
 			(1).wait;
 s.record(numChannels:4);
 			(1).wait;
-f.play;
+~ee.play;
+(180).wait;
+s.stopRecording;
+			(1).wait;
+s.record(numChannels:4);
+			(1).wait;
+~ff.play;
 (180).wait;
 s.stopRecording
 //	})
