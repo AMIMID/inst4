@@ -7,9 +7,9 @@ s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*32;
-s.options.blockSize = 64;
+s.options.blockSize = 64/2;
 s.options.maxNodes = 1024 * 16;
-s.options.sampleRate= 48000;
+s.options.sampleRate= 44100;
 );
 
 s.waitForBoot{
@@ -1322,7 +1322,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+		//\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*720,1,inf),
 			\pl2,Pbrown(0,5,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1333,7 +1333,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*720,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1344,7 +1344,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*720,1,inf),
 			\pl2,Pbrown(0,5,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1355,7 +1355,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*720,1,inf),
 			\pl2,Pbrown(0,5,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1366,7 +1366,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 			\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+	//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*720,1,inf),
 			\pl2,Pbrown(0,5,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1377,7 +1377,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+	//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*720,1,inf),
 			\pl2,Pbrown(0,5,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1401,26 +1401,17 @@ s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
 (180).wait;
-s.stopRecording;
-			(1).wait;
 ~bb.play;
 (180).wait;
-s.stopRecording;
-			(1).wait;
 ~cc.play;
 (180).wait;
-s.stopRecording;
-			(1).wait;
 ~dd.play;
 (180).wait;
-s.stopRecording;
-			(1).wait;
 ~ee.play;
 (180).wait;
-s.stopRecording;
-			(1).wait;
 ~ff.play;
 (180).wait;
+			(1).wait;
 s.stopRecording
 //	})
 })
