@@ -81,7 +81,7 @@ z1=Complex(0,0);
 		}.value;
 //////////////////////////////////////////////////basis
 {
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=3;
+var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=1;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -1192,11 +1192,11 @@ sig.plot;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=2,cutt=440,speed=1,decay=0.02,pl1=0,mult=12,pl2=0;
+	arg angle_rot=0,octave=2,cutt=440,speed=1,decay=0.0888,pl1=0,mult=12,pl2=0;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=32*(speed.reciprocal);
-	var freq,m=1,bank1=6,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var fundamental=64*(speed.reciprocal);
+	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1384,7 +1384,7 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(1/5);
+	TempoClock.default.tempo_(1/20);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
@@ -1392,12 +1392,6 @@ Osc.ar(~t.bufnum,Select.kr(pl1,Select.kr(pl2,~magz_array)),phase:sphere3.phi.lin
 //Scale.directory;
 
 		//	s.record(numChannels:4);
-//~aa.play;
-//~bb.play;
-//~cc.play;
-//~dd.play;
-//~ee.play;
-//~ff.play;
 
 	(
 Tdef.new(\h,{
