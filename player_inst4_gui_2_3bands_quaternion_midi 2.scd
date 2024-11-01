@@ -16,7 +16,7 @@ Buffer.freeAll
 s.record(numChannels:4)
 
 (
-~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst-4/final/inst4_imag_version a_sequence.wav");
+~c1 = Buffer.read(s,);
 )
 (
 (
@@ -60,7 +60,7 @@ sig1=FreeVerb.ar(LPF.ar
 			(HPF.ar
 			(PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2),
 				freq:lpass1.lag(0.333)),freq:hpass1.lag(0.333)),
-			mix:mix1.lag(0.333),room:1);
+			mix:mix1.lag(0.333),room:1,mul:gain1.lag(0.333));
 
 sig2=FreeVerb.ar(LPF.ar
 			(HPF.ar
