@@ -4,7 +4,7 @@ s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=2;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*32;
-s.options.blockSize = 64/1;
+s.options.blockSize = 64*8;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 48000;
 s.waitForBoot
