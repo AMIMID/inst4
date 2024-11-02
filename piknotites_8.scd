@@ -1046,7 +1046,7 @@ var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 rythm=[1,1/2,1,1,1/2].mirror;
 
 ~dur1 = (45*~time).collect{
-	ph1=Cartesian(~magx.[pl1],~magy.[pl1],~magz.[pl1]).rho/(2.sqrt);
+	ph1=Cartesian(~magx1.[pl1],~magy1.[pl1],~magz1.[pl1]).rho/(2.sqrt);
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
 	pl1=pl1+1;
@@ -1191,11 +1191,11 @@ sig.plot;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=1,cutt=440,speed=1,decay=0.02222,pl1=0,mult=12;
+	arg angle_rot=0,octave=1,cutt=440,speed=1,decay=0.04444,pl1=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55*(speed.reciprocal);
-	var freq,m=1,bank1=12,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=4,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1227,9 +1227,9 @@ bank2.do{
 
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]), Select.kr(pl1,~magz_array.[pl2]));
 
-	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_x),Select.kr(pl1,~el_x));
-	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_y),Select.kr(pl1,~el_y));
-	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_z),Select.kr(pl1,~el_z));
+	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
 	xyz=Spherical(1,sphere.theta,sphere.phi);
@@ -1404,19 +1404,19 @@ Tdef.new(\h,{
 //s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
-(180).wait;
+(120).wait;
 ~bb.play;
-(180).wait;
+(120).wait;
 ~cc.play;
-(180).wait;
+(120).wait;
 ~dd.play;
-(180).wait;
+(120).wait;
 ~ee.play;
-(180).wait;
+(120).wait;
 ~ff.play;
-(180).wait;
+(120).wait;
 			(1).wait;
-s.stopRecording
+//s.stopRecording
 //	})
 })
 );
