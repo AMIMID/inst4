@@ -1043,7 +1043,7 @@ var index1,index2,index3,index4,index5,index6,pl7=0,pl8=0,pl9=0,t1,t2,t3,t4,t5,t
 var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
-rythm=[1,1/1,1,1,1/1];
+rythm=[1,1/2,1,1,1/2];
 
 ~dur1 = (45*~time).collect{
 	ph1=Cartesian(~magx1.[pl1],~magy1.[pl1],~magz1.[pl1]).rho/(2.sqrt);
@@ -1195,7 +1195,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=32*(speed.reciprocal);
-	var freq,m=1,bank1=12,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=8,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1216,8 +1216,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/2);
-				//env=EnvGen.ar(Env.perc(attack,4,level:1/2,curve:[4.neg,4]),doneAction:2);
+//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
+			env=EnvGen.ar(Env.perc(0.05,8,level:1/bank1,doneAction:2));
 
 freq=(fundamental*octave);
 
@@ -1326,7 +1326,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1337,7 +1336,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1348,7 +1346,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1359,7 +1356,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1370,7 +1366,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
@@ -1381,7 +1376,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
