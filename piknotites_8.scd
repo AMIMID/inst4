@@ -1195,7 +1195,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55*(speed.reciprocal);
-	var freq,m=1,bank1=4,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1247,7 +1247,7 @@ v=q*v*q.conjugate;
 
 	pitch=Cartesian(v.b,v.c,v.d);
 
-	n1=(pitch.x*mult).round(1); n2=(pitch.y*mult).round(1); n3=(pitch.z*mult).round(1);
+	n1=(pitch.x*mult).round(0.0000000000001); n2=(pitch.y*mult).round(0.0000000000001); n3=(pitch.z*mult).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1319,7 +1319,7 @@ SynthDef.new(\ospace2, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55*(speed.reciprocal);
-	var freq,m=1,bank1=4,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1371,7 +1371,7 @@ v=q*v*q.conjugate;
 
 	pitch=Cartesian(v.b,v.c,v.d);
 
-	n1=(pitch.x*mult).round(1); n2=(pitch.y*mult).round(1); n3=(pitch.z*mult).round(1);
+	n1=(pitch.x*mult).round(0.0000000000001); n2=(pitch.y*mult).round(0.0000000000001); n3=(pitch.z*mult).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1436,7 +1436,7 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 
 			};
 }).add;
-)
+);
 
 
 ////////////list

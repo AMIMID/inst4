@@ -1191,11 +1191,11 @@ sig.plot;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=1,cutt=440,speed=1,decay=0.0888,pl1=0,mult=12;
+	arg angle_rot=0,octave=1,cutt=440,speed=1,decay=0.04444,pl1=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=32*(speed.reciprocal);
-	var freq,m=1,bank1=12,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
+	var fundamental=55*(speed.reciprocal);
+	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1203,9 +1203,8 @@ SynthDef.new(\ospace1, {
 	var mag_x,mag_y,mag_z;
 	var sphere1,sphere2,sphere3;
 
-
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/2);
-				//env=EnvGen.ar(Env.perc(attack,4,level:1/2,curve:[4.neg,4]),doneAction:2);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
+		//	env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
 
 freq=(fundamental*octave);
 
@@ -1215,9 +1214,9 @@ bank2.do{
 
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]), Select.kr(pl1,~magz_array.[pl2]));
 
-	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_x),Select.kr(pl1,~el_x));
-	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_y),Select.kr(pl1,~el_y));
-	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az_z),Select.kr(pl1,~el_z));
+	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
 	xyz=Spherical(1,sphere.theta,sphere.phi);
@@ -1235,7 +1234,7 @@ v=q*v*q.conjugate;
 
 	pitch=Cartesian(v.b,v.c,v.d);
 
-	n1=(pitch.x*mult).round(1); n2=(pitch.y*mult).round(1); n3=(pitch.z*mult).round(1);
+	n1=(pitch.x*mult).round(0.0000000000001); n2=(pitch.y*mult).round(0.0000000000001); n3=(pitch.z*mult).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1259,9 +1258,100 @@ ton3=2.pow(n3/(2*6));
 					///%2==0 simulates .even
 			phase=if(pl2%2==0,0.degrad,90.degrad);
 
-		/*cutt_freq1=(freq*ton1*m).round(0.0000000000001);
+		cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
-		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
+		cutt_freq3=(freq*ton3*m).round(0.0000000000001);
+				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
+
+osc1=Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase);
+osc2=Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase);
+osc3=Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase);
+
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+					Out.ar(1,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+					Out.ar(2,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+
+
+			pl1=pl1+1;
+	};
+			pl2=pl2+1;
+		m=m+1;
+
+			};
+}).add;
+);
+	(
+SynthDef.new(\ospace2, {
+	arg angle_rot=0,octave=1,cutt=440,speed=1,decay=0.04444,pl1=0,mult=12;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
+	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
+	var fundamental=55*(speed.reciprocal);
+	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var v,i,j,k,q;
+	var pitch;
+	var xyz,xyz_array,axis;
+	var n1,n2,n3;
+	var mag_x,mag_y,mag_z;
+	var sphere1,sphere2,sphere3;
+
+//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
+			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
+
+freq=(fundamental*octave);
+
+bank1.do{
+
+bank2.do{
+
+mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]), Select.kr(pl1,~magz_array.[pl2]));
+
+	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+
+	xyz=Spherical(1,sphere.theta,sphere.phi);
+	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
+
+v=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
+i=Quaternion(0, 0.57735026918963, 0, 0);
+j=Quaternion(0, 0,  0.57735026918963, 0);
+k=Quaternion(0, 0, 0,  0.57735026918963);
+axis=(i+j+k);
+
+q=((axis*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+
+v=q*v*q.conjugate;
+
+	pitch=Cartesian(v.b,v.c,v.d);
+
+	n1=(pitch.x*mult).round(0.0000000000001); n2=(pitch.y*mult).round(0.0000000000001); n3=(pitch.z*mult).round(0.0000000000001);
+
+ton1=2.pow(n1/(2*6));
+ton2=2.pow(n2/(2*6));
+ton3=2.pow(n3/(2*6));
+/*
+	mag_x=(Complex(sphere.y,sphere.z)*Select.kr(pl1,~magx_array.[pl2]));
+	mag_y=(Complex(sphere.x,sphere.z)*Select.kr(pl1,~magy_array.[pl2]));
+	mag_z=(Complex(sphere.x,sphere.y)*Select.kr(pl1,~magz_array.[pl2]));*/
+	mag_x=Complex(sphere.y,sphere.z).rho;
+	mag_y=Complex(sphere.x,sphere.z).rho;
+	mag_z=Complex(sphere.x,sphere.y).rho;
+
+	    amp1=(ton1.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp2=(ton2.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp3=(ton3.reciprocal*speed*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+
+	pitch1=(freq*ton1*m).round(0.0000000000001);
+	pitch2=(freq*ton2*m).round(0.0000000000001);
+	pitch3=(freq*ton3*m).round(0.0000000000001);
+
+					///%2==0 simulates .even
+			phase=if(pl2%2==0,0.degrad,90.degrad);
+
+		cutt_freq1=(freq*ton1*m).round(0.0000000000001);
+		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
+		cutt_freq3=(freq*ton3*m).round(0.0000000000001);
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
 
 osc1=Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase);
@@ -1279,69 +1369,115 @@ osc3=Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase);
 
 			};
 }).add;
-);
+)
 
 
+////////////list
+	({
+		var n=1.neg;
+		~list=(720*~time).collect{
+		n=n+1;
+		}
+		}.value
+	);
 
 //////////pattern for mobius strib of sequential or parallel play of directions
-
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1.mirror,1),
 		//\octave,Prand([1,2,4],inf),
-			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
+			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur2.mirror,1),
 		//	\octave,Prand([1,2,4],inf),
-			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
+			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur3.mirror,1),
 		//	\octave,Prand([1,2,4],inf),
-			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
+			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~dd=Pdef(\4, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur4.mirror,1),
 		//	\octave,Prand([1,2,4],inf),
-			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
+			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~ee=Pdef(\5, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur5.mirror,1),
-			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
+	//	\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~ff=Pdef(\6, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur6.mirror,1),
 	//	\octave,Prand([1,2,4],inf),
-			\pl1,Pbrown(0,~time*360,1,inf),
-			\pl2,Pbrown(0,2,1,inf),
+			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(1/10);
+	(
+~aaa=Pdef(\7, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~dur1.mirror,1),
+		//\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
+	\angle_rot,Pseq(~angle,inf),
+	\speed,Prand([1,3/4,2/3,1/2],inf);
+));
+~bbb=Pdef(\8, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~dur2.mirror,1),
+		//	\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
+	\angle_rot,Pseq(~angle,inf),
+	\speed,Prand([1,3/4,2/3,1/2],inf);
+));
+~ccc=Pdef(\9, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~dur3.mirror,1),
+		//	\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
+	\angle_rot,Pseq(~angle,inf),
+	\speed,Prand([1,3/4,2/3,1/2],inf);
+));
+~ddd=Pdef(\10, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~dur4.mirror,1),
+		//	\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
+	\angle_rot,Pseq(~angle,inf),
+	\speed,Prand([1,3/4,2/3,1/2],inf);
+));
+~eee=Pdef(\11, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~dur5.mirror,1),
+	//	\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
+	\angle_rot,Pseq(~angle,inf),
+	\speed,Prand([1,3/4,2/3,1/2],inf);
+));
+~fff=Pdef(\12, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~dur6.mirror,1),
+	//	\octave,Prand([1,2,4],inf),
+			\pl1,Pxrand(~list,inf),
+	\angle_rot,Pseq(~angle,inf),
+	\speed,Prand([1,3/4,2/3,1/2],inf);
+));
+	);
+	TempoClock.default.tempo_(1);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
 	/////////////////////scales
 //Scale.directory;
 
-			s.record(numChannels:3);
+		//	s.record(numChannels:4);
 
 	(
 Tdef.new(\h,{
@@ -1350,28 +1486,20 @@ Tdef.new(\h,{
 //s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
-(180).wait;
+			~aaa.play;
+(120).wait;
 ~bb.play;
-(180).wait;
+(120).wait;
 ~cc.play;
-(180).wait;
+(120).wait;
 ~dd.play;
-(180).wait;
+(120).wait;
 ~ee.play;
-(180).wait;
+(120).wait;
 ~ff.play;
-(180).wait;
+(120).wait;
 			(1).wait;
-s.stopRecording
+//s.stopRecording
 //	})
 })
 );
-
-
-
-//Tdef(\h).stop;
-//Tdef(\h).play;
-//Tdef(\h).clear;
-
-}
-)
