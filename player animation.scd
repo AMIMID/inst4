@@ -5,7 +5,7 @@
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=2;
+s.options.numOutputBusChannels=3;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*64;
@@ -19,8 +19,9 @@ s.waitForBoot
 Buffer.freeAll
 
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0);
-~c2 =Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:1);
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/b-formtat.wav",channels:0);
+~c2 =Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/b-formtat.wav",channels:1);
+~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/b-formtat.wav",channels:2);
 //~c3 = Buffer.read(s,);
 //~c4 = Buffer.read(s,);
 )
@@ -31,14 +32,18 @@ SynthDef.new(\player,{
 	var env;
 	var sig1, sig2, sig3, sig4;
 
-	sig1=PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
-	sig2=PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2);
+	sig1=PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 1, doneAction:2);
+	sig2=PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 1, doneAction:2);
+	sig3=PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c2), loop: 1, doneAction:2);
 
-	~a = Amplitude.ar(sig1, 0.01, 0.25,10).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
-	~b = Amplitude.ar(sig2, 0.01, 0.25,10);SendReply.ar(Impulse.ar(100), '/b', ~b);
+	~a = Amplitude.ar(sig1, 0.01, 0.25,3).round(0.00001).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25,3).round(0.00001);SendReply.ar(Impulse.ar(100), '/b', ~b);
+	~c = Amplitude.ar(sig3, 0.01, 0.25,3).round(0.00001);SendReply.ar(Impulse.ar(100), '/c', ~c);
 
 Out.ar(0,sig1*1);
 Out.ar(1,sig2*1);
+Out.ar(2,sig3*1);
+
 }).add;
 )
 Synth.new(\player);
@@ -91,7 +96,7 @@ z=Complex(0,0);
 
 ////////////////////az el mag arrays
 (
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=1;
+var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=3;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -200,9 +205,11 @@ OSCdef(\amp2, { |msg|
 	defer { ~v.refresh };
 }, '/b', s.addr);
 
-r=[0,0,1];
-v=Quaternion(0,r.[0],r.[1],r.[2]);
-angle=(360-(360/1.6180339887499));
+OSCdef(\amp3, { |msg|
+	~c = msg[3];
+	defer { ~v.refresh };
+}, '/c', s.addr);
+
 
 data = (360*16).collect{
 
@@ -212,7 +219,7 @@ data = (360*16).collect{
 	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt);
 	pl=pl+1;
 
-	sph=Spherical(mag*800,az,el).asCartesian.asArray;
+	sph=Spherical(mag*600,az,el).asCartesian.asArray;
 
 
 };
@@ -223,14 +230,14 @@ w = Window.new("3D Scatterplot", Rect(40,40, 800, 800)).front;
 ~v.refresh;
 a = ScatterView3d(~v, Rect(0,0, 800,800), data, [-1000, 1000].asSpec,[-1000, 1000].asSpec,[-1000, 1000].asSpec);
 a.drawMethod = \fillRect;
-a.symbolSize = 1;
+a.symbolSize = 1.5;
 a.symbolColor = Color.white;
-a.background = Color.black;
+a.background = Color.white;
 
 ~v.animate;
 ~v.drawFunc ={
 Pen.translate(400,400);
-	a.symbolColor = Color.new(~a,~b,0);
+	a.symbolColor = Color.new(~a,~b,~c);
 		a.rot(ot,ot,ot);
     ~v.refresh;
 

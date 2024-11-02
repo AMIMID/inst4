@@ -1203,18 +1203,6 @@ SynthDef.new(\ospace1, {
 	var mag_x,mag_y,mag_z;
 	var sphere1,sphere2,sphere3;
 
-	var wrappedOut1 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut2 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-	var wrappedOut3 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
-	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
-	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
 env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/2);
 				//env=EnvGen.ar(Env.perc(attack,4,level:1/2,curve:[4.neg,4]),doneAction:2);
@@ -1276,34 +1264,13 @@ ton3=2.pow(n3/(2*6));
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
 
-osc1=VBAP.ar(4,
-				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase),
-~b.bufnum,
-//~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,mag_x,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,mag_x,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
-		);
-osc2=VBAP.ar(4,
-				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase),
-~b.bufnum,
-//~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,mag_y,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,mag_y,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
-		);
-osc3=VBAP.ar(4,
-				Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase),
-~b.bufnum,
-//~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,mag_z,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
-		);
+osc1=Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase);
+osc2=Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase);
+osc3=Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase);
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
-		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+					Out.ar(1,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+					Out.ar(2,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 
 			pl1=pl1+1;
 	};
@@ -1321,9 +1288,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1.mirror,1),
-		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
@@ -1332,9 +1296,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur2.mirror,1),
-				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
@@ -1343,9 +1304,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur3.mirror,1),
-				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
@@ -1354,9 +1312,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 ));
 ~dd=Pdef(\4, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur4.mirror,1),
-				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
@@ -1365,10 +1320,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 ));
 ~ee=Pdef(\5, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur5.mirror,1),
-			\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
 	\angle_rot,Pseq(~angle,inf),
@@ -1376,9 +1327,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 ));
 ~ff=Pdef(\6, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur6.mirror,1),
-				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	//	\octave,Prand([1,2,4],inf),
 			\pl1,Pbrown(0,~time*360,1,inf),
 			\pl2,Pbrown(0,2,1,inf),
@@ -1393,7 +1341,7 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	/////////////////////scales
 //Scale.directory;
 
-		//	s.record(numChannels:4);
+			s.record(numChannels:3);
 
 	(
 Tdef.new(\h,{
