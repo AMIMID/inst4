@@ -1122,7 +1122,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 				//level=level;
 				//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad.round(0.000001)).imag);
-			levels=level+(~magx.[pl]/100);
+			levels=level+(~magx.[pl]/10);
 };
 			env = Env(~levelsss,[1]);
 sig=env.asSignal(1024);
@@ -1141,7 +1141,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		//level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad.round(0.000001)).imag);
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad).imag)+(~magy_array.[2].[pl]/10000);
-			levels=level+(~magy.[pl]/100);
+			levels=level+(~magy.[pl]/10);
 };
 			env = Env(~levelssss,[1]);
 sig=env.asSignal(1024);
@@ -1160,7 +1160,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 			//	level=level;
 	///levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad.round(0.000001)).imag);
 		//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad).imag)+(~magy_array.[2].[pl]/10000);
-			levels=level+(~magz.[pl]/100);
+			levels=level+(~magz.[pl]/10);
 			};
 			env = Env(~levelsssss,[1]);
 sig=env.asSignal(1024);
@@ -1195,7 +1195,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55*(speed.reciprocal);
-	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=4,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1298,9 +1298,9 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180
 Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(LPF.ar(osc1,cutt_freq1,mul:env)));
-		wrappedOut2.value(out2,LeakDC.ar(LPF.ar(osc2,cutt_freq2,mul:env)));
-		wrappedOut3.value(out3,LeakDC.ar(LPF.ar(osc3,cutt_freq3,mul:env)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
+		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
 					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
@@ -1319,7 +1319,7 @@ SynthDef.new(\ospace2, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55*(speed.reciprocal);
-	var freq,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,bank1=4,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1404,27 +1404,27 @@ osc1=VBAP.ar(4,
 				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,mag_x,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,mag_x,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,mag_x.reciprocal,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,mag_x.reciprocal,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
 				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,mag_y,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,mag_y,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,mag_y.reciprocal.reciprocal,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,mag_y.reciprocal,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
 				Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
 //~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,mag_z,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,mag_z.reciprocal,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,mag_z.reciprocal,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(LPF.ar(osc1,cutt_freq1,mul:env)));
-		wrappedOut2.value(out2,LeakDC.ar(LPF.ar(osc2,cutt_freq2,mul:env)));
-		wrappedOut3.value(out3,LeakDC.ar(LPF.ar(osc3,cutt_freq3,mul:env)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
+		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
 					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
@@ -1455,7 +1455,7 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
@@ -1517,7 +1517,7 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
@@ -1573,7 +1573,7 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(1);
+	TempoClock.default.tempo_(1/4);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
@@ -1597,7 +1597,7 @@ Tdef.new(\h,{
 (120).wait;
 ~dd.play;
 (120).wait;
-~ee.play;
+~eee.play;
 (120).wait;
 ~ff.play;
 (120).wait;
