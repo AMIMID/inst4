@@ -16,7 +16,7 @@ Buffer.freeAll
 s.record(numChannels:4)
 
 (
-~c1 = Buffer.read(s,);
+~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241102_092240.wav");
 )
 (
 (
@@ -27,7 +27,7 @@ SynthDef.new(\inst4,
 		var sig1,sig2,sig3,sig4,sig5,sig6;
 		var lpass1,lpass2,lpass3,hpass1,hpass2,hpass3;
 		var i,j,k,q1,q2,v1,v2,xyz=[1,1,1].normalizeSum.sqrt;
-		var angle_cuttfreq1, angle_cuttfreq22;
+		var angle_cuttfreq1, angle_cuttfreq2;
 		var cuttfreq1,cuttfreq2,axis;
 
 		angle_cuttfreq1 = cutt1; angle_cuttfreq2 =  cutt2;
@@ -51,9 +51,9 @@ q2=((axis*exp(Complex(0,1)*angle_cuttfreq2).imag)+exp(Complex(0,1)*angle_cuttfre
 		lpass2=cuttfreq1.y.round(0.000001).abs.linlin(0,1,55,55*256);
 		lpass3=cuttfreq1.z.round(0.000001).abs.linlin(0,1,55,55*256);
 
-		hpass1=cuttfreq2.x.round(0.000001).abs.linlin(0,1,0.001,1);
-		hpass2=cuttfreq2.y.round(0.000001).abs.linlin(0,1,0.001,1);
-		hpass3=cuttfreq2.z.round(0.000001).abs.linlin(0,1,0.001,1);
+		hpass1=cuttfreq2.x.round(0.000001).abs.linlin(0,1,55,55*256);
+		hpass2=cuttfreq2.y.round(0.000001).abs.linlin(0,1,55,55*256);
+		hpass3=cuttfreq2.z.round(0.000001).abs.linlin(0,1,55,55*256);
 
 
 sig1=FreeVerb.ar(LPF.ar
@@ -152,10 +152,10 @@ e.string = "reverb3";
 ~filter1.x_(0).y_(0).action_({
 	arg obj;
 	var pass1,pass2;
-	pass=obj.x.linlin(0,1,360.neg,360);
-	width=obj.y.linlin(0,1,360.neg,360);
+	pass1=obj.x.linlin(0,1,360.neg,360);
+	pass2=obj.y.linlin(0,1,360.neg,360);
 	["pass1","widht1"].postln;
-	[pass.value,width.value].postln;
+	[pass1.value,pass2.value].postln;
 	if(~synth.isPlaying,{~synth.set(\cutt1,pass1,\cutt2,pass2)});
 });
 );
