@@ -10,6 +10,7 @@ s.options.memSize = 8192*32;
 s.options.blockSize = 64*8;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 48000;
+s.meter;
 );
 
 s.waitForBoot{
@@ -21,24 +22,18 @@ Buffer.freeAll;
 ~w2= Buffer.alloc(s,2048);
 ~w3= Buffer.alloc(s,2048);
 ~t= Buffer.alloc(s,2048);
-~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 );
 
 ////////////////////////////////////speaker setup///other
-/*(
+(
 // 3D///cube
 ~a = VBAPSpeakerArray.new(3, [[45, 45], [135, 45], [135.neg, 45], [45.neg, 45],[45, 45.neg], [135, 45.neg], [135.neg, 45.neg], [45.neg, 45.neg]]);
 //0 up fl, 1 up bl, 2 up br, 3 up fr, 4 down fl, 5 down bl, 6 down br, 7 down fr
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 ///furhter on speaker setup can be geodesic octahedron 2nd order torus with 16 channels, and Rhombic triacontahedron with 32 vertices as 32 speaker channels
-)
-
-(
-// 3D random
-~a = VBAPSpeakerArray.new(3, [[180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2]]);
-~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
-)*/
+);
+//~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
 
 
 ///////////////////////////////////////////////////////arrays
