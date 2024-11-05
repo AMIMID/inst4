@@ -21,7 +21,6 @@ Buffer.freeAll;
 ~w2= Buffer.alloc(s,2048);
 ~w3= Buffer.alloc(s,2048);
 ~t= Buffer.alloc(s,2048);
-~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 );
 
 ////////////////////////////////////speaker setup///other
@@ -33,6 +32,7 @@ Buffer.freeAll;
 ///furhter on speaker setup can be geodesic octahedron 2nd order torus with 16 channels, and Rhombic triacontahedron with 32 vertices as 32 speaker channels
 )*/
 ~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
+	~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 
 
 // 16
@@ -1197,7 +1197,7 @@ SynthDef.new(\ospace1, {
 	arg angle_rot=0,octave=1,cutt=440,speed1=1,speed2=1,speed3=1,decay=0.04444,pl1=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=110,fundamental1,fundamental2,fundamental3;
+	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,bank1=8,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
@@ -1237,7 +1237,7 @@ mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2
 	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-	sphere=Spherical(1,Select.kr(pl2,~az),Select.kr(pl2,~el));
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
 	xyz=Spherical(mult,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
@@ -1350,7 +1350,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//	\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
@@ -1362,7 +1362,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//	\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
@@ -1374,7 +1374,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//	\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
@@ -1386,7 +1386,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 			\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	//	\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
@@ -1398,7 +1398,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 				\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	//	\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
