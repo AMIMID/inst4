@@ -1196,9 +1196,9 @@ sig.plot;
 SynthDef.new(\ospace1, {
 	arg angle_rot=0,octave=1,cutt=440,speed1=1,speed2=1,speed3=1,decay=0.04444,pl1=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
-	var ton1,ton2,ton3,pl=0,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
+	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,bank1=12,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq1,freq2,freq3,m=1,bank1=12,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1406,7 +1406,6 @@ Osc.ar(~t.bufnum,mag_z,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),m
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-;
 	TempoClock.default.tempo_(1/4);
 /////with tempo 1 and time 1 overall duration of a is 2.08 min
 
@@ -1423,7 +1422,6 @@ Tdef.new(\h,{
 //s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
-			~aaa.play;
 (120).wait;
 ~bb.play;
 (120).wait;
