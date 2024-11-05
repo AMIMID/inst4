@@ -1234,12 +1234,18 @@ bank2.do{
 
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]), Select.kr(pl1,~magz_array.[pl2]));
 
-	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	/*sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+*/
 
-	xyz=Spherical(mult,sphere.theta,sphere.phi);
+	sphere1=Spherical(Select.kr(pl1,~magx_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(Select.kr(pl1,~magz_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+
+					xyz=Spherical(mult,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
