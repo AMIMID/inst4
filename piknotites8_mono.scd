@@ -3,7 +3,7 @@ Server.default = s = Server.local;
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=4;
+s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*32;
@@ -1178,8 +1178,8 @@ SynthDef.new(\ospace1, {
 	arg angle_rot=0,octave=1,cutt=440,speed1=1,speed2=1,speed3=1,decay=0.04444,pl1=0,mult=12;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,bank1=8,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
+	var fundamental=110,fundamental1,fundamental2,fundamental3;
+	var freq1,freq2,freq3,m=1,bank1=6,bank2=4,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1215,9 +1215,9 @@ bank2.do{
 
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]), Select.kr(pl1,~magz_array.[pl2]));
 
-	sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere1=Spherical(Select.kr(pl1,~magx_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(Select.kr(pl1,~magz_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
 	xyz=Spherical(mult,sphere.theta,sphere.phi);
@@ -1261,9 +1261,9 @@ ton3=2.pow(n3/(2*6));
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
 
-osc1=Osc.ar(~w1.bufnum,pitch1*mag_x.reciprocal,mul:amp1*mag_x,phase:phase);
-osc2=Osc.ar(~w2.bufnum,pitch2*mag_y.reciprocal,mul:amp2*mag_y,phase:phase);
-osc3=Osc.ar(~w3.bufnum,pitch3*mag_z.reciprocal,mul:amp3*mag_z,phase:phase);
+osc1=Osc.ar(~w1.bufnum,pitch1*mag_x.reciprocal,mul:amp1*mag_x,phase:(phase*sphere1.theta*sphere1.phi).mod(2pi));
+osc2=Osc.ar(~w2.bufnum,pitch2*mag_y.reciprocal,mul:amp2*mag_y,phase:(phase*sphere1.theta*sphere1.phi).mod(2pi));
+osc3=Osc.ar(~w3.bufnum,pitch3*mag_z.reciprocal,mul:amp3*mag_z,phase:(phase*sphere1.theta*sphere1.phi).mod(2pi));
 
 					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
