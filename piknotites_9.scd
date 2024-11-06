@@ -1049,7 +1049,7 @@ var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 rythm=[1,1/2,1,1,1/2].mirror;
 
 ~dur1 = (45*~time).collect{
-	ph1=Cartesian(~magx.[pl1],0,0).rho;
+	ph1=~magx.[pl1];
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
 	pl1=pl1+1;
@@ -1059,7 +1059,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	};
 
 ~dur2 = (45*~time).collect{
-	ph2=Cartesian(0,~magy.[pl2],0).rho;
+	ph2=~magy.[pl2];
 	index2=rythm.wrapAt(pl8);
 	pl8=pl8+1;
 	pl2=pl2+1;
@@ -1068,7 +1068,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	};
 
 ~dur3 = (45*~time).collect{
-	ph3=Cartesian(0,0,~magz.[pl3]).rho;
+	ph3=~magz.[pl3];
 	index3=rythm.wrapAt(pl9);
 	pl9=pl9+1;
 	pl3=pl3+1;
@@ -1561,7 +1561,6 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 ));
 	);
 	TempoClock.default.tempo_(1/1);
-/////with tempo 1 and time 1 overall duration of a is 2.08 min
 
 //s.record(numChannels:4);
 	/////////////////////scales
