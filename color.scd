@@ -43,7 +43,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=2;
+		~time=1;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -1296,42 +1296,42 @@ osc3=Osc.ar(~w3.bufnum,pitch3*mag_z.reciprocal,mul:amp3*mag_z,phase:(phase+ph_z)
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1.mirror,2),
-		//\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur2.mirror,1),
-		//	\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur3.mirror,1),
-		//	\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~dd=Pdef(\4, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur4.mirror,1),
-		//	\octave,Prand([1,2,4],inf),
+			\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~ee=Pdef(\5, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur5.mirror,1),
-	//	\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~ff=Pdef(\6, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur6.mirror,1),
-	//	\octave,Prand([1,2,4],inf),
+		\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle,inf),
 	\speed,Prand([1,3/4,2/3,1/2],inf);
@@ -1353,7 +1353,6 @@ Tdef.new(\h,{
 //s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
-			~aaa.play;
 (120).wait;
 ~bb.play;
 (120).wait;
@@ -1398,11 +1397,14 @@ SynthDef.new(\player,{
 			sig2=InFeedback.ar(1);
 			sig3=InFeedback.ar(2);
 
-	//sig3=PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c2), loop: 1, doneAction:2);
+	//sig1=PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+	//sig2=PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2);
+//sig3=PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2);
 
-	~a = Amplitude.ar(sig1, 0.01, 0.25,10).round(0.00001).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
-	~b = Amplitude.ar(sig2, 0.01, 0.25,10).round(0.00001);SendReply.ar(Impulse.ar(100), '/b', ~b);
-	~c = Amplitude.ar(sig3, 0.01, 0.25,10).round(0.00001);SendReply.ar(Impulse.ar(100), '/c', ~c);
+
+	~a = Amplitude.ar(sig1, 0.01, 0.25,5).round(0.00001).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25,5).round(0.00001);SendReply.ar(Impulse.ar(100), '/b', ~b);
+	~c = Amplitude.ar(sig3, 0.01, 0.25,5).round(0.00001);SendReply.ar(Impulse.ar(100), '/c', ~c);
 
 Out.ar(3,sig1*1);
 Out.ar(4,sig2*1);
