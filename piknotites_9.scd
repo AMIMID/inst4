@@ -1576,11 +1576,8 @@ Tdef.new(\h,{
 //s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
-(120).wait;
 ~bb.play;
-(120).wait;
 ~cc.play;
-(120).wait;
 			(1).wait;
 //s.stopRecording
 //	})
