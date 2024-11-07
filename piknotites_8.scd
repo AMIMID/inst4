@@ -1053,7 +1053,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
 	pl1=pl1+1;
-	ph1=(ph1*dur).round(1/32);
+	ph1=(ph1*dur).round(1/256);
 	t1=ph1*index1;
 
 	};
@@ -1063,7 +1063,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index2=rythm.wrapAt(pl8);
 	pl8=pl8+1;
 	pl2=pl2+1;
-	ph2=(ph2*dur).round(1/32);
+	ph2=(ph2*dur).round(1/256);
 	t2=ph2*index2;
 	};
 
@@ -1072,7 +1072,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index3=rythm.wrapAt(pl9);
 	pl9=pl9+1;
 	pl3=pl3+1;
-	ph3=(ph3*dur).round((1/32));
+	ph3=(ph3*dur).round((1/256));
 	t3=ph3*index3;
 	};
 
@@ -1081,7 +1081,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index4=rythm.wrapAt(pl11);
 	pl11=pl11+1;
 	pl10=pl10+1;
-	ph4=(ph4*dur).round((1/32));
+	ph4=(ph4*dur).round((1/256));
 	t4=ph4*index4;
 	};
 ~dur5 = (45*~time).collect{
@@ -1089,7 +1089,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index5=rythm.wrapAt(pl13);
 	pl13=pl13+1;
 	pl12=pl12+1;
-	ph5=(ph5*dur).round((1/32));
+	ph5=(ph5*dur).round((1/256));
 	t5=ph5*index5;
 	};
 
@@ -1098,7 +1098,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index6=rythm.wrapAt(pl9);
 	pl15=pl15+1;
 	pl14=pl14+1;
-	ph6=(ph6*dur).round((1/32));
+	ph6=(ph6*dur).round((1/256));
 	t6=ph6*index6;
 	};
 }.value;
@@ -1198,7 +1198,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq1,freq2,freq3,m=1,bank1=12,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;

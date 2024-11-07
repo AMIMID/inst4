@@ -1053,7 +1053,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
 	pl1=pl1+1;
-	ph1=(ph1*dur).round(1/32);
+	ph1=(ph1*dur).round(1/256);
 	t1=ph1*index1;
 
 	};
@@ -1063,7 +1063,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index2=rythm.wrapAt(pl8);
 	pl8=pl8+1;
 	pl2=pl2+1;
-	ph2=(ph2*dur).round(1/32);
+	ph2=(ph2*dur).round(1/256);
 	t2=ph2*index2;
 	};
 
@@ -1072,7 +1072,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	index3=rythm.wrapAt(pl9);
 	pl9=pl9+1;
 	pl3=pl3+1;
-	ph3=(ph3*dur).round((1/32));
+	ph3=(ph3*dur).round(1/256);
 	t3=ph3*index3;
 	};
 
@@ -1167,6 +1167,7 @@ sig.plot;
 	);
 
 /////synths////
+	(
 (
 SynthDef.new(\ospace1, {
 	arg angle_rot=0,octave=1,cutt=440,speed1=1,speed2=1,speed3=1,decay=0.04444,pl1=0,mult=12;
@@ -1516,6 +1517,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 
 			};
 }).add;
+);
 );
 
 ////////////list
