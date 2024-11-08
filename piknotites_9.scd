@@ -1174,7 +1174,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq1,freq2,freq3,m=1,bank1=12,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1197,7 +1197,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
+			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2,levelScale:1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1291,7 +1291,7 @@ SynthDef.new(\ospace2, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq1,freq2,freq3,m=1,bank1=12,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1314,7 +1314,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
+			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2,levelScale:1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1407,7 +1407,7 @@ SynthDef.new(\ospace3, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,pl2=0;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,bank1=8,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq1,freq2,freq3,m=1,bank1=12,bank2=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1430,7 +1430,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
+			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2,levelScale:1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1534,9 +1534,9 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1.mirror,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+		//\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
-	//\angle_rot,Pseq(~angle,inf),
+	//\angle_rot,Pseq(~angle.mirror,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
 		\speed2,Prand([1,3/4,2/3,1/2],inf),
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
@@ -1544,9 +1544,9 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~dur2.mirror,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+			//\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
-	//\angle_rot,Pseq(~angle,inf),
+	//\angle_rot,Pseq(~angle.mirror,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
 		\speed2,Prand([1,3/4,2/3,1/2],inf),
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
@@ -1554,9 +1554,9 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~dur3.mirror,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([1,2,4],inf),
+		//	\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
-	//\angle_rot,Pseq(~angle,inf),
+	//\angle_rot,Pseq(~angle.mirror,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
 		\speed2,Prand([1,3/4,2/3,1/2],inf),
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
