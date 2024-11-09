@@ -1439,67 +1439,64 @@ osc3=Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:(phase+ph_z).wrap(2pi.neg,2pi));
 		}.value
 	);
 
-//////////pattern for mobius strib of sequential or parallel play of directions
 (
-~aa=Pdef(\1, Pbind(\instrument, \ospace1,
-	\dur,Pseq(~dur1.mirror,1),
-		//\octave,Prand([1,2,4],inf),
-			\pl1,Pxrand(~list,inf),
-	\angle_rot,Pseq(~angle.mirror,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-		\speed3,Prand([1,3/4,2/3,1/2],inf);
-));
-~bb=Pdef(\2, Pbind(\instrument, \ospace2,
-	\dur,Pseq(~dur2.mirror,1),
-			//\octave,Prand([1,2,4],inf),
-			\pl1,Pxrand(~list,inf),
-\angle_rot,Pseq(~angle.mirror,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-		\speed3,Prand([1,3/4,2/3,1/2],inf);
-));
-~cc=Pdef(\3, Pbind(\instrument, \ospace3,
-	\dur,Pseq(~dur3.mirror,1),
-			//\octave,Prand([1,2,4],inf),
-			\pl1,Pxrand(~list,inf),
-	\angle_rot,Pseq(~angle.mirror,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-		\speed3,Prand([1,3/4,2/3,1/2],inf);
-));
-
-	);
-	TempoClock.default.tempo_(1/1);
-/////with tempo 1 and time 1 overall duration of a is 2.08 min
-
-//s.record(numChannels:4);
-	/////////////////////scales
-//Scale.directory;
-
-		//	s.record(numChannels:4);
+MIDIClient.init;
+MIDIIn.connectAll;
 
 	(
-Tdef.new(\h,{
-//loop({
-			(1).wait;
-//s.record(numChannels:4);
-			(1).wait;
-~aa.play;
-~bb.play;
-~cc.play;
-s.record;
-			(1).wait;
-//s.stopRecording
-//	})
-})
-);
+MIDIdef.cc(\midi1,{ |val, num, chan, src|
+		var pass;
+	//[val, num, chan, src].postln;
+	pass=val.linlin(0,127,360.neg,360);
+		pass.postln;
+		if(~synth.isPlaying,{~synth.set(\cutt1,pass)});
+},25);
+	);
+		(
+MIDIdef.cc(\midi2,{ |val, num, chan, src|
+		var pass;
+	//[val, num, chan, src].postln;
+	pass=val.linlin(0,127,360.neg,360);
+		pass.postln;
+		if(~synth.isPlaying,{~synth.set(\cutt2,pass)});
+},24);
+	);
+	(
+MIDIdef.cc(\midi3,{ |val, num, chan, src|
+		var pass;
+	//[val, num, chan, src].postln;
+	pass=val.linlin(0,127,0,1);
+		pass.postln;
+		if(~synth.isPlaying,{~synth.set(\gain1,pass)});
+},23);
+	);
+		(
+MIDIdef.cc(\midi4,{ |val, num, chan, src|
+		var mix;
+	//[val, num, chan, src].postln;
+	mix=val.linlin(0,127,0,1);
+		mix.postln;
+		if(~synth.isPlaying,{~synth.set(\mix1,mix)});
+},22);
+	);
+	(
+MIDIdef.cc(\midi5,{ |val, num, chan, src|
+		var mix;
+	//[val, num, chan, src].postln;
+	mix=val.linlin(0,127,0,1);
+		mix.postln;
+		if(~synth.isPlaying,{~synth.set(\mix1,mix)});
+},21);
+	);
+		(
+MIDIdef.cc(\midi6,{ |val, num, chan, src|
+		var mix;
+	//[val, num, chan, src].postln;
+	mix=val.linlin(0,127,0,1);
+		mix.postln;
+		if(~synth.isPlaying,{~synth.set(\mix3,mix)});
+},20);
+	);
 
-
-
-//Tdef(\h).stop;
-//Tdef(\h).play;
-//Tdef(\h).clear;
-
-}
+)
 )
