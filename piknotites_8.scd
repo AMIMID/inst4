@@ -1419,7 +1419,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 	/////////////////////scales
 //Scale.directory;
 
-		//	s.record(numChannels:4);
+			s.record(numChannels:4);
 
 	(
 Tdef.new(\h,{

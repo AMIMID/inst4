@@ -1196,8 +1196,6 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2,levelScale:1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1274,8 +1272,8 @@ Osc.ar(~t.bufnum,speed1,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed1,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:1/bank2));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:1/bank2)));
 
 			pl1=pl1+1;
 	};
@@ -1313,8 +1311,6 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2,levelScale:1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1391,8 +1387,8 @@ Osc.ar(~t.bufnum,speed2,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed2,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:1/bank2));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:1/bank2)));
 			pl1=pl1+1;
 	};
 			pl2=pl2+1;
@@ -1429,8 +1425,6 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-			env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2,levelScale:1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1507,8 +1501,8 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:1/bank2));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:1/bank2)));
 
 			pl1=pl1+1;
 	};
@@ -1520,14 +1514,9 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 );
 );
 
-////////////list
-	({
-		var n=1.neg;
-		~list=(720*~time).collect{
-		n=n+1;
-		}
-		}.value
-	);
+	~synth1=Synth(\ospace1);
+	~synth2=Synth(\ospace2);
+	~synth3=Synth(\ospace3);
 
 		//	s.record(numChannels:4);
 
@@ -1540,56 +1529,56 @@ MIDIIn.connectAll;
 
 	(
 MIDIdef.cc(\midi1,{ |val, num, chan, src|
-		var pass;
+		var r;
 	//[val, num, chan, src].postln;
-	pass=val.linlin(0,127,360.neg,360);
-		pass.postln;
-		if(~synth.isPlaying,{~synth.set(\cutt1,pass)});
+	r=val.linlin(0,127,360.neg,360);
+		r.postln;
+		if(~synth1.isPlaying,{~synth1.set(\angle_rot,r)});
 },25);
 	);
 		(
 MIDIdef.cc(\midi2,{ |val, num, chan, src|
-		var pass;
+		var r;
 	//[val, num, chan, src].postln;
-	pass=val.linlin(0,127,360.neg,360);
-		pass.postln;
-		if(~synth.isPlaying,{~synth.set(\cutt2,pass)});
+	r=val.linlin(0,127,360.neg,360);
+		r.postln;
+		if(~synth2.isPlaying,{~synth2.set(\angle_rot,r)});
 },24);
 	);
 	(
 MIDIdef.cc(\midi3,{ |val, num, chan, src|
-		var pass;
+		var r;
 	//[val, num, chan, src].postln;
-	pass=val.linlin(0,127,0,1);
-		pass.postln;
-		if(~synth.isPlaying,{~synth.set(\gain1,pass)});
+	r=val.linlin(0,127,360.neg,360);
+		r.postln;
+		if(~synth3.isPlaying,{~synth3.set(\angle_rot,r)});
 },23);
 	);
 		(
 MIDIdef.cc(\midi4,{ |val, num, chan, src|
-		var mix;
+		var set;
 	//[val, num, chan, src].postln;
-	mix=val.linlin(0,127,0,1);
-		mix.postln;
-		if(~synth.isPlaying,{~synth.set(\mix1,mix)});
+		set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		if(~synth1.isPlaying,{~synth1.set(\pl1,set)});
 },22);
 	);
 	(
 MIDIdef.cc(\midi5,{ |val, num, chan, src|
-		var mix;
+		var set;
 	//[val, num, chan, src].postln;
-	mix=val.linlin(0,127,0,1);
-		mix.postln;
-		if(~synth.isPlaying,{~synth.set(\mix1,mix)});
+	set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		if(~synth2.isPlaying,{~synth2.set(\pl1,set)});
 },21);
 	);
 		(
 MIDIdef.cc(\midi6,{ |val, num, chan, src|
-		var mix;
+		var set;
 	//[val, num, chan, src].postln;
-	mix=val.linlin(0,127,0,1);
-		mix.postln;
-		if(~synth.isPlaying,{~synth.set(\mix3,mix)});
+	set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		if(~synth3.isPlaying,{~synth3.set(\pl1,set)});
 },20);
 	);
 
@@ -2820,8 +2809,6 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:1/bank1);
-		//	env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -2912,12 +2899,12 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
-		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:1/bank2));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:1/bank2));
+		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:1/bank2));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:1/bank2)));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:1/bank2)));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:1/bank2)));
 
 			pl1=pl1+1;
 	};
@@ -2941,4 +2928,40 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 
 }
 )*/
+
+	~synth1=Synth(\ospace1);
+
+		//	s.record(numChannels:4);
+
+
+}
+)
+(
+MIDIClient.init;
+MIDIIn.connectAll;
+
+	(
+MIDIdef.cc(\midi1,{ |val, num, chan, src|
+		var r;
+	//[val, num, chan, src].postln;
+	r=val.linlin(0,127,360.neg,360);
+		r.postln;
+		if(~synth1.isPlaying,{~synth1.set(\angle_rot,r)});
+},25);
+	);
+
+		(
+MIDIdef.cc(\midi4,{ |val, num, chan, src|
+		var set;
+	//[val, num, chan, src].postln;
+		set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		if(~synth1.isPlaying,{~synth1.set(\pl1,set)});
+},22);
+	);
+
+
+
+)
+
 
