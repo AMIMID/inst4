@@ -1272,8 +1272,8 @@ Osc.ar(~t.bufnum,speed1,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed1,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:1/bank2));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:1/bank2)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:1/bank1));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:1/bank1)));
 
 			pl1=pl1+1;
 	};
@@ -1387,8 +1387,8 @@ Osc.ar(~t.bufnum,speed2,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed2,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:1/bank2));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:1/bank2)));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:1/bank1));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:1/bank1)));
 			pl1=pl1+1;
 	};
 			pl2=pl2+1;
@@ -1501,8 +1501,8 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:1/bank2));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:1/bank2)));
+		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:1/bank1));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:1/bank1)));
 
 			pl1=pl1+1;
 	};
@@ -1514,15 +1514,19 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 );
 );
 
-	~synth1=Synth(\ospace1);
-	~synth2=Synth(\ospace2);
-	~synth3=Synth(\ospace3);
 
-		//	s.record(numChannels:4);
+
 
 
 }
 )
+(
+~synth1=Synth(\ospace1);
+	~synth2=Synth(\ospace2);
+	~synth3=Synth(\ospace3);
+)
+
+//	s.record(numChannels:4);
 (
 MIDIClient.init;
 MIDIIn.connectAll;
@@ -1533,7 +1537,7 @@ MIDIdef.cc(\midi1,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 	r=val.linlin(0,127,360.neg,360);
 		r.postln;
-		if(~synth1.isPlaying,{~synth1.set(\angle_rot,r)});
+		~synth1.set(\angle_rot,r);
 },25);
 	);
 		(
@@ -1542,7 +1546,7 @@ MIDIdef.cc(\midi2,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 	r=val.linlin(0,127,360.neg,360);
 		r.postln;
-		if(~synth2.isPlaying,{~synth2.set(\angle_rot,r)});
+		~synth2.set(\angle_rot,r);
 },24);
 	);
 	(
@@ -1551,7 +1555,7 @@ MIDIdef.cc(\midi3,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 	r=val.linlin(0,127,360.neg,360);
 		r.postln;
-		if(~synth3.isPlaying,{~synth3.set(\angle_rot,r)});
+		~synth3.set(\angle_rot,r);
 },23);
 	);
 		(
@@ -1560,7 +1564,7 @@ MIDIdef.cc(\midi4,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 		set=val.linlin(0,127,0,720*~time).round(1);
 		set.postln;
-		if(~synth1.isPlaying,{~synth1.set(\pl1,set)});
+		~synth1.set(\pl1,set);
 },22);
 	);
 	(
@@ -1569,7 +1573,7 @@ MIDIdef.cc(\midi5,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 	set=val.linlin(0,127,0,720*~time).round(1);
 		set.postln;
-		if(~synth2.isPlaying,{~synth2.set(\pl1,set)});
+		~synth2.set(\pl1,set);
 },21);
 	);
 		(
@@ -1578,7 +1582,7 @@ MIDIdef.cc(\midi6,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 	set=val.linlin(0,127,0,720*~time).round(1);
 		set.postln;
-		if(~synth3.isPlaying,{~synth3.set(\pl1,set)});
+		~synth3.set(\pl1,set);
 },20);
 	);
 
@@ -2899,12 +2903,12 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:1/bank2));
-		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:1/bank2));
-		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:1/bank2));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:1/bank2)));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:1/bank2)));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:1/bank2)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:1/bank1));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:1/bank1));
+		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:1/bank1));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:1/bank1)));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:1/bank1)));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:1/bank1)));
 
 			pl1=pl1+1;
 	};
