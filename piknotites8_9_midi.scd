@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=1;
+		~time=16;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -1157,15 +1157,6 @@ sig.plot;
 
 	// Env(~levels,[0.04444]).plot;
 
-	//////notes
-	({
-		var angle=0;
-		~angle=(45*~time).collect{
-		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
-		}
-		}.value
-	);
-
 /////synths////
 	(
 (
@@ -1591,7 +1582,7 @@ MIDIdef.cc(\midi6,{ |val, num, chan, src|
 
 
 ////////////piknotites8
-/*(
+(
 Server.default = s = Server.local;
 ////server setup
 (
@@ -2931,7 +2922,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 
 
 }
-)*/
+)
 
 	~synth1=Synth(\ospace1);
 
@@ -2950,7 +2941,7 @@ MIDIdef.cc(\midi1,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 	r=val.linlin(0,127,360.neg,360);
 		r.postln;
-		if(~synth1.isPlaying,{~synth1.set(\angle_rot,r)});
+		~synth1.set(\angle_rot,r);
 },25);
 	);
 
@@ -2960,8 +2951,8 @@ MIDIdef.cc(\midi4,{ |val, num, chan, src|
 	//[val, num, chan, src].postln;
 		set=val.linlin(0,127,0,720*~time).round(1);
 		set.postln;
-		if(~synth1.isPlaying,{~synth1.set(\pl1,set)});
-},22);
+		~synth1.set(\pl1,set);
+},24);
 	);
 
 
