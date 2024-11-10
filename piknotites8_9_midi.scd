@@ -2928,9 +2928,6 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 
 		//	s.record(numChannels:4);
 
-
-}
-)
 (
 MIDIClient.init;
 MIDIIn.connectAll;
@@ -2953,6 +2950,19 @@ MIDIdef.cc(\midi4,{ |val, num, chan, src|
 		set.postln;
 		~synth1.set(\pl1,set);
 },24);
+	);
+
+
+		(
+MIDIdef.cc(\midi3,{ |val, num, chan, src|
+		var set;
+	//[val, num, chan, src].postln;
+		set=val.linlin(0,127,0.1,10).round(1);
+		set.postln;
+		~synth1.set(\speed1,set);
+		~synth1.set(\speed2,set);
+		~synth1.set(\speed3,set);
+},23);
 	);
 
 
