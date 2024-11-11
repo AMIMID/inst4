@@ -1007,24 +1007,24 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.rou
 ~magx6=(~magx6/(2.sqrt)).round(0.0000000000001);
 ~magy6=(~magy6/(2.sqrt)).round(0.0000000000001);
 ~magz6=(~magz6/(2.sqrt)).round(0.0000000000001);
-~magx7=(~magx1/(2.sqrt)).round(0.0000000000001);
-~magy7=(~magy1/(2.sqrt)).round(0.0000000000001);
-~magz7=(~magz1/(2.sqrt)).round(0.0000000000001);
-~magx8=(~magx2/(2.sqrt)).round(0.0000000000001);
-~magy8=(~magy2/(2.sqrt)).round(0.0000000000001);
-~magz8=(~magz2/(2.sqrt)).round(0.0000000000001);
-~magx9=(~magx3/(2.sqrt)).round(0.0000000000001);
-~magy9=(~magy3/(2.sqrt)).round(0.0000000000001);
-~magz9=(~magz3/(2.sqrt)).round(0.0000000000001);
-~magx10=(~magx4/(2.sqrt)).round(0.0000000000001);
-~magy10=(~magy4/(2.sqrt)).round(0.0000000000001);
-~magz10=(~magz4/(2.sqrt)).round(0.0000000000001);
-~magx11=(~magx5/(2.sqrt)).round(0.0000000000001);
-~magy11=(~magy5/(2.sqrt)).round(0.0000000000001);
-~magz11=(~magz5/(2.sqrt)).round(0.0000000000001);
-~magx12=(~magx6/(2.sqrt)).round(0.0000000000001);
-~magy12=(~magy6/(2.sqrt)).round(0.0000000000001);
-~magz12=(~magz6/(2.sqrt)).round(0.0000000000001);
+~magx7=(~magx7/(2.sqrt)).round(0.0000000000001);
+~magy7=(~magy7/(2.sqrt)).round(0.0000000000001);
+~magz7=(~magz7/(2.sqrt)).round(0.0000000000001);
+~magx8=(~magx8/(2.sqrt)).round(0.0000000000001);
+~magy8=(~magy8/(2.sqrt)).round(0.0000000000001);
+~magz8=(~magz8/(2.sqrt)).round(0.0000000000001);
+~magx9=(~magx9/(2.sqrt)).round(0.0000000000001);
+~magy9=(~magy9/(2.sqrt)).round(0.0000000000001);
+~magz9=(~magz9/(2.sqrt)).round(0.0000000000001);
+~magx10=(~magx10/(2.sqrt)).round(0.0000000000001);
+~magy10=(~magy10/(2.sqrt)).round(0.0000000000001);
+~magz10=(~magz10/(2.sqrt)).round(0.0000000000001);
+~magx11=(~magx11/(2.sqrt)).round(0.0000000000001);
+~magy11=(~magy11/(2.sqrt)).round(0.0000000000001);
+~magz11=(~magz11/(2.sqrt)).round(0.0000000000001);
+~magx12=(~magx12/(2.sqrt)).round(0.0000000000001);
+~magy12=(~magy12/(2.sqrt)).round(0.0000000000001);
+~magz12=(~magz12/(2.sqrt)).round(0.0000000000001);
 
 ~magx_array=[~magx1.round(0.00001),~magx2.round(0.00001),~magx3.round(0.00001),~magx4.round(0.00001),~magx5.round(0.00001),~magx6.round(0.00001),
 			~magx7.round(0.00001),~magx8.round(0.00001),~magx9.round(0.00001),~magx10.round(0.00001),~magx11.round(0.00001),~magx12.round(0.00001)];
@@ -1246,7 +1246,7 @@ mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2
 	sphere3=Spherical(Select.kr(pl1,~magz_array.[pl2]),Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
-					xyz=Spherical(mult,sphere.theta,sphere.phi);
+					xyz=Spherical(sphere.rho,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
@@ -1345,11 +1345,11 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\octave,Prand([1,2,4],inf),
+		//\octave,Prand([1,2,4],inf),
 			\pl1,Pxrand(~list,inf),
 	\angle_rot,Pseq(~angle.mirror,inf),
 	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
+	\speed2,Prand([1,3/4,2/3,1/2],inf),
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace1,

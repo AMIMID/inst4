@@ -41,7 +41,7 @@ SynthDef.new(\inst4,
 
 q1=((axis*exp(Complex(0,1)*angle_cuttfreq1).imag)+exp(Complex(0,1)*angle_cuttfreq1).real); v1=q1*v1*q1.conjugate;
 
-q2=((axis*exp(Complex(0,1)*angle_cuttfreq1).imag)+exp(Complex(0,1)*angle_cuttfreq1).real); v2=q2*v2*q2.conjugate;
+q2=((axis*exp(Complex(0,1)*angle_cuttfreq2).imag)+exp(Complex(0,1)*angle_cuttfreq2).real); v2=q2*v2*q2.conjugate;
 
 
 		cuttfreq1=Cartesian(v1.b,v1.c,v1.d);

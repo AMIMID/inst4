@@ -16,7 +16,7 @@ Buffer.freeAll
 s.record(numChannels:4)
 
 (
-~c1 = Buffer.read(s,);
+~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/BELL_mono/components/sine component.wav");
 )
 (
 (
