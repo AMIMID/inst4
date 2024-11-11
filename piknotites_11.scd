@@ -1242,7 +1242,7 @@ v=q*v*q.conjugate;
 
 ton1=2.pow(n1/(2*6));
 
-	    amp1=(ton1.reciprocal*speed1*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+	    amp1=(ton1.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 
 	pitch1=(freq1*ton1*m).round(0.0000000000001);
 
@@ -2861,7 +2861,7 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),
 }
 )
 (
-~synth1=Synth(\ospace1);.
+~synth1=Synth(\ospace1);
 	~synth2=Synth(\ospace2);
 	~synth3=Synth(\ospace3);
 )
@@ -2873,56 +2873,56 @@ MIDIIn.connectAll;
 
 	(
 MIDIdef.cc(\midi1,{ |val, num, chan, src|
-		var r;
+		var set;
 	//[val, num, chan, src].postln;
-	r=val.linlin(0,127,360.neg,360);
-		r.postln;
-		~synth1.set(\angle_rot,r);
+		set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		~synth1.set(\pl1,set);
 },25);
 	);
 		(
 MIDIdef.cc(\midi2,{ |val, num, chan, src|
-		var r;
+			var set;
 	//[val, num, chan, src].postln;
-	r=val.linlin(0,127,360.neg,360);
-		r.postln;
-		~synth2.set(\angle_rot,r);
+		set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		~synth2.set(\pl1,set);
 },24);
 	);
 	(
 MIDIdef.cc(\midi3,{ |val, num, chan, src|
-		var r;
+		var set;
 	//[val, num, chan, src].postln;
-	r=val.linlin(0,127,360.neg,360);
-		r.postln;
-		~synth3.set(\angle_rot,r);
+		set=val.linlin(0,127,0,720*~time).round(1);
+		set.postln;
+		~synth3.set(\pl1,set);
 },23);
 	);
 		(
 MIDIdef.cc(\midi4,{ |val, num, chan, src|
 		var set;
 	//[val, num, chan, src].postln;
-		set=val.linlin(0,127,0,720*~time).round(1);
+		set=val.linlin(0,127,0,1).round(1);
 		set.postln;
-		~synth1.set(\pl1,set);
+		~synth1.set(\pl2,set);
 },22);
 	);
 	(
 MIDIdef.cc(\midi5,{ |val, num, chan, src|
 		var set;
 	//[val, num, chan, src].postln;
-	set=val.linlin(0,127,0,720*~time).round(1);
+	set=val.linlin(0,127,0,11).round(1);
 		set.postln;
-		~synth2.set(\pl1,set);
+		~synth2.set(\pl2,set);
 },21);
 	);
 		(
 MIDIdef.cc(\midi6,{ |val, num, chan, src|
 		var set;
 	//[val, num, chan, src].postln;
-	set=val.linlin(0,127,0,720*~time).round(1);
+	set=val.linlin(0,127,0,11).round(1);
 		set.postln;
-		~synth3.set(\pl1,set);
+		~synth3.set(\pl2,set);
 },20);
 	);
 
