@@ -1214,7 +1214,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 
 env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2);
 		//	env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
-fundamental1=fundamental*speed1.reciprocal;
+fundamental1=fundamental;
 freq1=(fundamental1*octave);
 
 
