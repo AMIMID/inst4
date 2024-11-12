@@ -24,18 +24,18 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10).degrad).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
 wt = sig.asWavetable;
 ~b.loadCollection(wt);
 sig.plot;
-	}.value
+	}.value;
 
 
 (
-~time=1;
+~time=2;
 ////////fractal
 		{
 var signal,wt,m=0,amp;
@@ -231,20 +231,20 @@ var phase,angle=0,mag,phase1,angle1=0,mag1,m=6,pl1=0,pl2=0;
 }.value;
 
 (
-~magR=~magR.normalize(0,1);
-~magL=~magL.normalize(0,1);
-~magR1=~magR1.normalize(0,1);
-~magL1=~magL1.normalize(0,1);
-~magR2=~magR2.normalize(0,1);
-~magL2=~magL2.normalize(0,1);
-~magR3=~magR3.normalize(0,1);
-~magL3=~magL3.normalize(0,1);
-~magR4=~magR4.normalize(0,1);
-~magL4=~magL4.normalize(0,1);
-~magR5=~magR5.normalize(0,1);
-~magL5=~magL5.normalize(0,1);
-~magR6=~magR6.normalize(0,1);
-~magL6=~magL6.normalize(0,1);
+~magR=~magR/(2.sqrt);
+~magL=~magL/(2.sqrt);
+~magR1=~magR1/(2.sqrt);
+~magL1=~magL1/(2.sqrt);
+~magR2=~magR2/(2.sqrt);
+~magL2=~magL2/(2.sqrt);
+~magR3=~magR3/(2.sqrt);
+~magL3=~magL3/(2.sqrt);
+~magR4=~magR4/(2.sqrt);
+~magL4=~magL4/(2.sqrt);
+~magR5=~magR5/(2.sqrt);
+~magL5=~magL5/(2.sqrt);
+~magR6=~magR6/(2.sqrt);
+~magL6=~magL6/(2.sqrt);
 );
 
 	(	~magx=[~magR1.round(0.0000000000001),~magR2.round(0.0000000000001),~magR3.round(0.0000000000001),~magR4.round(0.0000000000001),~magR5.round(0.0000000000001),~magR6.round(0.0000000000001)];
@@ -260,14 +260,14 @@ var index1,index2,index3,index4,index5,index6,pl7=0,pl8=0,pl9=0,t1,t2,t3,t4,t5,t
 var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
-rythm=[1,1/1,1,1,1/1];
+rythm=[1,1/2,1,1,1/2];
 
 ~dur1 = (45*~time).collect{
 	ph1=(Complex(~magL.[pl1],~magR.[pl1]).rho/(2.sqrt)).round(0.0000000001);
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
 	pl1=pl1+1;
-	ph1=(ph1*dur).round(1/32);
+	ph1=(ph1*dur).round(1/256);
 	t1=ph1*index1;
 
 	};
@@ -281,21 +281,21 @@ rythm=[1,1/1,1,1,1/1];
 (
 SynthDef.new(\ostereo,
 {
-arg decay=8,speed=1,octave=1,pl1=0,angle_r=0,gain=1,pl2=0;
-var signal1,signal2,env,amp1,amp2,pl=0,nx,ny;
+arg decay=6,speed=1,octave=1,pl1=0,angle_r=0,gain=1,pl2=0;
+var signal1,signal2,env,amp1,amp2,pl=0,nx,ny,mult=12;
 var pos1,pos2,phase1,phase2,mag,fundamental=55,freq,pitch1,pitch2;
 var amp,phase,c1,c2;
 
 fundamental=fundamental*speed.reciprocal;
 		freq=fundamental*octave;
-env=EnvGen.ar(Env.sine(decay,1),doneAction:2);
+env=EnvGen.ar(Env.sine(decay,0.1),doneAction:2);
 
 
 		pos1=Select.kr(pl1,~posL)/(2.sqrt);
 		pos2=Select.kr(pl1,~posR)/(2.sqrt);
 		//phase1=~phase1.[pl];
 		//phase2=~phase2.[pl];
-		mag=Complex(Select.kr(pl1,Select.kr(pl2,~magx)),Select.kr(pl1,Select.kr(pl2,~magx)));
+		mag=Complex(Select.kr(pl1,Select.kr(pl2,~magx)),Select.kr(pl1,Select.kr(pl2,~magy)));
 
 		//ph1=SinOsc.ar(mag.reciprocal,phase1,mag);
 		//ph2=SinOsc.ar(mag.reciprocal,phase2,mag);
@@ -304,8 +304,10 @@ env=EnvGen.ar(Env.sine(decay,1),doneAction:2);
 				c1=Polar(mag.real,mag.theta);
 				c2=Polar(mag.imag,mag.theta);
 
-				nx=exp(Complex(0,1)*((angle_r*c1.theta)).wrap(2pi.neg,2pi)).real;
-				ny=exp(Complex(0,1)*((angle_r*c2.theta)).wrap(2pi.neg,2pi)).imag;
+				nx=exp(Complex(0,1)*((angle_r*c1.theta)).wrap(2pi.neg,2pi)).real*mult;
+			    ny=exp(Complex(0,1)*((angle_r*c2.theta)).wrap(2pi.neg,2pi)).imag*mult;
+				//nx=c1.x*mult;
+				//ny=c1.y*mult;
 
 		pitch1=2.pow(nx/12);
 		pitch2=2.pow(ny/12);
@@ -315,8 +317,8 @@ env=EnvGen.ar(Env.sine(decay,1),doneAction:2);
 		amp1=octave.reciprocal*speed*pitch1.reciprocal;
 		amp2=octave.reciprocal*speed*pitch2.reciprocal;
 
-				signal1=(Osc.ar(~t.bufnum,freq*pitch1,phase,amp1));
-				signal2=(Osc.ar(~t.bufnum,freq*pitch2,phase,amp2));
+				signal1=(Osc.ar(~b.bufnum,freq*pitch1,SinOsc.ar(c1.rho,phase,c1.theta.abs),amp1));
+				signal2=(Osc.ar(~b.bufnum,freq*pitch2,SinOsc.ar(c2.rho,phase,c2.theta.abs),amp2));
 
 				Out.ar(0,Pan2.ar(LeakDC.ar(signal1),pos1,env));
 				Out.ar(0,Pan2.ar(LeakDC.ar(signal2),pos2,env));
@@ -330,7 +332,13 @@ env=EnvGen.ar(Env.sine(decay,1),doneAction:2);
 		}
 		}.value
 	);
-
+		({
+		var angle=0;
+		~angle=(45*~time).collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		}
+		}.value
+	);
 (
 a=Pdef(\1, Pbind(\instrument, \ostereo,
 	\dur,Pseq(~dur1.mirror,inf),
@@ -342,21 +350,18 @@ a=Pdef(\1, Pbind(\instrument, \ostereo,
 	\speed,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-TempoClock.default.tempo_(1);
+TempoClock.default.tempo_(2);
 /////with tempo 1 and ~time 1 overall duration of a is 2.08 min
 
 
-(
-Tdef.new(\h,{
-a.play;
+//a.play;
 
-})
-)
+
+SerialPort.devices;
+~port = SerialPort.new("/dev/cu.usbserial-210",9600);
+
 
 	}
 )
 
-//Tdef(\h).stop;
-Tdef(\h).play;
-//Tdef(\h).clear;
 
