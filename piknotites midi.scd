@@ -1161,7 +1161,7 @@ SynthDef.new(\ospace1, {
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
-	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1;
+	var freq,m=1,pitch1,pitch2,pitch3,env,gate=1;
 	var v,i,j,k,q;
 	var pitch;
 	var xyz,xyz_array,axis;
@@ -1170,15 +1170,14 @@ SynthDef.new(\ospace1, {
 	var sphere1,sphere2,sphere3;
 	var ph_x,ph_y,ph_z;
 
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2);
-		//	env=EnvGen.ar(Env.perc(0.05,6,level:1/bank1),doneAction:2);
-fundamental1=fundamental*speed1.reciprocal;
-freq1=(fundamental1*octave);
+freq=(fundamental*octave);
 
 
 mag_o=Cartesian(Select.kr(pl1,Select.kr(pl2,~magx_array)), Select.kr(pl1,Select.kr(pl2,~magy_array)),Select.kr(pl1,Select.kr(pl2,~magz_array)));
 
-
+	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(mag_o.y,Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(mag_o.z,Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
 					xyz=Spherical(mult,sphere.theta,sphere.phi);
@@ -1213,9 +1212,9 @@ ton3=2.pow(n3/(2*6));
 		amp2=(ton2.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 		amp3=(ton3.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 
-	pitch1=(freq1*ton1*m).round(0.0000000000001);
-	pitch2=(freq2*ton2*m).round(0.0000000000001);
-	pitch3=(freq3*ton3*m).round(0.0000000000001);
+	pitch1=(freq*ton1*m).round(0.0000000000001);
+	pitch2=(freq*ton2*m).round(0.0000000000001);
+	pitch3=(freq*ton3*m).round(0.0000000000001);
 
 					///%2==0 simulates .even
 			phase=if(pl2%2==0,0.degrad,90.degrad);
@@ -1247,9 +1246,9 @@ Osc.ar(~t.bufnum,speed3,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:18
 Osc.ar(~t.bufnum,speed3,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-			Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:gain)));
-			Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:gain)));
-			Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:gain)));
+			Out.ar(0,LeakDC.ar(osc1,mul:gain));
+			Out.ar(0,LeakDC.ar(osc2,mul:gain));
+			Out.ar(0,LeakDC.ar(osc3,mul:gain));
 
 }).add;
 )
@@ -1290,7 +1289,7 @@ MIDIdef.cc(\midi3,{ |val, num, chan, src|
 		var set;
 	//	~pl2=val.linlin(0,127,0,720*~time).round(1);
 	//[val, num, chan, src].postln;
-		set=val.linlin(0,127,0,720*~time).round(1);
+	set=val.linlin(0,127,0,11).round(1);
 		set.postln;
 		~synth1.set(\pl2,set);
 },23);
@@ -1301,7 +1300,7 @@ MIDIdef.cc(\midi4,{ |val, num, chan, src|
 		var set;
 		//~sp=val.linlin(0,127,1,2);
 	//[val, num, chan, src].postln;
-		set=val.linlin(0,127,1,2);
+		set=val.linlin(0,127,0.1,100);
 		set.postln;
 		~synth1.set(\speed3,set);
 },22);
@@ -1312,11 +1311,11 @@ MIDIdef.cc(\midi5,{ |val, num, chan, src|
 		var set;
 	//	~sp=val.linlin(0,127,1,2);
 	//[val, num, chan, src].postln;
-		set=val.linlin(0,127,1,2);
+		set=val.linlin(0,127,0.1,100);
 		set.postln;
 		~synth1.set(\speed2,set);
 
-},22);
+},21);
 	);
 
 				(
@@ -1324,10 +1323,10 @@ MIDIdef.cc(\midi6,{ |val, num, chan, src|
 		var set;
 		//~sp=val.linlin(0,127,1,2);
 	//[val, num, chan, src].postln;
-		set=val.linlin(0,127,1,2);
+		set=val.linlin(0,127,0.1,100);
 		set.postln;
 		~synth1.set(\speed1,set);
-},22);
+},20);
 	);
 
 
