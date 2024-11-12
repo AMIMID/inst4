@@ -1201,9 +1201,9 @@ ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
 ton3=2.pow(n3/(2*6));
 
-	ph_x=Complex(sphere.y,sphere.z).theta;
-	ph_y=Complex(sphere.x,sphere.z).theta;
-	ph_z=Complex(sphere.x,sphere.y).theta;
+	ph_x=Polar(sphere1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+	ph_y=Polar(sphere2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+	ph_z=Polar(sphere3.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi));
 	mag_x=sphere1.rho;
 	mag_y=sphere2.rho;
 	mag_z=sphere3.rho;
@@ -1225,21 +1225,21 @@ ton3=2.pow(n3/(2*6));
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
 
 osc1=VBAP.ar(4,
-				Osc.ar(~w1.bufnum,pitch1*mag_x.reciprocal,mul:amp1*mag_x,phase:(phase+ph_x).wrap(2pi.neg,2pi)),
+				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:SinOsc.ar(ph_x.rho.abs,phase,ph_x.theta.abs)),
 ~b.bufnum,
 //~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,speed1,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed1,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc2=VBAP.ar(4,
-				Osc.ar(~w2.bufnum,pitch2*mag_y.reciprocal,mul:amp2*mag_y,phase:(phase+ph_y).wrap(2pi.neg,2pi)),
+				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:SinOsc.ar(ph_y.rho.abs,phase,ph_y.theta.abs)),
 ~b.bufnum,
 //~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,speed2,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,speed2,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 osc3=VBAP.ar(4,
-				Osc.ar(~w3.bufnum,pitch3*mag_z.reciprocal,mul:amp3*mag_z,phase:(phase+ph_z).wrap(2pi.neg,2pi)),
+				Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:SinOsc.ar(ph_z.rho.abs,phase,ph_z.theta.abs)),
 ~b.bufnum,
 //~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,speed3,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
