@@ -2,9 +2,9 @@
 s.options.numWireBufs = 1024*4;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=2;
-TempoClock.default.tempo_(0.5);
-s.options.memSize = 8192*32;
-s.options.blockSize = 64*8;
+TempoClock.default.tempo_(1);
+s.options.memSize = 8192*64;
+s.options.blockSize = 64;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 48000;
 s.waitForBoot
@@ -869,7 +869,7 @@ SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024/2;
+	var phase1,phase2,bank1,bank2,frames=1024;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
@@ -877,7 +877,7 @@ SynthDef.new(\o1, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=360;
+	bank2=180;
 
    bank2.do{
 
@@ -915,7 +915,7 @@ SynthDef.new(\o2, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024/2;
+	var phase1,phase2,bank1,bank2,frames=1024;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
@@ -923,7 +923,7 @@ SynthDef.new(\o2, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=360;
+	bank2=180;
 
    bank2.do{
 
@@ -960,7 +960,7 @@ SynthDef.new(\o3, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024/2;
+	var phase1,phase2,bank1,bank2,frames=1024;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
@@ -968,7 +968,7 @@ SynthDef.new(\o3, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=360;
+	bank2=180;
 
    bank2.do{
 

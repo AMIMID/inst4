@@ -3,7 +3,7 @@ s.options.numWireBufs = 1024*4;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=2;
 TempoClock.default.tempo_(0.5);
-s.options.memSize = 8192*32;
+s.options.memSize = 8192*64;
 s.options.blockSize = 64*8;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 48000;
@@ -713,7 +713,7 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.rou
 
 (
 SynthDef.new(\o1, {
-    var in1,in2, chainx,chainy,az1=0,az2=0,el1=0,el2=0,rpr=1,pl1=0;
+    var in1,in2, chainx,chainy,az1=0,az2=0,el1=0,el2=0,pl1=0;
 	var chainxx,chainyy,amp1,amp2,phase,pl=0;
 	var angle1=0,angle2=90,b=0;
 	var phase1,phase2,frames=1024;
@@ -731,8 +731,8 @@ SynthDef.new(\o1, {
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
-		amp1=Cartesian(Select.kr(pl1,~magx_array).[pl],Select.kr(pl1,~magx_array).[pl],Select.kr(pl1,~magx_array).[pl]);
-amp2=Cartesian(Select.kr(pl1,~magx_array).reverse.[pl],Select.kr(pl1,~magx_array).reverse.[pl],Select.kr(pl1,~magx_array).reverse.[pl]);
+		amp1=Cartesian(Select.kr(pl1,~magx_array).[pl],Select.kr(pl1,~magy_array).[pl],Select.kr(pl1,~magz_array).[pl]);
+amp2=Cartesian(Select.kr(pl1,~magx_array).reverse.[pl],Select.kr(pl1,~magy_array).reverse.[pl],Select.kr(pl1,~magz_array).reverse.[pl]);
 
 	phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
 	phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
