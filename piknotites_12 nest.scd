@@ -1048,7 +1048,7 @@ var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
 rythm=[1,1/2,1,1,1/2].mirror;
 
-~dur1 = (45*~time).collect{
+~dur1 = (180*~time).collect{
 	ph1=~magx.[pl1];
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
@@ -1058,7 +1058,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 
 	};
 
-~dur2 = (45*~time).collect{
+~dur2 = (180*~time).collect{
 	ph2=~magy.[pl2];
 	index2=rythm.wrapAt(pl8);
 	pl8=pl8+1;
@@ -1067,7 +1067,7 @@ rythm=[1,1/2,1,1,1/2].mirror;
 	t2=ph2*index2;
 	};
 
-~dur3 = (45*~time).collect{
+~dur3 = (180*~time).collect{
 	ph3=~magz.[pl3];
 	index3=rythm.wrapAt(pl9);
 	pl9=pl9+1;
