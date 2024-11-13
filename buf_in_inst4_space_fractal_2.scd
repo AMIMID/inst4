@@ -29,22 +29,23 @@ SynthDef("help-phaseShift", { arg out=0;
 
 
 ////////////////buffers
+Buffer.freeAll
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/My Movie.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/My Movie.wav",channels:1 );
+(
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/birds 4 am.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/birds 4 am.wav",channels:1 );
 //~c3 = Buffer.readChannel(s,,channels:0 );
 //~c4 = Buffer.readChannel(s,,channels:1 );
 //~c5 = Buffer.readChannel(s,,channels:0 );
 //~c6 = Buffer.readChannel(s,,channels:1 );
-)
+);
 
 /////wavetables
-Buffer.freeAll
 
 ~t= Buffer.alloc(s,2048);
 
 
-(
+{
 var signal,wt,m=0,amp;
 
 ~level=90.round(1).collect{m=m+1;amp=m.reciprocal};
@@ -54,6 +55,7 @@ signal=Signal.sineFill(1024,~level,~phase);
 wt = signal.asWavetable;
 ~t.loadCollection(wt);
 signal.plot;
+}.value;
 )
 
 ////speaker setup
@@ -65,13 +67,6 @@ signal.plot;
 ///furhter on speaker setup can be geodesic octahedron 2nd order torus with 16 channels, and Rhombic triacontahedron with 32 vertices as 32 speaker channels
 )
 
-/////////tetrahedron
-(
-// 3D
-~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
-~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
-)
-
 (
 // 3D random
 ~a = VBAPSpeakerArray.new(3, [[180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2], [180.rand2, 90.rand2]]);
@@ -80,6 +75,12 @@ signal.plot;
 
 //////////arrays
 (
+/////////tetrahedron
+(
+// 3D
+~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
+~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
+);
 		~time=8;
 {
 var c,cc,angle=0,c_real,c_imag,z;
@@ -868,7 +869,7 @@ SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
+	var phase1,phase2,bank1,bank2,frames=1024/2;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
@@ -876,7 +877,7 @@ SynthDef.new(\o1, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=180;
+	bank2=360;
 
    bank2.do{
 
@@ -914,7 +915,7 @@ SynthDef.new(\o2, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
+	var phase1,phase2,bank1,bank2,frames=1024/2;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
@@ -922,7 +923,7 @@ SynthDef.new(\o2, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=180;
+	bank2=360;
 
    bank2.do{
 
@@ -959,7 +960,7 @@ SynthDef.new(\o3, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
+	var phase1,phase2,bank1,bank2,frames=1024/2;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
@@ -967,7 +968,7 @@ SynthDef.new(\o3, {
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in2);
 
-	bank2=180;
+	bank2=360;
 
    bank2.do{
 
