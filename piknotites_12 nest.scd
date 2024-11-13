@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=2;
+		~time=4;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -1081,8 +1081,8 @@ rythm=[1,1/2,1,1,1/2].mirror;
 		{
 var signal,wt,m=0,amp;
 
-~level=8.round(1).collect{m=m+1;amp=m.reciprocal};
-~phase=8.collect{pi};
+~level=45.round(1).collect{m=m+1;amp=m.reciprocal};
+~phase=45.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
@@ -1155,20 +1155,11 @@ sig.plot;
 
 	// Env(~levels,[0.04444]).plot;
 
-	//////notes
-	({
-		var angle=0;
-		~angle=(45*~time).collect{
-		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
-		}
-		}.value
-	);
-
 /////synths////
 	(
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
+		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
@@ -1229,16 +1220,17 @@ j=Quaternion(0, 0,  axis.[1], 0);
 k=Quaternion(0, 0, 0,  axis.[2]);
 v=(i+j+k);
 
-q1=((v0*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q1=((v0*exp(Complex(0,1)*angle_rot1.degrad).imag)+exp(Complex(0,1)*angle_rot1.degrad).real);
 v=q1*v*q1.conjugate;
-q2=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q2=((v*exp(Complex(0,1)*angle_rot2.degrad).imag)+exp(Complex(0,1)*angle_rot2.degrad).real);
 v=q2*v*q2.conjugate;
-q3=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q3=((v*exp(Complex(0,1)*angle_rot3.degrad).imag)+exp(Complex(0,1)*angle_rot3.degrad).real);
 v=q3*v*q3.conjugate;
-q4=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q4=((v*exp(Complex(0,1)*angle_rot4.degrad).imag)+exp(Complex(0,1)*angle_rot4.degrad).real);
 v=q4*v*q4.conjugate;
-q5=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q5=((v*exp(Complex(0,1)*angle_rot5.degrad).imag)+exp(Complex(0,1)*angle_rot5.degrad).real);
 v6=q5*v6*q5.conjugate;
+
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
@@ -1286,7 +1278,7 @@ Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 );
 (
 SynthDef.new(\ospace2, {
-	arg angle_rot=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
+		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
@@ -1347,15 +1339,15 @@ j=Quaternion(0, 0,  axis.[1], 0);
 k=Quaternion(0, 0, 0,  axis.[2]);
 v=(i+j+k);
 
-q1=((v0*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q1=((v0*exp(Complex(0,1)*angle_rot1.degrad).imag)+exp(Complex(0,1)*angle_rot1.degrad).real);
 v=q1*v*q1.conjugate;
-q2=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q2=((v*exp(Complex(0,1)*angle_rot2.degrad).imag)+exp(Complex(0,1)*angle_rot2.degrad).real);
 v=q2*v*q2.conjugate;
-q3=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q3=((v*exp(Complex(0,1)*angle_rot3.degrad).imag)+exp(Complex(0,1)*angle_rot3.degrad).real);
 v=q3*v*q3.conjugate;
-q4=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q4=((v*exp(Complex(0,1)*angle_rot4.degrad).imag)+exp(Complex(0,1)*angle_rot4.degrad).real);
 v=q4*v*q4.conjugate;
-q5=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q5=((v*exp(Complex(0,1)*angle_rot5.degrad).imag)+exp(Complex(0,1)*angle_rot5.degrad).real);
 v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
@@ -1405,7 +1397,7 @@ Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 );
 (
 SynthDef.new(\ospace3, {
-	arg angle_rot=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
@@ -1466,15 +1458,15 @@ j=Quaternion(0, 0,  axis.[1], 0);
 k=Quaternion(0, 0, 0,  axis.[2]);
 v=(i+j+k);
 
-q1=((v0*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q1=((v0*exp(Complex(0,1)*angle_rot1.degrad).imag)+exp(Complex(0,1)*angle_rot1.degrad).real);
 v=q1*v*q1.conjugate;
-q2=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q2=((v*exp(Complex(0,1)*angle_rot2.degrad).imag)+exp(Complex(0,1)*angle_rot2.degrad).real);
 v=q2*v*q2.conjugate;
-q3=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q3=((v*exp(Complex(0,1)*angle_rot3.degrad).imag)+exp(Complex(0,1)*angle_rot3.degrad).real);
 v=q3*v*q3.conjugate;
-q4=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q4=((v*exp(Complex(0,1)*angle_rot4.degrad).imag)+exp(Complex(0,1)*angle_rot4.degrad).real);
 v=q4*v*q4.conjugate;
-q5=((v*exp(Complex(0,1)*angle_rot.degrad).imag)+exp(Complex(0,1)*angle_rot.degrad).real);
+q5=((v*exp(Complex(0,1)*angle_rot5.degrad).imag)+exp(Complex(0,1)*angle_rot5.degrad).real);
 v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
@@ -1541,49 +1533,70 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 		}.value
 	);
 
+		//////notes
+	({
+		var angle=0;
+		~angle=(720*~time).collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		}
+		}.value
+	);
+
 //////////pattern for mobius strib of sequential or parallel play of directions
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
-	\dur,Pseq(~dur1.mirror,1),
+	\dur,Pseq(~dur1,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	//	\octave,Prand([2,4],inf),
+		\mult,Pbrown(1,24,1,inf),
 			\pl1,Pxrand(~list1,inf),
 			\pl2,Pbrown(0,11,1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
-	\angle_rot,Pseq(~angle.mirror,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-	\speed2,Prand([1,3/4,2/3,1/2],inf),
-	\speed3,Prand([1,3/4,2/3,1/2],inf);
+	\angle_rot1,Prand(~angle,inf),
+	\angle_rot2,Prand(~angle,inf),
+	\angle_rot3,Prand(~angle,inf),
+	\angle_rot4,Prand(~angle,inf),
+	\angle_rot5,Prand(~angle,inf),
+	//\speed1,Prand([1,3/4,2/3,1/2],inf),
+	//\speed2,Prand([1,3/4,2/3,1/2],inf),
+	//\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
-	\dur,Pseq(~dur2.mirror,1),
+	\dur,Pseq(~dur2,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\octave,Prand([2,4],inf),
+			\mult,Pbrown(1,24,1,inf),
 			\pl1,Pxrand(~list1,inf),
 			\pl2,Pbrown(0,11,1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
-	\angle_rot,Pseq(~angle.mirror,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-	\speed3,Prand([1,3/4,2/3,1/2],inf);
+		\angle_rot1,Prand(~angle,inf),
+	\angle_rot2,Prand(~angle,inf),
+	\angle_rot3,Prand(~angle,inf),
+	\angle_rot4,Prand(~angle,inf),
+	\angle_rot5,Prand(~angle,inf),
+	//\speed1,Prand([1,3/4,2/3,1/2],inf),
+	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
+	//\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
-	\dur,Pseq(~dur3.mirror,1),
+	\dur,Pseq(~dur3,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		//	\octave,Prand([2,4],inf),
+		\mult,Pbrown(1,24,1,inf),
 			\pl1,Pxrand(~list1,inf),
 			\pl2,Pbrown(0,11,1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
 		\zr,Pbrown(0.1,1,0.1,inf),
-	\angle_rot,Pseq(~angle.mirror,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-		\speed3,Prand([1,3/4,2/3,1/2],inf);
+		\angle_rot1,Prand(~angle,inf),
+	\angle_rot2,Prand(~angle,inf),
+	\angle_rot3,Prand(~angle,inf),
+	\angle_rot4,Prand(~angle,inf),
+	\angle_rot5,Prand(~angle,inf),
+	//\speed1,Prand([1,3/4,2/3,1/2],inf),
+	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
+	//	\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
 	TempoClock.default.tempo_(1/1);
