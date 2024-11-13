@@ -1081,8 +1081,8 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 				//level=level;
-				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
-			//levels=level+(~magx.[pl]/100);
+				//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100000).degrad.round(0.000001)).imag);
+			levels=level+(~magx.[pl]/1000);
 };
 			env = Env(~levelsss,[1]);
 sig=env.asSignal(1024);
@@ -1099,8 +1099,8 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 		//level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
-		//	levels=level+(~magy.[pl]/100);
+	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100000).degrad.round(0.000001)).imag);
+			levels=level+(~magy.[pl]/1000);
 };
 			env = Env(~levelssss,[1]);
 sig=env.asSignal(1024);
@@ -1117,8 +1117,8 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 			//	level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
-		//	levels=level+(~magz.[pl]/100);
+	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100000).degrad.round(0.000001)).imag);
+			levels=level+(~magz.[pl]/1000);
 			};
 			env = Env(~levelsssss,[1]);
 sig=env.asSignal(1024);
@@ -1150,7 +1150,7 @@ sig.plot;
 	(
 (
 SynthDef.new(\ospace, {
-	arg angle_rot=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=24,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
+	arg angle_rot=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=128,fundamental1,fundamental2,fundamental3;
@@ -1176,8 +1176,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.2);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.2);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.2);
+			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.2);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1199,7 +1199,7 @@ mag_o=Cartesian(Select.kr(pl1,Select.kr(pl2,~magx_array)), Select.kr(pl1,Select.
 	sphere3=Spherical(mag_o.z,Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
-					xyz=Spherical(sphere.rho,sphere.theta,sphere.phi);
+					xyz=Spherical(mult,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 				axis_r=[xr,yr,zr].normalizeSum.sqrt;
 v=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
@@ -1214,7 +1214,7 @@ v=q*v*q.conjugate;
 
 	pitch=Cartesian(v.b,v.c,v.d);
 
-	n1=(pitch.x).round(0.0000000000001)*mult; n2=(pitch.y).round(0.0000000000001)*mult; n3=(pitch.z).round(0.0000000000001)*mult;
+	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1308,12 +1308,12 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
 	\angle_rot,Pseq(~angle.mirror,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//\speed3,Prand([1,3/4,2/3,1/2],inf);
+	\speed1,Prand([1,3/4,2/3,1/2],inf),
+	\speed2,Prand([1,3/4,2/3,1/2],inf),
+	\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(1/1);
+	TempoClock.default.tempo_(2/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
