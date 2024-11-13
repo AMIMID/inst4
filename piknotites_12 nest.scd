@@ -1162,7 +1162,7 @@ SynthDef.new(\ospace1, {
 		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=110,fundamental1,fundamental2,fundamental3;
+	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -1281,7 +1281,7 @@ SynthDef.new(\ospace2, {
 		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=110,fundamental1,fundamental2,fundamental3;
+	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -1400,7 +1400,7 @@ SynthDef.new(\ospace3, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,pl2=0,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=110,fundamental1,fundamental2,fundamental3;
+	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -1558,9 +1558,9 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//\speed3,Prand([1,3/4,2/3,1/2],inf);
+	\speed1,Prand([1,3/4,2/3,1/2],inf),
+	\speed2,Prand([1,3/4,2/3,1/2],inf),
+	\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~dur2,1),
@@ -1576,9 +1576,9 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//\speed3,Prand([1,3/4,2/3,1/2],inf);
+	\speed1,Prand([1,3/4,2/3,1/2],inf),
+		\speed2,Prand([1,3/4,2/3,1/2],inf),
+	\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~dur3,1),
@@ -1594,9 +1594,9 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//	\speed3,Prand([1,3/4,2/3,1/2],inf);
+	\speed1,Prand([1,3/4,2/3,1/2],inf),
+		\speed2,Prand([1,3/4,2/3,1/2],inf),
+		\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
 	TempoClock.default.tempo_(1/1);
