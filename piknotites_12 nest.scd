@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=4;
+		~time=2;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -1099,7 +1099,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 				//level=level;
-				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
+				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
 			//levels=level+(~magx.[pl]/100);
 };
 			env = Env(~levelsss,[1]);
@@ -1117,7 +1117,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 		//level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
 		//	levels=level+(~magy.[pl]/100);
 };
 			env = Env(~levelssss,[1]);
@@ -1135,7 +1135,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 			//	level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/10000).degrad.round(0.000001)).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
 		//	levels=level+(~magz.[pl]/100);
 			};
 			env = Env(~levelsssss,[1]);
@@ -1266,13 +1266,13 @@ ton3=2.pow(n3/(2*6));
 osc1=VBAP.ar(4,
 				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
 ~b.bufnum,
-//~b.bufnum,sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere1.theta.raddeg,sphere1.phi.raddeg
+//Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 
 }).add;
 );
@@ -1385,13 +1385,13 @@ ton3=2.pow(n3/(2*6));
 osc2=VBAP.ar(4,
 				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase+ph_y.theta),
 ~b.bufnum,
-//~b.bufnum,sphere2.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere2.theta.raddeg,sphere2.phi.raddeg
+//Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+		//wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 
 }).add;
 );
@@ -1504,13 +1504,13 @@ ton3=2.pow(n3/(2*6));
 osc3=VBAP.ar(4,
 					Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 ~b.bufnum,
-//~b.bufnum,sphere3.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere3.theta.raddeg,sphere3.phi.raddeg
+//Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+		//wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 
 }).add;
 );
