@@ -768,6 +768,7 @@ MIDIdef.cc(\midi1,{ |val, num, chan, src|
 		~synth1.set(pl1,r);
 },25);
 	);
+)
 //////////////////////////////////////IN
 
 (
