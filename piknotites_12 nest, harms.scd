@@ -1185,8 +1185,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1302,8 +1302,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1418,8 +1418,8 @@ SynthDef.new(\ospace3, {
 var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
-env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1531,7 +1531,8 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		~angle=(720*~time).collect{
 		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		}
-		}.value
+		}.value;
+	~angle=~angle/2;
 	);
 
 //////////pattern for mobius strib of sequential or parallel play of directions
