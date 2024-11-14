@@ -1160,7 +1160,7 @@ sig.plot;
 (
 SynthDef.new(\ospace1, {
 		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=2;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
@@ -1185,8 +1185,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1229,7 +1229,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
+	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1277,7 +1277,7 @@ Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 (
 SynthDef.new(\ospace2, {
 		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=2;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
@@ -1302,8 +1302,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1345,7 +1345,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
+	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1394,7 +1394,7 @@ Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 (
 SynthDef.new(\ospace3, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=2;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
@@ -1418,8 +1418,8 @@ SynthDef.new(\ospace3, {
 var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1460,7 +1460,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
+	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1533,7 +1533,7 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\mult,Prand([12,24],inf),
+			\mult,Prand([12,24,48],inf),
 			\pl1,Pxrand(~list1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -1550,7 +1550,7 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~dur2,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\mult,Prand([12,24],inf),
+			\mult,Prand([12,24,48],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -1567,7 +1567,7 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~dur3,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\mult,Prand([12,24],inf),
+		\mult,Prand([12,24,48],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
