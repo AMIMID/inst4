@@ -1229,7 +1229,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
+	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1261,13 +1261,13 @@ ton3=2.pow(n3/(2*6));
 osc1=VBAP.ar(4,
 				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
 ~b.bufnum,
-sphere1.theta.raddeg,sphere1.phi.raddeg
-//Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-//Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+//sphere1.theta.raddeg,sphere1.phi.raddeg
+Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 								m=m+1;
 					pl2=pl2+1;
 			};
@@ -1345,7 +1345,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
+	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1378,13 +1378,13 @@ ton3=2.pow(n3/(2*6));
 osc2=VBAP.ar(4,
 				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:phase+ph_y.theta),
 ~b.bufnum,
-sphere2.theta.raddeg,sphere2.phi.raddeg
-//Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-//Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+//sphere2.theta.raddeg,sphere2.phi.raddeg
+Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 									m=m+1;
 					pl2=pl2+1;
 			};
@@ -1460,7 +1460,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
+	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -1493,13 +1493,13 @@ ton3=2.pow(n3/(2*6));
 osc3=VBAP.ar(4,
 					Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 ~b.bufnum,
-sphere3.theta.raddeg,sphere3.phi.raddeg
-//Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-//Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+//sphere3.theta.raddeg,sphere3.phi.raddeg
+Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 	wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
-					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 				m=m+1;
 					pl2=pl2+1;
 			};
@@ -1517,13 +1517,6 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		}.value
 	);
 
-		({
-		var n=1.neg;
-		~list2=(12).collect{
-		n=n+1;
-		}
-		}.value
-	);
 
 		//////notes
 	({
@@ -1540,7 +1533,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\mult,Pbrown(1,24,1,inf),
+			\mult,Prand([12,24],inf),
 			\pl1,Pxrand(~list1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -1557,7 +1550,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~dur2,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\mult,Pbrown(1,24,1,inf),
+			\mult,Prand([12,24],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -1574,7 +1567,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~dur3,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\mult,Pbrown(1,24,1,inf),
+		\mult,Prand([12,24],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
