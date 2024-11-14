@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=2;
+		~time=16;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -378,7 +378,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
+envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho*fundamental),gate:gate,doneAction:2,levelScale:0.1);
 osc1=VBAP.ar(4,
 				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:ph_x.theta),
 ~b.bufnum,
@@ -485,7 +485,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_y.rho/2,6,ph_y.rho),gate:gate,doneAction:2);
+envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho*fundamental),gate:gate,doneAction:2,levelScale:0.1);
 osc2=VBAP.ar(4,
 				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:ph_y.theta),
 ~b.bufnum,
@@ -592,7 +592,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-	envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_z.rho/2,6,ph_z.rho),gate:gate,doneAction:2);
+	envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho*fundamental),gate:gate,doneAction:2,levelScale:0.1);
 
 osc3=VBAP.ar(4,
 					Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:ph_z.theta),
@@ -692,7 +692,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(2/1);
+	TempoClock.default.tempo_(8/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
