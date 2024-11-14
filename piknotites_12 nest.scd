@@ -174,7 +174,7 @@ var index1,index2,index3,index4,index5,index6,pl7=0,pl8=0,pl9=0,t1,t2,t3,t4,t5,t
 var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
-rythm=[1,1/2,1,1,1/2].mirror;
+rythm=[1,1/1,1,1,1/1].mirror;
 
 ~dur1 = (180*~time).collect{
 	ph1=~magx.[pl1];
@@ -671,7 +671,7 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 	\dur,Pseq(~dur1,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Prand([12,24],inf),
-			\gate,Pseq([1,0],inf),
+			\gate,Pseq([1,0,1,1,0],inf),///l system
 			\pl1,Pxrand(~list1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -689,7 +689,7 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 	\dur,Pseq(~dur2,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Prand([12,24],inf),
-			\gate,Pseq([1,0],inf),
+			\gate,Pseq([1,0,1,1,0],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -707,7 +707,7 @@ Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi
 	\dur,Pseq(~dur3,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\mult,Prand([12,24],inf),
-			\gate,Pseq([1,0],inf),
+			\gate,Pseq([1,0,1,1,0],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
