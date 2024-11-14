@@ -1162,7 +1162,7 @@ SynthDef.new(\ospace1, {
 		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=55,fundamental1,fundamental2,fundamental3;
+	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -1185,8 +1185,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1195,7 +1195,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-6.do{
+12.do{
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~magz_array.[pl2]));
 
 	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
@@ -1266,8 +1266,8 @@ sphere1.theta.raddeg,sphere1.phi.raddeg
 //Osc.ar(~t.bufnum,ph_x.rho,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 								m=m+1;
 					pl2=pl2+1;
 			};
@@ -1279,7 +1279,7 @@ SynthDef.new(\ospace2, {
 		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=55,fundamental1,fundamental2,fundamental3;
+	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -1302,8 +1302,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1312,7 +1312,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-6.do{
+12.do{
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~magz_array.[pl2]));
 
 	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
@@ -1383,8 +1383,8 @@ sphere2.theta.raddeg,sphere2.phi.raddeg
 //Osc.ar(~t.bufnum,ph_y.rho,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		//wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 									m=m+1;
 					pl2=pl2+1;
 			};
@@ -1396,7 +1396,7 @@ SynthDef.new(\ospace3, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=55,fundamental1,fundamental2,fundamental3;
+	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,gate=1,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -1418,8 +1418,8 @@ SynthDef.new(\ospace3, {
 var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
-//env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-				env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
+				//env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 fundamental1=fundamental*speed1.reciprocal;
 fundamental2=fundamental*speed2.reciprocal;
 fundamental3=fundamental*speed3.reciprocal;
@@ -1427,14 +1427,8 @@ freq1=(fundamental1*octave);
 freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
-6.do{
+12.do{
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~magz_array.[pl2]));
-
-	/*sphere1=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-	sphere2=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-	sphere3=Spherical(mag_o.rho.round(0.0000000000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
-*/
 
 	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere2=Spherical(mag_o.y,Select.kr(pl1,~az),Select.kr(pl1,~el));
@@ -1504,8 +1498,8 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 //Osc.ar(~t.bufnum,ph_z.rho,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-		//wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+	wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
+					//Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 				m=m+1;
 					pl2=pl2+1;
 			};
@@ -1547,7 +1541,6 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\mult,Pbrown(1,24,1,inf),
 			\pl1,Pxrand(~list1,inf),
-			\pl2,Pbrown(0,11,1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
@@ -1565,7 +1558,6 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Pbrown(1,24,1,inf),
 			\pl1,Pxrand(~list1,inf),
-			\pl2,Pbrown(0,11,1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
@@ -1583,7 +1575,6 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\mult,Pbrown(1,24,1,inf),
 			\pl1,Pxrand(~list1,inf),
-			\pl2,Pbrown(0,11,1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
 		\zr,Pbrown(0.1,1,0.1,inf),
