@@ -227,8 +227,8 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 				//level=level;
-				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			//levels=level+(~magx.[pl]/100);
+			//	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
+			levels=level+(~magx.[pl]/100);
 };
 			env = Env(~levelsss,[1]);
 sig=env.asSignal(1024);
@@ -245,8 +245,8 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 		//level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-		//	levels=level+(~magy.[pl]/100);
+	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
+			levels=level+(~magy.[pl]/100);
 };
 			env = Env(~levelssss,[1]);
 sig=env.asSignal(1024);
@@ -263,8 +263,8 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 		angle=angle+1.degrad;
 				pl=pl+1;
 			//	level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-		//	levels=level+(~magz.[pl]/100);
+	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
+			levels=level+(~magz.[pl]/100);
 			};
 			env = Env(~levelsssss,[1]);
 sig=env.asSignal(1024);
@@ -287,7 +287,7 @@ sig.plot;
 	(
 (
 SynthDef.new(\ospace1, {
-		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
@@ -394,7 +394,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace2, {
-		arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
@@ -501,7 +501,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace3, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=1,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
@@ -692,7 +692,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(1/1);
+	TempoClock.default.tempo_(2/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
