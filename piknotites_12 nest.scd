@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=16;
+		~time=4;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -84,7 +84,7 @@ z1=Complex(0,0);
 		}.value;
 //////////////////////////////////////////////////basis
 {
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=1;
+var  sph1,sph2,sph3,sph4,sph5,m_x=4,m_y=3,m_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -174,7 +174,7 @@ var index1,index2,index3,index4,index5,index6,pl7=0,pl8=0,pl9=0,t1,t2,t3,t4,t5,t
 var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
-rythm=[1,1/1,1,1,1/1].mirror;
+rythm=[1,1/1,1,1,1/1];
 
 ~dur1 = (180*~time).collect{
 	ph1=~magx.[pl1];
@@ -228,7 +228,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 				//level=level;
 			//	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magx.[pl]/100);
+			levels=level+(~magx.[pl]/10);
 };
 			env = Env(~levelsss,[1]);
 sig=env.asSignal(1024);
@@ -246,7 +246,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 		//level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magy.[pl]/100);
+			levels=level+(~magy.[pl]/10);
 };
 			env = Env(~levelssss,[1]);
 sig=env.asSignal(1024);
@@ -264,7 +264,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 			//	level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magz.[pl]/100);
+			levels=level+(~magz.[pl]/10);
 			};
 			env = Env(~levelsssss,[1]);
 sig=env.asSignal(1024);
@@ -378,7 +378,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho*fundamental),gate:gate,doneAction:2,levelScale:0.1);
+envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
 osc1=VBAP.ar(4,
 				Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:ph_x.theta),
 ~b.bufnum,
@@ -485,7 +485,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho*fundamental),gate:gate,doneAction:2,levelScale:0.1);
+envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
 osc2=VBAP.ar(4,
 				Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:ph_y.theta),
 ~b.bufnum,
@@ -592,7 +592,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-	envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho*fundamental),gate:gate,doneAction:2,levelScale:0.1);
+	envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
 
 osc3=VBAP.ar(4,
 					Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:ph_z.theta),
@@ -641,7 +641,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\dur,Pseq(~dur1,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Prand([12,24],inf),
-			\gate,Pseq([1,0,1,1,0],inf),///l system
+			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
 			\pl1,Pxrand(~list1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -659,7 +659,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\dur,Pseq(~dur2,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Prand([12,24],inf),
-			\gate,Pseq([1,0,1,1,0],inf),
+			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
@@ -677,7 +677,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\dur,Pseq(~dur3,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\mult,Prand([12,24],inf),
-			\gate,Pseq([1,0,1,1,0],inf),
+			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
 			\pl1,Pxrand(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
@@ -692,7 +692,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 		\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
-	TempoClock.default.tempo_(8/1);
+	TempoClock.default.tempo_(4/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
