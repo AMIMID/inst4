@@ -287,7 +287,8 @@ sig.plot;
 	(
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,pl1=0,mult=12,
+		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
@@ -313,15 +314,12 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.05,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
-fundamental1=fundamental*speed1.reciprocal;
-fundamental2=fundamental*speed2.reciprocal;
-fundamental3=fundamental*speed3.reciprocal;
-freq1=(fundamental1*octave);
-freq2=(fundamental2*octave);
-freq3=(fundamental3*octave);
+freq1=(fundamental*octave);
+freq2=(fundamental*octave);
+freq3=(fundamental*octave);
 
 
 mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz));
@@ -370,15 +368,15 @@ ton3=2.pow(n3/(2*6));
 	mag_y=sphere2.rho;
 	mag_z=sphere3.rho;
 
-	    amp1=(ton1.reciprocal*speed1*octave.reciprocal*m.reciprocal).round(0.0000000000001);
-		amp2=(ton2.reciprocal*speed2*octave.reciprocal*m.reciprocal).round(0.0000000000001);
-		amp3=(ton3.reciprocal*speed3*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+	    amp1=(ton1.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp2=(ton2.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp3=(ton3.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 
 	pitch1=(freq1*ton1*m).round(0.0000000000001);
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
+envp=EnvGen.ar(Env.adsr(0.01,0.5,ton1/2,6,ton1),gate:gate,doneAction:2);
 osc1=VBAP.ar(4,
 				FreeVerb.ar(Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:ph_x.theta),wet,envp),
 ~b.bufnum,
@@ -394,7 +392,8 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace2, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,pl1=0,mult=12,
+	xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
@@ -420,15 +419,12 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.05,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,6),gate:gate,doneAction:2);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
-fundamental1=fundamental*speed1.reciprocal;
-fundamental2=fundamental*speed2.reciprocal;
-fundamental3=fundamental*speed3.reciprocal;
-freq1=(fundamental1*octave);
-freq2=(fundamental2*octave);
-freq3=(fundamental3*octave);
+freq1=(fundamental*octave);
+freq2=(fundamental*octave);
+freq3=(fundamental*octave);
 
 
 mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz));
@@ -477,15 +473,15 @@ ton3=2.pow(n3/(2*6));
 	mag_y=sphere2.rho;
 	mag_z=sphere3.rho;
 
-	    amp1=(ton1.reciprocal*speed1*octave.reciprocal*m.reciprocal).round(0.0000000000001);
-		amp2=(ton2.reciprocal*speed2*octave.reciprocal*m.reciprocal).round(0.0000000000001);
-		amp3=(ton3.reciprocal*speed3*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+	    amp1=(ton1.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp2=(ton2.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp3=(ton3.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 
 	pitch1=(freq1*ton1*m).round(0.0000000000001);
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
+envp=EnvGen.ar(Env.adsr(0.01,0.5,ton2/2,6,ton2),gate:gate,doneAction:2);
 osc2=VBAP.ar(4,
 				FreeVerb.ar(Osc.ar(~w2.bufnum,pitch2,mul:amp2,phase:ph_y.theta),wet,envp),
 ~b.bufnum,
@@ -501,7 +497,8 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace3, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,speed1=1,speed2=1,speed3=1,pl1=0,mult=12,xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,pl1=0,mult=12,
+		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
@@ -527,15 +524,12 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.05,0.5,0.5,6),gate:gate,doneAction:2);
+				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,6),gate:gate,doneAction:2);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
-fundamental1=fundamental*speed1.reciprocal;
-fundamental2=fundamental*speed2.reciprocal;
-fundamental3=fundamental*speed3.reciprocal;
-freq1=(fundamental1*octave);
-freq2=(fundamental2*octave);
-freq3=(fundamental3*octave);
+freq1=(fundamental*octave);
+freq2=(fundamental*octave);
+freq3=(fundamental*octave);
 
 
 mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz));
@@ -584,15 +578,15 @@ ton3=2.pow(n3/(2*6));
 	mag_y=sphere2.rho;
 	mag_z=sphere3.rho;
 
-	    amp1=(ton1.reciprocal*speed1*octave.reciprocal*m.reciprocal).round(0.0000000000001);
-		amp2=(ton2.reciprocal*speed2*octave.reciprocal*m.reciprocal).round(0.0000000000001);
-		amp3=(ton3.reciprocal*speed3*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+	    amp1=(ton1.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp2=(ton2.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
+		amp3=(ton3.reciprocal*octave.reciprocal*m.reciprocal).round(0.0000000000001);
 
 	pitch1=(freq1*ton1*m).round(0.0000000000001);
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-	envp=EnvGen.ar(Env.adsr(0.05,0.5,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2,levelScale:0.1);
+	envp=EnvGen.ar(Env.adsr(0.01,0.5,ton3/2,6,ton3),gate:gate,doneAction:2);
 
 osc3=VBAP.ar(4,
 					FreeVerb.ar(Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:ph_z.theta),wet,envp),
@@ -652,9 +646,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~dur2,1),
@@ -671,9 +662,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~dur3,1),
@@ -690,9 +678,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	//\speed1,Prand([1,3/4,2/3,1/2],inf),
-	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
-	//	\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
 	TempoClock.default.tempo_(4/1);

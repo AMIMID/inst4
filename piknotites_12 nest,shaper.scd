@@ -231,7 +231,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 				//level=level;
 			//	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magx.[pl]/100);
+			levels=level+(~magx.[pl]/10);
 };
 			env = Env(~level1,[1]);
 sig=env.asSignal(1024);
@@ -249,7 +249,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 		//level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magy.[pl]/100);
+			levels=level+(~magy.[pl]/10);
 };
 			env = Env(~level2,[1]);
 sig=env.asSignal(1024);
@@ -267,7 +267,7 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 				pl=pl+1;
 			//	level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magz.[pl]/100);
+			levels=level+(~magz.[pl]/10);
 			};
 			env = Env(~level3,[1]);
 sig=env.asSignal(1024);
@@ -373,7 +373,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(1,1,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.adsr(0.05,1,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 freq1=(fundamental*octave);
@@ -435,7 +435,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(1,1,ton1/2,6,ton1),gate:gate,doneAction:2);
+envp=EnvGen.ar(Env.adsr(0.05,1,ton1/2,6,ton1),gate:gate,doneAction:2);
 osc1=VBAP.ar(4,
 		FreeVerb.ar(Shaper.ar(~w1.bufnum,Osc.ar(~w4.bufnum,pitch1,mul:amp1,phase:ph_x.theta)),wet,envp),
 ~b.bufnum,
@@ -478,7 +478,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(1,1,0.5,6),gate:gate,doneAction:2);
+				env=EnvGen.ar(Env.adsr(0.05,1,0.5,6),gate:gate,doneAction:2);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 freq1=(fundamental*octave);
@@ -540,7 +540,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(1,1,ton2/2,6,ton2),gate:gate,doneAction:2);
+envp=EnvGen.ar(Env.adsr(0.05,1,ton2/2,6,ton2),gate:gate,doneAction:2);
 
 osc2=VBAP.ar(4,
 		FreeVerb.ar(Shaper.ar(~w2.bufnum,Osc.ar(~w5.bufnum,pitch2,mul:amp2,phase:ph_y.theta)),wet,envp),
@@ -584,7 +584,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(1,1,0.5,6),gate:gate,doneAction:2);
+				env=EnvGen.ar(Env.adsr(0.05,1,0.5,6),gate:gate,doneAction:2);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 freq1=(fundamental*octave);
@@ -646,7 +646,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-	envp=EnvGen.ar(Env.adsr(1,1,ton3/2,6,ton3),gate:gate,doneAction:2);
+	envp=EnvGen.ar(Env.adsr(0.05,1,ton3/2,6,ton3),gate:gate,doneAction:2);
 
 osc3=VBAP.ar(4,
 					FreeVerb.ar(Shaper.ar(~w3.bufnum,Osc.ar(~w6.bufnum,pitch3,mul:amp3,phase:ph_z.theta)),wet,envp),
