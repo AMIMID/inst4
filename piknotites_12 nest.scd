@@ -640,7 +640,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur1,1),
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\mult,Prand([12,24],inf),
+			\mult,Prand([6,8,9,12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
 			\wet,Pbrown(0.1,1,0.1,inf),
 			\pl1,Pxrand(~list1,inf),
@@ -652,14 +652,14 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-	\speed2,Prand([1,3/4,2/3,1/2],inf),
-	\speed3,Prand([1,3/4,2/3,1/2],inf);
+	//\speed1,Prand([1,3/4,2/3,1/2],inf),
+	//\speed2,Prand([1,3/4,2/3,1/2],inf),
+	//\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~bb=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~dur2,1),
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-			\mult,Prand([12,24],inf),
+			\mult,Prand([6,8,9,12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
 			\wet,Pbrown(0.1,1,0.1,inf),
 			\pl1,Pxrand(~list1,inf),
@@ -671,14 +671,14 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-	\speed3,Prand([1,3/4,2/3,1/2],inf);
+	//\speed1,Prand([1,3/4,2/3,1/2],inf),
+	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
+	//\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 ~cc=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~dur3,1),
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\mult,Prand([12,24],inf),
+		\mult,Prand([6,8,9,12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
 			\wet,Pbrown(0.1,1,0.1,inf),
 			\pl1,Pxrand(~list1,inf),
@@ -690,9 +690,9 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot3,Prand(~angle,inf),
 	\angle_rot4,Prand(~angle,inf),
 	\angle_rot5,Prand(~angle,inf),
-	\speed1,Prand([1,3/4,2/3,1/2],inf),
-		\speed2,Prand([1,3/4,2/3,1/2],inf),
-		\speed3,Prand([1,3/4,2/3,1/2],inf);
+	//\speed1,Prand([1,3/4,2/3,1/2],inf),
+	//	\speed2,Prand([1,3/4,2/3,1/2],inf),
+	//	\speed3,Prand([1,3/4,2/3,1/2],inf);
 ));
 	);
 	TempoClock.default.tempo_(4/1);
