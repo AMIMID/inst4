@@ -435,7 +435,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(1,1,ph_x.rho/2,6,ph_x.rho),gate:gate,doneAction:2);
+envp=EnvGen.ar(Env.adsr(1,1,ton1/2,6,ton1),gate:gate,doneAction:2);
 osc1=VBAP.ar(4,
 		FreeVerb.ar(Shaper.ar(~w1.bufnum,Osc.ar(~w4.bufnum,pitch1,mul:amp1,phase:ph_x.theta)),wet,envp),
 ~b.bufnum,
@@ -540,7 +540,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-envp=EnvGen.ar(Env.adsr(1,1,ph_y.rho/2,6,ph_y.rho),gate:gate,doneAction:2);
+envp=EnvGen.ar(Env.adsr(1,1,ton2/2,6,ton2),gate:gate,doneAction:2);
 
 osc2=VBAP.ar(4,
 		FreeVerb.ar(Shaper.ar(~w2.bufnum,Osc.ar(~w5.bufnum,pitch2,mul:amp2,phase:ph_y.theta)),wet,envp),
@@ -646,7 +646,7 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*m).round(0.0000000000001);
 	pitch3=(freq3*ton3*m).round(0.0000000000001);
 
-	envp=EnvGen.ar(Env.adsr(1,1,ph_z.rho/2,6,ph_z.rho),gate:gate,doneAction:2);
+	envp=EnvGen.ar(Env.adsr(1,1,ton3/2,6,ton3),gate:gate,doneAction:2);
 
 osc3=VBAP.ar(4,
 					FreeVerb.ar(Shaper.ar(~w3.bufnum,Osc.ar(~w6.bufnum,pitch3,mul:amp3,phase:ph_z.theta)),wet,envp),
