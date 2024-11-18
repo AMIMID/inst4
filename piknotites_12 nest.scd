@@ -209,8 +209,8 @@ rythm=[1,1/1,1,1,1/1];
 		{
 var signal,wt,m=0,amp;
 
-~level=45.round(1).collect{m=m+1;amp=m.reciprocal};
-~phase=45.collect{pi};
+~level=90.round(1).collect{m=m+1;amp=m.reciprocal};
+~phase=90.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
@@ -287,9 +287,9 @@ sig.plot;
 	(
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=16,pl1=0,mult=12,
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,pl1=0,mult=12,
 		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=8;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env;
@@ -392,9 +392,9 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace2, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=16,pl1=0,mult=12,
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,pl1=0,mult=12,
 	xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=8;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env;
@@ -497,9 +497,9 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace3, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=16,pl1=0,mult=12,
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,pl1=0,mult=12,
 		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=8;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env;
