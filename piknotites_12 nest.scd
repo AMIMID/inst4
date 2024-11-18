@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=4;
+		~time=2;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -226,9 +226,9 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
-				//level=level;
-			//	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magx.[pl]/10);
+				level=level;
+				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
+			//levels=level+(~magx.[pl]/100);
 };
 			env = Env(~levelsss,[1]);
 sig=env.asSignal(1024);
@@ -244,9 +244,9 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
-		//level=level;
+		level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magy.[pl]/10);
+		//	levels=level+(~magy.[pl]/100);
 };
 			env = Env(~levelssss,[1]);
 sig=env.asSignal(1024);
@@ -262,9 +262,9 @@ var env,sig,wt,angle=0,level,levels,pl=1.neg;
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
 				pl=pl+1;
-			//	level=level;
+				level=level;
 	//levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			levels=level+(~magz.[pl]/10);
+			//levels=level+(~magz.[pl]/100);
 			};
 			env = Env(~levelsssss,[1]);
 sig=env.asSignal(1024);
@@ -287,7 +287,7 @@ sig.plot;
 	(
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,pl1=0,mult=12,
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=8,pl1=0,mult=12,
 		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
@@ -314,7 +314,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,6),gate:gate,doneAction:2);
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
 freq1=(fundamental*octave);
@@ -329,7 +329,7 @@ mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz))
 	sphere3=Spherical(mag_o.z,Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
-	xyz=Spherical(mult,sphere.theta,sphere.phi);
+	xyz=Spherical(mult*sphere1.rho,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v6=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
@@ -392,7 +392,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace2, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,pl1=0,mult=12,
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=8,pl1=0,mult=12,
 	xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
@@ -434,7 +434,7 @@ mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz))
 	sphere3=Spherical(mag_o.z,Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
-	xyz=Spherical(mult,sphere.theta,sphere.phi);
+	xyz=Spherical(mult*sphere2.rho,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v6=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
@@ -497,7 +497,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 );
 (
 SynthDef.new(\ospace3, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=4,pl1=0,mult=12,
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,octave=8,pl1=0,mult=12,
 		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1,wet=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444;
 	var ton1,ton2,ton3,envp;
@@ -539,7 +539,7 @@ mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz))
 	sphere3=Spherical(mag_o.z,Select.kr(pl1,~az),Select.kr(pl1,~el));
 	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
-	xyz=Spherical(mult,sphere.theta,sphere.phi);
+	xyz=Spherical(mult*sphere3.rho,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v6=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
@@ -637,7 +637,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 			\mult,Prand([6,8,9,12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
 			\wet,Pbrown(0.1,1,0.1,inf),
-			\pl1,Pxrand(~list1,inf),
+			\pl1,Pseq(~list1,inf),
 			\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
@@ -653,7 +653,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 			\mult,Prand([6,8,9,12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
 			\wet,Pbrown(0.1,1,0.1,inf),
-			\pl1,Pxrand(~list1,inf),
+			\pl1,Pseq(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 			\yr,Pbrown(0.1,1,0.1,inf),
 			\zr,Pbrown(0.1,1,0.1,inf),
@@ -669,7 +669,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 		\mult,Prand([6,8,9,12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
 			\wet,Pbrown(0.1,1,0.1,inf),
-			\pl1,Pxrand(~list1,inf),
+			\pl1,Pseq(~list1,inf),
 				\xr,Pbrown(0.1,1,0.1,inf),
 		\yr,Pbrown(0.1,1,0.1,inf),
 		\zr,Pbrown(0.1,1,0.1,inf),
@@ -680,7 +680,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle,inf),
 ));
 	);
-	TempoClock.default.tempo_(4/1);
+	TempoClock.default.tempo_(2/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
