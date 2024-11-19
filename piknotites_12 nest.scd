@@ -46,7 +46,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=2;
+		~time=1;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -84,7 +84,7 @@ z1=Complex(0,0);
 		}.value;
 //////////////////////////////////////////////////basis
 {
-var  sph1,sph2,sph3,sph4,sph5,m_x=4,m_y=3,m_z=2;
+var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=1;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -289,7 +289,7 @@ sig.plot;
 SynthDef.new(\ospace1, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,pl1=0,mult=12,
 		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=4;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=16;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env;
@@ -355,7 +355,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
+	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -394,7 +394,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 SynthDef.new(\ospace2, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,pl1=0,mult=12,
 	xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=4;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=16;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env;
@@ -459,7 +459,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
+	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
@@ -499,7 +499,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 SynthDef.new(\ospace3, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,pl1=0,mult=12,
 		xr=0.57735026918963,yr=0.57735026918963,zr=0.57735026918963,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=4;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,octave=16;
 	var ton1,ton2,ton3,envp;
 	var fundamental=55,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env;
@@ -564,7 +564,7 @@ v6=q5*v6*q5.conjugate;
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
-	n1=(pitch.x).round(0.0000000000001); n2=(pitch.y).round(0.0000000000001); n3=(pitch.z).round(0.0000000000001);
+	n1=(pitch.x).round(1); n2=(pitch.y).round(1); n3=(pitch.z).round(1);
 
 ton1=2.pow(n1/(2*6));
 ton2=2.pow(n2/(2*6));
