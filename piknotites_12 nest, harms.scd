@@ -1197,7 +1197,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-12.do{
+6.do{
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~magz_array.[pl2]));
 
 	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
@@ -1317,7 +1317,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-12.do{
+6.do{
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~magz_array.[pl2]));
 
 	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
@@ -1436,7 +1436,7 @@ freq1=(fundamental1*octave);
 freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
-12.do{
+6.do{
 mag_o=Cartesian(Select.kr(pl1,~magx_array.[pl2]), Select.kr(pl1,~magy_array.[pl2]),Select.kr(pl1,~magz_array.[pl2]));
 
 	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));

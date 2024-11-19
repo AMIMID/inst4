@@ -55,7 +55,7 @@ var c1,cc1,angle1=0,c_real1,c_imag1,z1;
  	c_real=exp(Complex(0,1)*angle.degrad).real;
 	c_imag=exp(Complex(0,1)*angle.degrad).imag;
  	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
- 	c=Complex(c_real,c_imag);
+ 	c=Complex(c_real.round(0.000001),c_imag.round(0.000001));
  };
 z=Complex(0,0);
 
@@ -70,7 +70,7 @@ z=Complex(0,0);
  	c_real1=exp(Complex(0,1)*angle1.degrad).real;
 	c_imag1=exp(Complex(0,1)*angle1.degrad).imag;
  	angle1=(angle1+45).wrap(0,360);
- 	c1=Complex(c_real,c_imag);
+ 	c1=Complex(c_real1.round(0.000001),c_imag1.round(0.000001));
  };
 z1=Complex(0,0);
 
