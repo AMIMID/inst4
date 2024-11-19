@@ -677,7 +677,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle,inf),
 ));
 	);
-	TempoClock.default.tempo_(1/1);
+	TempoClock.default.tempo_(1/4);
 
 //s.record(numChannels:4);
 	/////////////////////scales
