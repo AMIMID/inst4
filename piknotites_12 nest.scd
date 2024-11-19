@@ -636,7 +636,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Prand([10,20,30,40],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
-			\wet,Pbrown(0.1,1,0.1,inf),
 			\pl1,Pseq(~list1,inf),
 		\xr,Pseq(~magx,inf),
 		\yr,Pseq(~magy,inf),
@@ -652,7 +651,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\mult,Prand([10,20,30,40],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
-			\wet,Pbrown(0.1,1,0.1,inf),
 			\pl1,Pseq(~list1,inf),
 		\xr,Pseq(~magx,inf),
 		\yr,Pseq(~magy,inf),
@@ -668,7 +666,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\mult,Prand([10,20,30,40],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),
-			\wet,Pbrown(0.1,1,0.1,inf),
 			\pl1,Pseq(~list1,inf),
 				\xr,Pseq(~magx,inf),
 		\yr,Pseq(~magy,inf),
