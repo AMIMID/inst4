@@ -1046,7 +1046,7 @@ var index1,index2,index3,index4,index5,index6,pl7=0,pl8=0,pl9=0,t1,t2,t3,t4,t5,t
 var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
-rythm=[1,1/2,1,1,1/2].mirror;
+rythm=[1,1/1,1,1,1/1];
 
 ~dur1 = (180*~time).collect{
 	ph1=~magx.[pl1];

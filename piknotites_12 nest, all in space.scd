@@ -175,7 +175,7 @@ var index1,index2,index3,index4,index5,index6,pl7=0,pl8=0,pl9=0,t1,t2,t3,t4,t5,t
 var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
-rythm=[1,1/2,1,1,1/2].mirror;
+rythm=[1,1/1,1,1,1/1];
 
 ~dur1 = (90*~time).collect{
 	ph1=~magx.[pl1];
@@ -289,7 +289,7 @@ sig.plot;
 (
 SynthDef.new(\ospace1, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=4,envp;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=8,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,cutt=440;
@@ -397,8 +397,8 @@ osc1=VBAP.ar(4,
 ~b.bufnum,
 ~b.bufnum,
 //sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,1,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,1,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
@@ -412,7 +412,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 (
 SynthDef.new(\ospace2, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=4,envp;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=8,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,cutt=440;
@@ -517,8 +517,8 @@ osc2=VBAP.ar(4,
 						SinOsc.ar(pitch2,mul:amp2,phase:phase+ph_y.theta),
 ~b.bufnum,
 //sphere2.theta.raddeg,sphere2.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,1,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,1,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 		wrappedOut2.value(out2,LeakDC.ar(osc2,mul:env));
@@ -532,7 +532,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 (
 SynthDef.new(\ospace3, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=4,envp;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=8,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=110,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,cutt=440;
@@ -636,8 +636,8 @@ osc3=VBAP.ar(4,
 						SinOsc.ar(pitch3,mul:amp3,phase:phase+ph_z.theta),
 ~b.bufnum,
 //sphere3.theta.raddeg,sphere3.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,1,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,1,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 	wrappedOut3.value(out3,LeakDC.ar(osc3,mul:env));
@@ -715,7 +715,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle,inf),
 ));
 	);
-	TempoClock.default.tempo_(1/2);
+	TempoClock.default.tempo_(1/4);
 
 //s.record(numChannels:4);
 	/////////////////////scales
@@ -730,9 +730,9 @@ Tdef.new(\h,{
 //s.record(numChannels:4);
 			(1).wait;
 ~aa.play;
-			s.record(numChannels:4);
+		//	s.record(numChannels:4);
 ~bb.play;
-			s.record(numChannels:4);
+		//	s.record(numChannels:4);
 ~cc.play;
 s.record(numChannels:4);
 			(1).wait;
