@@ -210,8 +210,8 @@ rythm=[1,1/1,1,1,1/1];
 		{
 var signal,wt,m=0,amp;
 
-~level=45.round(0.00001).collect{m=m+1;amp=m.reciprocal};
-~phase=45.collect{pi};
+~level=90.collect{m=m+1;amp=m.reciprocal};
+~phase=90.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
@@ -326,7 +326,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-90.do{
+45.do{
 		mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
@@ -448,7 +448,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-90.do{
+45.do{
 	mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
@@ -568,7 +568,7 @@ freq1=(fundamental1*octave);
 freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
-90.do{
+45.do{
 	mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
