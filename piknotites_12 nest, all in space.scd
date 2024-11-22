@@ -514,7 +514,7 @@ ton3=2.pow(n3/(2*6));
 
 osc2=VBAP.ar(4,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3,phase:phase+ph_z.theta),
+						SinOsc.ar(pitch2,mul:amp2,phase:phase+ph_y.theta),
 ~b.bufnum,
 //sphere2.theta.raddeg,sphere2.phi.raddeg
 Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
