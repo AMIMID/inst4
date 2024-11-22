@@ -284,6 +284,16 @@ sig.plot;
 
 	// Env(~levels,[0.04444]).plot;
 
+		//////notes
+	({
+		var angle=0;
+		~angle=(720*~time).collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		}
+		}.value;
+	~angle=~angle/2;
+	);
+
 /////synths////
 	(
 (
@@ -326,7 +336,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-45.do{
+90.do{
 		mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
@@ -382,7 +392,7 @@ ton3=2.pow(n3/(2*6));
 	pitch3=(freq3*ton3).round(0.0000000000001);
 
 					///%2==0 simulates .even
-			phase=if(pl2%2==0,0.degrad,90.degrad);
+			//phase=if(pl2%2==0,0.degrad,90.degrad);
 
 		/*cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
@@ -393,7 +403,7 @@ ton3=2.pow(n3/(2*6));
 
 osc1=VBAP.ar(4,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
-						SinOsc.ar(pitch1,mul:amp1,phase:phase+ph_x.theta),
+						SinOsc.ar(pitch1,mul:amp1,phase:~angle.[pl1].degrad),
 ~b.bufnum,
 ~b.bufnum,
 //sphere1.theta.raddeg,sphere1.phi.raddeg
@@ -448,7 +458,7 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-45.do{
+90.do{
 	mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
@@ -504,7 +514,7 @@ ton3=2.pow(n3/(2*6));
 	pitch3=(freq3*ton3).round(0.0000000000001);
 
 					///%2==0 simulates .even
-			phase=if(pl2%2==0,0.degrad,90.degrad);
+			//phase=if(pl2%2==0,0.degrad,90.degrad);
 
 		/*cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
@@ -514,7 +524,7 @@ ton3=2.pow(n3/(2*6));
 
 osc2=VBAP.ar(4,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch2,mul:amp2,phase:phase+ph_y.theta),
+						SinOsc.ar(pitch2,mul:amp2,phase:~angle.[pl1].degrad),
 ~b.bufnum,
 //sphere2.theta.raddeg,sphere2.phi.raddeg
 Osc.ar(~t.bufnum,1,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -568,7 +578,7 @@ freq1=(fundamental1*octave);
 freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
-45.do{
+90.do{
 	mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
@@ -623,7 +633,7 @@ amp1=(ton1.reciprocal*octave.reciprocal*sphere1.rho).round(0.0000000000001);
 	pitch2=(freq2*ton2).round(0.0000000000001);
 	pitch3=(freq3*ton3).round(0.0000000000001);
 					///%2==0 simulates .even
-			phase=if(pl2%2==0,0.degrad,90.degrad);
+			//phase=if(pl2%2==0,0.degrad,90.degrad);
 
 		/*cutt_freq1=(freq*ton1*m).round(0.0000000000001);
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
@@ -633,7 +643,7 @@ amp1=(ton1.reciprocal*octave.reciprocal*sphere1.rho).round(0.0000000000001);
 
 osc3=VBAP.ar(4,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3,phase:phase+ph_z.theta),
+						SinOsc.ar(pitch3,mul:amp3,phase:~angle.[pl1].degrad),
 ~b.bufnum,
 //sphere3.theta.raddeg,sphere3.phi.raddeg
 Osc.ar(~t.bufnum,1,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -657,17 +667,6 @@ Osc.ar(~t.bufnum,1,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:9
 		n=n+1;
 		}
 		}.value
-	);
-
-
-		//////notes
-	({
-		var angle=0;
-		~angle=(720*~time).collect{
-		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
-		}
-		}.value;
-	~angle=~angle/2;
 	);
 
 //////////pattern for mobius strib of sequential or parallel play of directions
@@ -715,7 +714,7 @@ Osc.ar(~t.bufnum,1,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:9
 	\angle_rot5,Prand(~angle,inf),
 ));
 	);
-	TempoClock.default.tempo_(1/4);
+	TempoClock.default.tempo_(1/2);
 
 //s.record(numChannels:4);
 	/////////////////////scales
