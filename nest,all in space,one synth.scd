@@ -180,7 +180,7 @@ var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
 rythm=[1,1/1,1,1,1/1];
 
-~dur = (45*~time).collect{
+~dur = (180*~time).collect{
 			ph1=Cartesian(~magx.[pl1],~magy.[pl1],~magz.[pl1]).rho/(2.sqrt);
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
@@ -285,7 +285,7 @@ SynthDef.new(\ospace1, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=8,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=220,fundamental1,fundamental2,fundamental3;
+	var fundamental=440,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,cutt=440;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch,pl1=0;
@@ -308,7 +308,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(1,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.adsr(0.05,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -320,13 +320,20 @@ freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
 
-45.do{
-		mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
+1.do{
+		//mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
-	sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
-	sphere2=Spherical(mag_o.y,~az.[pl1],~el.[pl1]);
-	sphere3=Spherical(mag_o.z,~az.[pl1],~el.[pl1]);
-	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),~az.[pl1],~el.[pl1]);
+	//sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
+	//sphere2=Spherical(mag_o.y,~az.[pl1],~el.[pl1]);
+	//sphere3=Spherical(mag_o.z,~az.[pl1],~el.[pl1]);
+	//sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),~az.[pl1],~el.[pl1]);
+
+				mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz));
+
+	sphere1=Spherical(mag_o.x,Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere2=Spherical(mag_o.y,Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere3=Spherical(mag_o.z,Select.kr(pl1,~az),Select.kr(pl1,~el));
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),Select.kr(pl1,~az),Select.kr(pl1,~el));
 
 	xyz=Spherical(mult,sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
@@ -350,6 +357,7 @@ q4=((v*exp(Complex(0,1)*angle_rot4.degrad).imag)+exp(Complex(0,1)*angle_rot4.deg
 v=q4*v*q4.conjugate;
 q5=((v*exp(Complex(0,1)*angle_rot5.degrad).imag)+exp(Complex(0,1)*angle_rot5.degrad).real);
 v6=q5*v6*q5.conjugate;
+				//v6=q1*v6*q1.conjugate;
 
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
@@ -382,7 +390,7 @@ ton3=2.pow(n3/(2*6));
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
-					envp=EnvGen.ar(Env.adsr(1,0.5,1/2,6,1),gate:gate);
+					envp=EnvGen.ar(Env.adsr(0.05,0.5,1/2,6,1),gate:gate);
 
 
 osc1=VBAP.ar(6,
@@ -421,7 +429,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
 				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 							//	m=m+1;
-					pl1=pl1+1;
+					//pl1=pl1+1;
 			};
 
 }).add;
@@ -440,10 +448,11 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur,1),
+			\pl1,Prand(~list1,inf),
 		\out1,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 			\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 			\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
-			\mult,Prand([12,24,48],inf),
+			\mult,Prand([12,24,48,96],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
 		\xr,Pseq(~magx,inf),
 		\yr,Pseq(~magy,inf),
@@ -455,7 +464,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle,inf),
 ));
 	);
-	TempoClock.default.tempo_(1/2);
+	TempoClock.default.tempo_(4/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
