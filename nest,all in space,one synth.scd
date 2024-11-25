@@ -49,7 +49,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
-		~time=16;
+		~time=32;
 {
 var c,cc,angle=0,c_real,c_imag,z;
 var c1,cc1,angle1=0,c_real1,c_imag1,z1;
@@ -308,7 +308,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.05,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.1);
+				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.001);
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -319,8 +319,6 @@ freq1=(fundamental1*octave);
 freq2=(fundamental2*octave);
 freq3=(fundamental3*octave);
 
-
-1.do{
 		//mag_o=Cartesian(~magx.[pl1], ~magy.[pl1],~magz.[pl1]);
 
 	//sphere1=Spherical(mag_o.x,~az.[pl1],~el.[pl1]);
@@ -430,7 +428,6 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 							//	m=m+1;
 					//pl1=pl1+1;
-			};
 
 }).add;
 );
@@ -464,7 +461,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle,inf),
 ));
 	);
-	TempoClock.default.tempo_(32/1);
+	TempoClock.default.tempo_(16/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
