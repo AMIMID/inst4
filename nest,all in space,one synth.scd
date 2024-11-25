@@ -6,7 +6,7 @@ s.options.numWireBufs = 1024*4;
 s.options.numOutputBusChannels=6;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
-s.options.memSize = 8192*64;
+s.options.memSize = 8192*128;
 s.options.blockSize = 64*8;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 48000;
@@ -87,7 +87,7 @@ z1=Complex(0,0);
 		}.value;
 //////////////////////////////////////////////////basis
 {
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=1;
+var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=3;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -445,15 +445,15 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur,1),
-			\pl1,Prand(~list1,inf),
+		//	\pl1,Prand(~list1,inf),
 		\out1,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 			\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 			\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 			\mult,Prand([48,96],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
-		\xr,Pseq(~magx,inf),
-		\yr,Pseq(~magy,inf),
-		\zr,Pseq(~magz,inf),
+		\xr,Pbrown(0,1,0.1,inf),
+		\yr,Pbrown(0,1,0.1,inf),
+		\zr,Pbrown(0,1,0.1,inf),
 	\angle_rot1,Prand(~angle,inf),
 	\angle_rot2,Prand(~angle,inf),
 	\angle_rot3,Prand(~angle,inf),
