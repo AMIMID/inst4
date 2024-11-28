@@ -25,17 +25,17 @@ SynthDef.new(\ospace1, {
 	env=EnvGen.ar(Env.sine(duration));
 	in=InFeedback.ar(6,6);
 	sig=BPF.ar(in,cuttfreq,band,1/(band.sqrt));
-	Out.ar(0,sig);
+	Out.ar(0,sig*env);
 }).add;
 );
 
 //////////pattern for mobius strib of sequential or parallel play of directions
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
-	\dur,Pseq(1,inf),
+	\dur,Pseq([1],inf),
 	\duration,Pbrown(2,8,1,inf),
-	\cuttfreq,Pbrown(100,1000,100,inf)
-	\cand,Pbrown(0.0001,1,0.0001,inf);
+	\cuttfreq,Pbrown(100,1000,100,inf),
+	\band,Pbrown(0.0001,1,0.0001,inf);
 
 ));
 	);
