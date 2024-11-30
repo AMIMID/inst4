@@ -285,7 +285,7 @@ SynthDef.new(\ospace1, {
 	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1,pl=0,m_x=3,m_y=3,m_z=3;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pll=0,octave=1,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
-	var fundamental=10000,fundamental1,fundamental2,fundamental3;
+	var fundamental=5000,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,cutt=440,o,magg;
 	var v0,v,v6,q1,q2,q3,q4,q5,axis;
 	var pitch;
@@ -419,7 +419,7 @@ mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 	);
 			};
 
-				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.001);
+				env=EnvGen.ar(Env.adsr(1,0.5,0.5,6),gate:gate,doneAction:2,levelScale:0.001);
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -505,7 +505,7 @@ ton3=2.pow(n3/(2*6));
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
-					envp=EnvGen.ar(Env.adsr(0.1,0.5,1/2,6,1),gate:gate);
+					envp=EnvGen.ar(Env.adsr(1,0.5,1/2,6,1),gate:gate);
 
 
 osc1=VBAP.ar(6,
@@ -517,7 +517,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180)
 Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-osc2=VBAP.ar(6,
+/*osc2=VBAP.ar(6,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 						SinOsc.ar(pitch2,mul:amp2,phase:Select.kr(pl,~angle).degrad),
 ~b.bufnum,
@@ -533,13 +533,13 @@ osc3=VBAP.ar(6,
 //sphere3.theta.raddeg,sphere3.phi.raddeg
 Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
-		);
+		);*/
 
-	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
-
-		wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+				// wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
+				// //	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+				//
+				// wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
+				// //	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 
 		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
 				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
@@ -570,7 +570,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 			\m_z,Prand([1,2,3,4],inf),
 		//	\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
-			\mult,Prand([48,96],inf),
+			\mult,Prand([48],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
 		\xr,Pbrown(0,1,0.1,inf),
 		\yr,Pbrown(0,1,0.1,inf),
@@ -582,7 +582,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle1,inf),
 ));
 	);
-	TempoClock.default.tempo_(1/1);
+	TempoClock.de}fault.tempo_(1/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
