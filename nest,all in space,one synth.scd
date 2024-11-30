@@ -308,7 +308,7 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 //	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.01,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.001);
+				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.001);
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -388,7 +388,7 @@ ton3=2.pow(n3/(2*6));
 		cutt_freq2=(freq*ton2*m).round(0.0000000000001);
 		cutt_freq3=(freq*ton3*m).round(0.0000000000001);*/
 				/////fm///+SinOsc.ar(mag_x.rho,mag_x.theta,mul:mag_x.rho.reciprocal)
-					envp=EnvGen.ar(Env.adsr(0.01,0.5,1/2,8,1),gate:gate);
+					envp=EnvGen.ar(Env.adsr(0.1,0.5,1/2,8,1),gate:gate);
 
 
 osc1=VBAP.ar(6,
@@ -418,13 +418,13 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180)
 Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-	wrappedOut3.value(out1,LeakDC.ar(CombC.ar(osc3,mag_z/10,mag_z/10,mag_z*2),mul:env));
+	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
 				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 
-		wrappedOut2.value(out1,LeakDC.ar(CombC.ar(osc2,mag_y/10,mag_y/10,mag_y*2),mul:env));
+		wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
 				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 
-		wrappedOut1.value(out1,LeakDC.ar(CombC.ar(osc1,mag_x/10,mag_x/10,mag_x*2),mul:env));
+		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
 				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 							//	m=m+1;
 					//pl1=pl1+1;
