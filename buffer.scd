@@ -14,12 +14,12 @@ s.waitForBoot
 Buffer.freeAll
 (
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav",channels:1 );
-~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav",channels:2 );
-~c4 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav",channels:3 );
-~c5 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav",channels:4 );
-~c6 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav",channels:5 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:1 );
+~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:2 );
+~c4 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:3 );
+~c5 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:4 );
+~c6 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:5 );
 );
 )
 ~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav");
@@ -1297,12 +1297,12 @@ chainff = chainf.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin
 	//	Osc.ar(~t,1,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 	//		Osc.ar(~t,1,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
 
-		sig1=CombC.ar(IFFT(chainaa),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:6);
-		sig2=CombC.ar(IFFT(chainbb),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:6);
-		sig3=CombC.ar(IFFT(chaincc),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:6);
-		sig4=CombC.ar(IFFT(chaindd),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:6);
-		sig5=CombC.ar(IFFT(chainee),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:6);
-		sig6=CombC.ar(IFFT(chainff),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:6);
+		sig1=CombC.ar(IFFT(chainaa),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:((amp1.rho/(2.sqrt))*10));
+		sig2=CombC.ar(IFFT(chainbb),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:((amp1.rho/(2.sqrt))*10));
+		sig3=CombC.ar(IFFT(chaincc),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:((amp1.rho/(2.sqrt))*10));
+		sig4=CombC.ar(IFFT(chaindd),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:((amp1.rho/(2.sqrt))*10));
+		sig5=CombC.ar(IFFT(chainee),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:((amp1.rho/(2.sqrt))*10));
+		sig6=CombC.ar(IFFT(chainff),maxdelaytime:((amp1.rho/(2.sqrt))/10),delaytime:(amp1.rho/(2.sqrt))/10,decaytime:((amp1.rho/(2.sqrt))*10));
 
 
 		Out.ar(0,sig1);	Out.ar(1,sig2);	Out.ar(2,sig3);	Out.ar(3,sig4);	Out.ar(4,sig5);	Out.ar(5,sig6);
