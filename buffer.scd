@@ -14,15 +14,18 @@ s.waitForBoot
 Buffer.freeAll
 (
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:1 );
-~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:2 );
-~c4 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:3 );
-~c5 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:4 );
-~c6 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241130_161337.wav",channels:5 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241208_051435.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241208_051435.wav",channels:1 );
+~c3 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241208_051435.wav",channels:2 );
+~c4 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241208_051435.wav",channels:3 );
+~c5 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241208_051435.wav",channels:4 );
+~c6 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241208_051435.wav",channels:5 );
 );
 )
-~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/SC_241128_154919.wav");
+~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav");
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:1 );
 /////wavetables
 (
 ~t= Buffer.alloc(s,2048);
@@ -1067,10 +1070,10 @@ SynthDef.new(\o_in, {
 	var phase1,phase2,bank1,bank2,frames=1024;
 
  in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
-//	in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
+in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
 
 	chainx = FFT(LocalBuf(frames), in1);
-//	chainy = FFT(LocalBuf(frames), in2);
+	chainy = FFT(LocalBuf(frames), in2);
 
 	//in1 =SoundIn.ar(0);
 	// in2 = SoundIn.ar(0);
@@ -1089,18 +1092,20 @@ SynthDef.new(\o_in, {
 amp1=Cartesian(~magx[pl],~magy.[pl],~magz.[pl]);
 //amp2=Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]);
 
-		phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+	//	phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
 	//phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
 
+		phase1=Complex(exp(Complex(0,1)*(az1)).real.round(0.000001),exp(Complex(0,1)*(el1)).imag.round(0.000001)).theta;
 
-chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+~angle.[pl].degrad)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-//chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+~angle.[pl].degrad)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+
+		chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		//	Out.ar(0,VBAP.ar(6,IFFT(chainxx),~b.bufnum,
-		//Osc.ar(~t,1,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-		//	Osc.ar(~t,1,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
+			Out.ar(0,VBAP.ar(6,IFFT(chainxx),~b.bufnum,
+	/Osc.ar(~t,1,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
 
 	//	Out.ar(0,VBAP.ar(6,IFFT(chainyy),~b.bufnum,
 	//	Osc.ar(~t,1,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -1109,7 +1114,7 @@ chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), 
 
 		Out.ar(0,VBAP.ar(6,IFFT(chainxx),~b.bufnum,az1.raddeg,el1.raddeg));
 
-	//	Out.ar(0,VBAP.ar(6,IFFT(chainyy),~b.bufnum,az2.raddeg,el2.raddeg));
+		Out.ar(0,VBAP.ar(6,IFFT(chainyy),~b.bufnum,az1.raddeg,el1.raddeg));
 pl=pl+1;
 
 		};
@@ -1139,7 +1144,7 @@ s.record(numChannels:6)
 
 /////////////freeze
 
-~bf = Buffer.read(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/spinos.wav");
+~bf = Buffer.read(s,"/Users/petrostatsiopoulos/Documents/EXTERNAL/music/piece of my heart Intermission.wav");
 
 (
 ~fftsize=8192;
@@ -1150,7 +1155,7 @@ s.record(numChannels:6)
 (
 {
 	var sig,chain,localbuf;
-	sig=PlayBuf.ar(6, ~bf.bufnum, BufRateScale.kr(~bf), loop: 0,doneAction:2);
+	sig=PlayBuf.ar(2, ~bf.bufnum, BufRateScale.kr(~bf), loop: 0,doneAction:2);
 	localbuf={LocalBuf.new(~fftsize)}!2;
 	chain=FFT(localbuf,sig,~hop,~win);
 	chain=PV_RecordBuf(chain,~f,run:1,hop:~hop,wintype:~win);
@@ -1162,13 +1167,13 @@ s.record(numChannels:6)
 x={
 	var sig,chain,localbuf;
 	localbuf={LocalBuf.new(~fftsize)}!2;
-		chain=PV_PlayBuf(localbuf,~f,\rate.kr(1),loop:0);
+		chain=PV_PlayBuf(localbuf,~f,\rate.kr(0.5),loop:1);
 		sig=IFFT(chain,~win);
 	}.play;
 )
 
 x.set(\rate,0);
-x.set(\rate,-1);
+x.set(\rate,1);
 x.set(\rate,-2/3);
 x.release(2);
 
@@ -1274,9 +1279,10 @@ SynthDef.new(\o_reverb, {
 amp1=Cartesian(~magx[pl],~magy.[pl],~magz.[pl]);
 //amp2=Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]);
 
-		phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+	//	phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
 	//phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
 
+phase1=Complex(exp(Complex(0,1)*(az1)).real.round(0.000001),exp(Complex(0,1)*(el1)).imag.round(0.000001)).theta;
 
 chainaa = chaina.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 chainbb = chainb.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
@@ -1284,8 +1290,14 @@ chaincc = chainc.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin
 chaindd = chaind.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 chainee = chaine.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 chainff = chainf.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-	//	chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+~angle.[pl].degrad)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-//chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+~angle.[pl].degrad)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+
+/*chainaa = chaina.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chainbb = chainb.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chaincc = chainc.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chaindd = chaind.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chainee = chaine.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chainff = chainf.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);*/
+
 
 	b=b+1;
 
@@ -1307,7 +1319,6 @@ chainff = chainf.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin
 
 		Out.ar(0,sig1);	Out.ar(1,sig2);	Out.ar(2,sig3);	Out.ar(3,sig4);	Out.ar(4,sig5);	Out.ar(5,sig6);
 
-	//	Out.ar(0,VBAP.ar(6,IFFT(chainyy),~b.bufnum,az2.raddeg,el2.raddeg));
 pl=pl+1;
 
 		};

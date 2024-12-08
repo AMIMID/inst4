@@ -372,12 +372,12 @@ ton3=2.pow(n3/(2*6));
 	sphere2=Spherical(mag.y,~az.[pl2],~el.[pl2]);
 	sphere3=Spherical(mag.z,~az.[pl2],~el.[pl2]);
 
-	ph_x=Polar(sphere1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-	ph_y=Polar(sphere2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-	ph_z=Polar(sphere3.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-	mag_x=sphere1.rho;
-	mag_y=sphere2.rho;
-	mag_z=sphere3.rho;
+//	ph_x=Polar(sphere1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+//	ph_y=Polar(sphere2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+//	ph_z=Polar(sphere3.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi));
+//	mag_x=sphere1.rho;
+//	mag_y=sphere2.rho;
+//	mag_z=sphere3.rho;
 
 	    amp1=(ton1.reciprocal*octave.reciprocal*sphere1.rho).round(0.0000000000001);
 		amp2=(ton2.reciprocal*octave.reciprocal*sphere2.rho).round(0.0000000000001);
@@ -386,6 +386,8 @@ ton3=2.pow(n3/(2*6));
 	pitch1=(freq1*ton1*sphere1.rho.reciprocal).round(0.0000000000001);
 	pitch2=(freq2*ton2*sphere2.rho.reciprocal).round(0.0000000000001);
 	pitch3=(freq3*ton3*sphere3.rho.reciprocal).round(0.0000000000001);
+
+				phase=Complex(exp(Complex(0,1)*(sphere.theta)).real.round(0.000001),exp(Complex(0,1)*(sphere.phi)).imag.round(0.000001)).theta;
 
 					///%2==0 simulates .even
 			//phase=if(pl2%2==0,0.degrad,90.degrad);
@@ -399,7 +401,7 @@ ton3=2.pow(n3/(2*6));
 
 osc1=VBAP.ar(6,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
-				SinOsc.ar(pitch1,mul:amp1,phase:Select.kr(pl1,~angle).degrad),
+				SinOsc.ar(pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
 //sphere1.theta.raddeg,sphere1.phi.raddeg
 Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -408,7 +410,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 
 osc2=VBAP.ar(6,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch2,mul:amp2,phase:Select.kr(pl1,~angle).degrad),
+						SinOsc.ar(pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
 //sphere2.theta.raddeg,sphere2.phi.raddeg
 Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -417,7 +419,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 
 osc3=VBAP.ar(6,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3,phase:Select.kr(pl1,~angle).degrad),
+						SinOsc.ar(pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
 //sphere3.theta.raddeg,sphere3.phi.raddeg
 Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),

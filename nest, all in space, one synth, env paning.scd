@@ -388,6 +388,8 @@ ton3=2.pow(n3/(2*6));
 	pitch2=(freq2*ton2*sphere2.rho.reciprocal).round(0.0000000000001);
 	pitch3=(freq3*ton3*sphere3.rho.reciprocal).round(0.0000000000001);
 
+			phase=Complex(exp(Complex(0,1)*(sphere.theta)).real.round(0.000001),exp(Complex(0,1)*(sphere.phi)).imag.round(0.000001)).theta;
+
 					///%2==0 simulates .even
 			//phase=if(pl2%2==0,0.degrad,90.degrad);
 
@@ -401,7 +403,7 @@ ton3=2.pow(n3/(2*6));
 
 osc1=VBAP.ar(6,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
-				SinOsc.ar(pitch1,mul:amp1,phase:Select.kr(pl1,~angle).degrad),
+				SinOsc.ar(pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
 EnvGen.ar(Env(~az_levels,[0.001])),
 EnvGen.ar(Env(~el_levels,[0.001]))
@@ -409,7 +411,7 @@ EnvGen.ar(Env(~el_levels,[0.001]))
 
 osc2=VBAP.ar(6,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch2,mul:amp2,phase:Select.kr(pl1,~angle).degrad),
+						SinOsc.ar(pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
 EnvGen.ar(Env(~az_levels,[0.001])),
 EnvGen.ar(Env(~el_levels,[0.001]))
@@ -417,7 +419,7 @@ EnvGen.ar(Env(~el_levels,[0.001]))
 
 osc3=VBAP.ar(6,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3,phase:Select.kr(pl1,~angle).degrad),
+						SinOsc.ar(pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
 EnvGen.ar(Env(~az_levels,[0.001])),
 EnvGen.ar(Env(~el_levels,[0.001]))
