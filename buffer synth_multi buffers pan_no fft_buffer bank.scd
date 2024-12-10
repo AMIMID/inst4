@@ -18,22 +18,22 @@ Buffer.freeAll;
 
 (
 		(
-~c1 = Buffer.read(s,);
-~c2 = Buffer.read(s,);
-~c3 = Buffer.read(s,);
-~c4 = Buffer.read(s,);
-~c5 = Buffer.read(s,);
-~c6 = Buffer.read(s,);
-~c7 = Buffer.read(s,);
-~c8 = Buffer.read(s,);
-~c9 = Buffer.read(s,);
-~c10 = Buffer.read(s,);
-~c11 = Buffer.read(s,);
-~c12 = Buffer.read(s,);
-~c13 = Buffer.read(s,);
-~c14 = Buffer.read(s,);
-~c15 = Buffer.read(s,);
-~c16 = Buffer.read(s,);
+~c1 = Buffer.readChannel(s,,channels:0);
+~c2 = Buffer.readChannel(s,,channels:0);
+~c3 = Buffer.readChannel(s,,channels:0);
+~c4 = Buffer.readChannel(s,,channels:0);
+~c5 = Buffer.readChannel(s,,channels:0);
+~c6 = Buffer.readChannel(s,,channels:0);
+~c7 = Buffer.readChannel(s,,channels:0);
+~c8 = Buffer.readChannel(s,,channels:0);
+~c9 = Buffer.readChannel(s,,channels:0);
+~c10 = Buffer.readChannel(s,,channels:0);
+~c11 = Buffer.readChannel(s,,channels:0);
+~c12 = Buffer.readChannel(s,,channels:0);
+~c13 = Buffer.readChannel(s,,channels:0);
+~c14 = Buffer.readChannel(s,,channels:0);
+~c15 = Buffer.readChannel(s,,channels:0);
+~c16 = Buffer.readChannel(s,,channels:0);
 )
 );
 
@@ -211,7 +211,7 @@ SynthDef.new(\ospacebuf, {
 
 
 osc=VBAP.ar(6,
-				PlayBuf.ar(2, pl1, BufRateScale.kr(pl1.bufnum), loop: 0, doneAction:0);
+				PlayBuf.ar(1, pl1, BufRateScale.kr(pl1.bufnum), loop: 0, doneAction:0);
 ~b.bufnum,
 sphere.theta.raddeg,sphere.phi.raddeg
 //Osc.ar(~t.bufnum,1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),

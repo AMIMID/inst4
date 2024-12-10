@@ -449,35 +449,35 @@ ton3=2.pow(n3/(2*6));
 osc1=VBAP.ar(6,
 				Osc.ar(pl2,pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
-//sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere1.theta.raddeg,sphere1.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc2=VBAP.ar(6,
 				Osc.ar(pl2,pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
-//sphere2.theta.raddeg,sphere2.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere2.theta.raddeg,sphere2.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc3=VBAP.ar(6,
 					Osc.ar(pl2,pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
-//sphere3.theta.raddeg,sphere3.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere3.theta.raddeg,sphere3.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+//	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 
-		wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+	//	wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+	//	wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 							//	m=m+1;
 					pl2=pl2+1;
 			};

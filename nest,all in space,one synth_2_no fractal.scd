@@ -368,37 +368,37 @@ osc1=VBAP.ar(6,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
 				SinOsc.ar(pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
-//sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere1.theta.raddeg,sphere1.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc2=VBAP.ar(6,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 						SinOsc.ar(pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
-//sphere2.theta.raddeg,sphere2.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere2.theta.raddeg,sphere2.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc3=VBAP.ar(6,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 						SinOsc.ar(pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
-//sphere3.theta.raddeg,sphere3.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere3.theta.raddeg,sphere3.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+//	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 
-		wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+	//	wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 							//	m=m+1;
 					pl2=pl2+1;
 			};
@@ -419,7 +419,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur,1),
-			\pl1,Prand(~list1,inf),
+			\pl1,Pseq(~list1,inf),
 		\out1,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),

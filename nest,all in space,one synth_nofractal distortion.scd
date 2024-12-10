@@ -50,41 +50,6 @@ Buffer.freeAll;
 ///////////////////////////////////////////////////////arrays
 ///////fractal
 		~time=16;
-{
-var c,cc,angle=0,c_real,c_imag,z;
-var c1,cc1,angle1=0,c_real1,c_imag1,z1;
-
-~c = 5.collect{
- 	c_real=exp(Complex(0,1)*angle.degrad).real;
-	c_imag=exp(Complex(0,1)*angle.degrad).imag;
- 	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
- 	c=Complex(c_real.round(0.000001),c_imag.round(0.000001));
- };
-z=Complex(0,0);
-
-~j = (2*720*~time).collect{
-	cc=~c.[4];
-	z=z.pow(2)+cc;
-	z.theta.round(0.0000000000001);
-
-};
-
-~k = 5.collect{
- 	c_real1=exp(Complex(0,1)*angle1.degrad).real;
-	c_imag1=exp(Complex(0,1)*angle1.degrad).imag;
- 	angle1=(angle1+45).wrap(0,360);
- 	c1=Complex(c_real1.round(0.000001),c_imag1.round(0.000001));
- };
-z1=Complex(0,0);
-
-~h = (2*720*~time).collect{
-	cc1=~k.[4].round(0.0000000000001);
-	z1=z1.pow(2)+cc1;
-	z1.theta.round(0.0000000000001);
-
-}
-
-		}.value;
 //////////////////////////////////////////////////basis
 {
 var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=3;
@@ -98,7 +63,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-		sph1=Spherical(1,(az1.degrad*~h.[pl1]).wrap(pi.neg,pi),(el1.degrad*~j.[pl1]).wrap((pi/2).neg,(pi/2))).theta.round(0.00001);
+		sph1=Spherical(1,(az1.degrad).wrap(pi.neg,pi),(el1.degrad).wrap((pi/2).neg,(pi/2))).theta.round(0.00001);
 
 	};
 
@@ -109,7 +74,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 	el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph2=Spherical(1,(az2.degrad*~h.[pl2]).wrap(pi.neg,pi),(el2.degrad*~j.[pl2]).wrap((pi/2).neg,(pi/2))).phi.round(0.00001);
+	sph2=Spherical(1,(az2.degrad).wrap(pi.neg,pi),(el2.degrad).wrap((pi/2).neg,(pi/2))).phi.round(0.00001);
 
 	};
 
@@ -119,7 +84,7 @@ pl3=pl3+1;
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph3=Spherical(1,(az3.degrad*~h.[pl3]).wrap(pi.neg,pi),(el3.degrad*~j.[pl3]).wrap((pi/2).neg,(pi/2)));
+	sph3=Spherical(1,(az3.degrad).wrap(pi.neg,pi),(el3.degrad).wrap((pi/2).neg,(pi/2)));
 
 			//mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
@@ -139,7 +104,7 @@ pl4=pl4+1;
 
 	el4=(el4+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph4=Spherical(1,(az3.degrad*~h.[pl3]).wrap(pi.neg,pi),(el4.degrad*~j.[pl4]).wrap((pi/2).neg,(pi/2)));
+	sph4=Spherical(1,(az3.degrad).wrap(pi.neg,pi),(el4.degrad).wrap((pi/2).neg,(pi/2)));
 
 	mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),
 		sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
@@ -156,7 +121,7 @@ pl5=pl5+1;
 
 	el5=(el5+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-		sph5=Spherical(1,((az5.degrad*~h.[pl5]).wrap(pi.neg,pi)).wrap(pi.neg,pi),((el5.degrad*~j.[pl5]).wrap((pi/2).neg,(pi/2))).wrap((pi/2).neg,(pi/2)));
+		sph5=Spherical(1,((az5.degrad).wrap(pi.neg,pi)).wrap(pi.neg,pi),((el5.degrad).wrap((pi/2).neg,(pi/2))).wrap((pi/2).neg,(pi/2)));
 
 if(
 m_z.even,
@@ -398,37 +363,37 @@ osc1=VBAP.ar(6,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
 				SinOsc.ar(pitch1,mul:amp1,phase:phase),
 ~b.bufnum,
-//sphere1.theta.raddeg,sphere1.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere1.theta.raddeg,sphere1.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere1.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc2=VBAP.ar(6,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 						SinOsc.ar(pitch2,mul:amp2,phase:phase),
 ~b.bufnum,
-//sphere2.theta.raddeg,sphere2.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere2.theta.raddeg,sphere2.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere2.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
 osc3=VBAP.ar(6,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
 						SinOsc.ar(pitch3,mul:amp3,phase:phase),
 ~b.bufnum,
-//sphere3.theta.raddeg,sphere3.phi.raddeg
-Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+sphere3.theta.raddeg,sphere3.phi.raddeg
+//Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+//Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-	wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+	//wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
 
-		wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+	//	wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
 
-		wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
+					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
 							//	m=m+1;
 					//pl1=pl1+1;
 
@@ -448,7 +413,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~dur,1),
-			\pl1,Prand(~list1,inf),
+			\pl1,Pseq(~list1,inf),
 		\out1,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
@@ -464,7 +429,7 @@ Osc.ar(~t.bufnum,envp,phase:sphere3.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mu
 	\angle_rot5,Prand(~angle1,inf),
 ));
 	);
-	TempoClock.default.tempo_(8/1);
+	TempoClock.default.tempo_(32/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
