@@ -1103,9 +1103,9 @@ chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), 
 
 	b=b+1;
 
-			Out.ar(0,VBAP.ar(6,IFFT(chainxx),~b.bufnum,
-	/Osc.ar(~t,1,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
+		//	Out.ar(0,VBAP.ar(6,IFFT(chainxx),~b.bufnum,
+	//Osc.ar(~t,1,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+	//	Osc.ar(~t,1,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
 
 	//	Out.ar(0,VBAP.ar(6,IFFT(chainyy),~b.bufnum,
 	//	Osc.ar(~t,1,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),

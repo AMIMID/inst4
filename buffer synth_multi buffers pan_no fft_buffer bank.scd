@@ -203,12 +203,6 @@ SynthDef.new(\ospacebuf, {
 
 	var osc,sphere,mag_o,pl1=0,bank=16;
 
-	var wrappedOut1 = { |busArray, signalArray|
-	[busArray, signalArray].flop.do { |pair|
-		Out.ar(pair[0], pair[1])}};
-
-var out1 = NamedControl.kr(\out1, [0, 1, 2, 3, 4, 5]);  // multiple buses!
-
 			bank.do{
 
 		mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz));
@@ -225,8 +219,7 @@ sphere.theta.raddeg,sphere.phi.raddeg
 		);
 
 
-		wrappedOut.value(out1,LeakDC.ar(osc,mul:sphere.rho));
-				//	Out.ar(0,LeakDC.ar(LeakDC.ar(osc,mul:sphere.rho)));
+				Out.ar(0,LeakDC.ar(LeakDC.ar(osc,mul:sphere.rho)));
 
 					pl1=pl1+1;
 		}
