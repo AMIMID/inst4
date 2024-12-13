@@ -156,144 +156,9 @@ mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 	};
 }.value;
 
-
-
-
-///////////////////////////////////////az///randomizer-difuser
-
-/*{
-var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
-var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
-var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r1=[0,0,1],r2=[1,0,0],r3=[0,1,0];
-var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),v3=Quaternion(0,r3.[0],r3.[1],r3.[2]);
-var angle=(360-(360/1.6180339887499));
-var harm1,harn2,harm3;
-
-~az_x=(720*~time).collect{
-
-	az1=~az.[pl1];el1=~el.[pl1];
-	pl1=pl1+1;
-sph1=Spherical(1,az1,el1).asCartesian;
-
-	rot1=[sph1.x,sph1.y,sph1.z];
-
-	i1=Quaternion(0, rot1.[0], 0, 0);
-	j1=Quaternion(0, 0, rot1.[1], 0);
-	k1=Quaternion(0, 0, 0, rot1.[2]);
-
-		q1=(exp(Complex(0,1)*(angle.degrad)).real+(exp(Complex(0,1)*(angle.degrad)).imag*(i1+j1+k1)));
-v1=q1*v1*q1.conjugate;
-
-raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).theta.round(0.0000000000001);
-};
-
-~az_y=(720*~time).collect{
-
-	az2=~az.[pl2];el2=~el.[pl2];
-	pl2=pl2+1;
-sph2=Spherical(1,az2,el2).asCartesian;
-
-	rot2=[sph2.x,sph2.y,sph2.z];
-
-	i2=Quaternion(0, rot2.[0], 0, 0);
-	j2=Quaternion(0, 0, rot2.[1], 0);
-	k2=Quaternion(0, 0, 0, rot2.[2]);
-
-q2=(exp(Complex(0,1)*(angle.degrad)).real+(exp(Complex(0,1)*(angle.degrad)).imag*(i1+j1+k1)));
-v2=q2*v2*q2.conjugate;
-
-raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).theta.round(0.0000000000001);
-};
-
-~az_z=(720*~time).collect{
-
-	az3=~az.[pl3];el3=~el.[pl3];
-	pl3=pl3+1;
-sph3=Spherical(1,az3,el3).asCartesian;
-
-	rot3=[sph3.x,sph3.y,sph3.z];
-
-	i3=Quaternion(0, rot3.[0], 0, 0);
-	j3=Quaternion(0, 0, rot3.[1], 0);
-	k3=Quaternion(0, 0, 0, rot3.[2]);
-
-q3=(exp(Complex(0,1)*(angle.degrad)).real+(exp(Complex(0,1)*(angle.degrad)).imag*(i1+j1+k1)));
-v3=q3*v3*q3.conjugate;
-
-raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta.round(0.0000000000001);
-};
-
-}.value;
-///////////////////////el
-{
-var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
-var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
-var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r1=[0,0,1],r2=[1,0,0],r3=[0,1,0];
-var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),v3=Quaternion(0,r3.[0],r3.[1],r3.[2]);
-var angle=(360-(360/1.6180339887499));
-
-~el_x=(720*~time).collect{
-
-	az1=~az.[pl1];el1=~el.[pl1];
-	pl1=pl1+1;
-sph1=Spherical(1,az1,el1).asCartesian;
-
-	rot1=[sph1.x,sph1.y,sph1.z];
-
-	i1=Quaternion(0, rot1.[0], 0, 0);
-	j1=Quaternion(0, 0, rot1.[1], 0);
-	k1=Quaternion(0, 0, 0, rot1.[2]);
-
-q1=(exp(Complex(0,1)*(angle.degrad)).real+(exp(Complex(0,1)*(angle.degrad)).imag*(i1+j1+k1)));
-v1=q1*v1*q1.conjugate;
-
-rel1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).phi.round(0.0000000000001);
-};
-
-~el_y=(720*~time).collect{
-
-	az2=~az.[pl2];el2=~el.[pl2];
-	pl2=pl2+1;
-sph2=Spherical(1,az2,el2).asCartesian;
-
-	rot2=[sph2.x,sph2.y,sph2.z];
-
-	i2=Quaternion(0, rot2.[0], 0, 0);
-	j2=Quaternion(0, 0, rot2.[1], 0);
-	k2=Quaternion(0, 0, 0, rot2.[2]);
-
-q2=(exp(Complex(0,1)*(angle.degrad)).real+(exp(Complex(0,1)*(angle.degrad)).imag*(i1+j1+k1)));
-v2=q2*v2*q2.conjugate;
-
-rel2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).phi.round(0.0000000000001);
-};
-
-~el_z=(720*~time).collect{
-
-	az3=~az.[pl3];el3=~el.[pl3];
-	pl3=pl3+1;
-sph3=Spherical(1,az3,el3).asCartesian;
-
-	rot3=[sph3.x,sph3.y,sph3.z];
-
-	i3=Quaternion(0, rot3.[0], 0, 0);
-	j3=Quaternion(0, 0, rot3.[1], 0);
-	k3=Quaternion(0, 0, 0, rot3.[2]);
-
-q3=(exp(Complex(0,1)*(angle.degrad)).real+(exp(Complex(0,1)*(angle.degrad)).imag*(i1+j1+k1)));
-v3=q3*v3*q3.conjugate;
-
-rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.round(0.0000000000001);
-};
-
-	}.value;*/
-//////////////////////////////////////////////////space
-
 )
 
-/*(
+(
 (
 SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
@@ -318,11 +183,14 @@ SynthDef.new(\o1, {
 		el1=~el_x.[pl];
 		az2=~az_x.reverse.[pl];
 		el2=~el_x.reverse.[pl];
-amp1=Cartesian(~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1]);
-amp2=Cartesian(~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1]);
+	amp1=~mag_x.[pl];
+amp2=~mag_x.reverse.[pl];
 
-			phase1=exp(Complex(0,1)*(amp1.theta))*exp(Complex(0,1)*(amp1.phi));
-		phase2=exp(Complex(0,1)*(amp2.theta))*exp(Complex(0,1)*(amp2.phi));
+			//phase1=exp(Complex(0,1)*(amp1.theta))*exp(Complex(0,1)*(amp1.phi));
+		//phase2=exp(Complex(0,1)*(amp2.theta))*exp(Complex(0,1)*(amp2.phi));
+			phase1=Complex(exp(Complex(0,1)*(az1)).real.round(0.000001),exp(Complex(0,1)*(el1)).imag.round(0.000001)).theta;
+			phase2=Complex(exp(Complex(0,1)*(el1)).imag.round(0.000001),exp(Complex(0,1)*(az1)).real.round(0.000001)).theta;
+
 
 chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
@@ -368,11 +236,13 @@ SynthDef.new(\o2, {
 		el1=~el_y.[pl];
 		az2=~az_y.reverse.[pl];
 		el2=~el_y.reverse.[pl];
-amp1=Cartesian(~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1]);
-amp2=Cartesian(~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1]);
+	amp1=~mag_y.[pl];
+amp2=~mag_y.reverse.[pl];
 
-			phase1=exp(Complex(0,1)*(amp1.theta))*exp(Complex(0,1)*(amp1.phi));
-		phase2=exp(Complex(0,1)*(amp2.theta))*exp(Complex(0,1)*(amp2.phi));
+			//phase1=exp(Complex(0,1)*(amp1.theta))*exp(Complex(0,1)*(amp1.phi));
+		//phase2=exp(Complex(0,1)*(amp2.theta))*exp(Complex(0,1)*(amp2.phi));
+			phase1=Complex(exp(Complex(0,1)*(az1)).real.round(0.000001),exp(Complex(0,1)*(el1)).imag.round(0.000001)).theta;
+			phase2=Complex(exp(Complex(0,1)*(el1)).imag.round(0.000001),exp(Complex(0,1)*(az1)).real.round(0.000001)).theta;
 
 chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
@@ -418,11 +288,13 @@ SynthDef.new(\o3, {
 		el1=~el_z.[pl];
 		az2=~az_z.reverse.[pl];
 		el2=~el_z.reverse.[pl];
-amp1=Cartesian(~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1]);
-amp2=Cartesian(~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1]);
+	amp1=~mag_z.[pl];
+amp2=~mag_z.reverse.[pl];
 
-			phase1=exp(Complex(0,1)*(amp1.theta))*exp(Complex(0,1)*(amp1.phi));
-		phase2=exp(Complex(0,1)*(amp2.theta))*exp(Complex(0,1)*(amp2.phi));
+			//phase1=exp(Complex(0,1)*(amp1.theta))*exp(Complex(0,1)*(amp1.phi));
+		//phase2=exp(Complex(0,1)*(amp2.theta))*exp(Complex(0,1)*(amp2.phi));
+			phase1=Complex(exp(Complex(0,1)*(az1)).real.round(0.000001),exp(Complex(0,1)*(el1)).imag.round(0.000001)).theta;
+			phase2=Complex(exp(Complex(0,1)*(el1)).imag.round(0.000001),exp(Complex(0,1)*(az1)).real.round(0.000001)).theta;
 
 chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
@@ -444,215 +316,17 @@ pl=pl+1;
 	};
 }).add;
 );
-)*/;
-/*(
+);
+(
 Synth(\o1);
 s.record(numChannels:4)
 Synth(\o2);
 //s.record(numChannels:4)
 Synth(\o3);
 //s.record(numChannels:4)
-)*/
-
-(
-(
-SynthDef.new(\o1, {
-    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
-	var chainxx,chainyy,pl=0,amp1,amp2,phase;
-	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
-
-    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
-	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
-
-	chainx = FFT(LocalBuf(frames), in1);
-	chainy = FFT(LocalBuf(frames), in2);
-
-	bank2=180;
-
-   bank2.do{
-
-		az1=~az.[pl];
-		el1=~el.[pl];
-		az2=~az.reverse.[pl];
-		el2=~el.reverse.[pl];
-amp1=Cartesian(~magx3.[pl],~magy3.[pl],~magz3.[pl]);
-amp2=Cartesian(~magx3.reverse.[pl],~magy3.reverse.[pl],~magz3.reverse.[pl]);
-
-
-	phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-	phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-
-
-chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-
-	b=b+1;
-
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,phase1.rho,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,phase1.rho,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,phase2.rho,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,phase2.rho,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-pl=pl+1;
-
-	};
-}).add;
-);
-(
-SynthDef.new(\o2, {
-    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
-	var chainxx,chainyy,pl=0,amp1,amp2,phase;
-	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
-
-    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
-	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
-
-	chainx = FFT(LocalBuf(frames), in1);
-	chainy = FFT(LocalBuf(frames), in2);
-
-	bank2=180;
-
-   bank2.do{
-
-		az1=~az.[pl];
-		el1=~el.[pl];
-		az2=~az.reverse.[pl];
-		el2=~el.reverse.[pl];
-amp1=Cartesian(~magx3.[pl],~magy3.[pl],~magz3.[pl]);
-amp2=Cartesian(~magx3.reverse.[pl],~magy3.reverse.[pl],~magz3.reverse.[pl]);
-
-
-phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-	phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-
-
-chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-
-	b=b+1;
-
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,phase1.rho,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,phase1.rho,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,phase2.rho,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,phase2.rho,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-pl=pl+1;
-	}
-	}).add;
-);
-(
-SynthDef.new(\o3, {
-    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
-	var chainxx,chainyy,pl=0,amp1,amp2,phase;
-	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
-
-    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:2);
-	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:2);
-
-	chainx = FFT(LocalBuf(frames), in1);
-	chainy = FFT(LocalBuf(frames), in2);
-
-	bank2=180;
-
-   bank2.do{
-
-		az1=~az.[pl];
-		el1=~el.[pl];
-		az2=~az.reverse.[pl];
-		el2=~el.reverse.[pl];
-amp1=Cartesian(~magx3.[pl],~magy3.[pl],~magz3.[pl]);
-amp2=Cartesian(~magx3.reverse.[pl],~magy3.reverse.[pl],~magz3.reverse.[pl]);
-
-	phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-	phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-
-
-chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-
-	b=b+1;
-
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,phase1.rho,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,phase1.rho,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,phase2.rho,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,phase2.rho,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-pl=pl+1;
-	}
-	}).add;
-);
 )
-(
-Synth(\o1);
-//s.record(numChannels:4);
-Synth(\o2);
-//s.record(numChannels:4);
-Synth(\o3);
-s.record(numChannels:4)
-)
-////exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta
-//////////////////////////////////////IN
+///////////////////////////////bin width= samplerate/fft size/// fft size needs to be a power of 2 (frames)///// the center frequency of the bin =bin index * bin width//// with an array of center frequencies ifft can happen with sin oscillators with corresponding magnitudes and timing in the cycle (bin phase)
 
-// (
-// SynthDef.new(\o_in, {
-// 	var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
-// 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
-// 	var angle1=0,angle2=90;
-// 	var phase1,phase2,bank1,bank2,frames=1024;
-//
-// 	in1 =SoundIn.ar(0);
-// 	in2 = SoundIn.ar(0);
-//
-// 	chainx = FFT(LocalBuf(frames), in1);
-// 	chainy = FFT(LocalBuf(frames), in2);
-//
-// 	bank1=3;
-// 	bank2=90;
-//
-// 	bank1.do{
-//
-// 		bank2.do{
-//
-// 			az1=~az.[pl];
-// 			el1=~el.[pl];
-// 			az2=~az.reverse.[pl];
-// 			el2=~el.reverse.[pl];
-// 			amp1=Cartesian(~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1]);
-// 			amp2=Cartesian(~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1]);
-//
-// 			phase1=Polar(amp1.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp1.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-// 			phase2=Polar(amp2.phi.bilin(0,90.degrad.neg,90.degrad,1,0,0),amp2.theta.linlin(pi.neg,pi,2pi.neg,2pi));
-//
-//
-// 			chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase1.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-// 			chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), exp(Complex(0,1)*(phase+phase2.theta)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-//
-// 			b=b+1;
-//
-// 			Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-// 				Osc.ar(~t,phase1.rho,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-// 			Osc.ar(~t,phase1.rho,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-//
-// 			Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-// 				Osc.ar(~t,phase2.rho,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-// 			Osc.ar(~t,phase2.rho,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
-// 			pl=pl+1;
-// 			pl1=pl1+1;
-//
-// 		};
-// 		pl2=pl2+1;
-// 	};
-// }).add;
-// )
 	({
 		var angle=0;
 		~angle=(720*~time).collect{
