@@ -339,7 +339,6 @@ SynthDef.new(\o1, {
 	bank1=3;
 	bank2=90;
 
-	bank1.do{
 
    bank2.do{
 
@@ -372,8 +371,6 @@ pl=pl+1;
 	pl1=pl1+1;
 
 		};
-		pl2=pl2+1;
-	};
 }).add;
 );
 (
@@ -391,8 +388,6 @@ SynthDef.new(\o2, {
 
 	bank1=3;
 	bank2=90;
-
-	bank1.do{
 
    bank2.do{
 
@@ -424,8 +419,6 @@ pl=pl+1;
 	pl1=pl1+1;
 
 		};
-		pl2=pl2+1;
-	};
 }).add;
 );
 (
@@ -443,8 +436,6 @@ SynthDef.new(\o3, {
 
 	bank1=3;
 	bank2=90;
-
-	bank1.do{
 
    bank2.do{
 
@@ -476,8 +467,6 @@ pl=pl+1;
 	pl1=pl1+1;
 
 		};
-		pl2=pl2+1;
-	};
 }).add;
 );
 );

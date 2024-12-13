@@ -175,8 +175,6 @@ SynthDef.new(\o1, {
 	bank1=3;
 	bank2=90;
 
-	bank1.do{
-
    bank2.do{
 
 		az1=~az_x.[pl];
@@ -208,8 +206,6 @@ pl=pl+1;
 	pl1=pl1+1;
 
 		};
-		pl2=pl2+1;
-	};
 }).add;
 );
 (
@@ -227,8 +223,6 @@ SynthDef.new(\o2, {
 
 	bank1=3;
 	bank2=90;
-
-	bank1.do{
 
    bank2.do{
 
@@ -260,8 +254,6 @@ pl=pl+1;
 	pl1=pl1+1;
 
 		};
-		pl2=pl2+1;
-	};
 }).add;
 );
 (
@@ -279,8 +271,6 @@ SynthDef.new(\o3, {
 
 	bank1=3;
 	bank2=90;
-
-	bank1.do{
 
    bank2.do{
 
@@ -310,9 +300,6 @@ chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho/(2.sqrt), 
 			Osc.ar(~t,rpr,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
 pl=pl+1;
 	pl1=pl1+1;
-
-		};
-		pl2=pl2+1;
 	};
 }).add;
 );
@@ -325,7 +312,7 @@ Synth(\o2);
 Synth(\o3);
 //s.record(numChannels:4)
 )
-///////////////////////////////bin width= samplerate/fft size/// fft size needs to be a power of 2 (frames)///// the center frequency of the bin =bin index * bin width//// with an array of center frequencies ifft can happen with sin oscillators with corresponding magnitudes and timing in the cycle (bin phase)
+///////////////////////////////bin width= samplerate/fft size/// fft size needs to be a power of 2 (frames)///// the center frequency of the bin =bin index * bin width//// with an array of center frequencies ifft can happen with sin oscillators with corresponding magnitudes and timing in the cycle(fft window/sample) (bin phase)
 
 	({
 		var angle=0;
