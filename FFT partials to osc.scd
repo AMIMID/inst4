@@ -43,15 +43,16 @@ SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=1,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024*4;
-	var samplerate=44100,sig,mags,phases;
+	var phase1,phase2,bank1,bank2,frames=1024*16;
+	var samplerate=44100,mags,phases,complex;
+	var sig1,sig2;
 
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
 
 	chainx = FFT(LocalBuf(frames), in1);
 
-	bank2=1000;
+	bank2=720;
 
    bank2.do{
 
@@ -71,12 +72,16 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
 		}, frombin: b, tobin: b, zeroothers: 1);
 
-		sig=SinOsc.ar((samplerate/frames)*b,phases,mags*0.0001);
+		complex=exp(Complex(0,1)*phases);
+
+		sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.real);
+		sig2=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.imag);
 	b=b+1;
 	//Out.ar(0,IFFT(chainxx));
-		Out.ar(0,sig!2);
+		Out.ar(0,LPF.ar(sig1,1000));
+		Out.ar(0,LPF.ar(sig2,1000));
 		};
 }).add;
 )
 Synth(\o1)
-(44100/(1024*4))*500
+(44100/(1024*16))*180
