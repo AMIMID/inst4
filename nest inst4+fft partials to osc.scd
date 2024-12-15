@@ -1,3 +1,55 @@
+
+
+////////////////buffers
+Buffer.freeAll
+
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh2/source/SPINOS A.wav",channels:0 );
+
+	({
+		var angle=0;
+		~angle=(720*8).collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		}
+		}.value;
+	);
+
+(
+SynthDef.new(\o1, {
+    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
+	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
+	var angle1=0,angle2=90;
+	var phase1,phase2,bank1,bank2,frames=1024;
+	var samplerate=44100,mags,phases,complex;
+	var sig1,sig2;
+
+
+    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+
+	chainx = FFT(LocalBuf(frames), in1);
+
+	bank2=360;
+
+   bank2.do{
+
+
+chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
+
+			mags=K2A.ar(magnitude);
+			phases=K2A.ar(phase);
+
+			Out.kr(0,magnitude);
+			Out.kr(1,phase);
+			[magnitude,phase];
+
+		}, frombin: b, tobin: b, zeroothers: 1);
+
+	b=b+1;
+		};
+}).add;
+)
+Synth(\o1)
+
 (
 Server.default = s = Server.local;
 ////server setup
@@ -17,9 +69,6 @@ s.waitForBoot{
 Buffer.freeAll;
 
 (
-//~w1= Buffer.alloc(s,2048);
-//~w2= Buffer.alloc(s,2048);
-//~w3= Buffer.alloc(s,2048);
 ~t= Buffer.alloc(s,2048);
 );
 
@@ -167,63 +216,7 @@ signal=Signal.sineFill(1024,~level,~phase);
 wt = signal.asWavetable;
 ~t.loadCollection(wt);
 signal.plot;
-		}.value;
-/*(
-		{
-var env,sig,wt,angle=0,level,levels,pl=1.neg;
-
-~levelsss=360.collect{
-
-	level=exp(Complex(0,1)*angle).imag;
-		angle=angle+1.degrad;
-				pl=pl+1;
-				//level=level;
-				levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/100).degrad.round(0.000001)).imag);
-			//levels=level+(~magx.[pl]/100);
-};
-			env = Env(~levelsss,[1]);
-sig=env.asSignal(1024);
-wt = sig.asWavetable;
-~w1.loadCollection(wt);
-sig.plot;
-}.value;
-	{
-var env,sig,wt,angle=0,level,levels,pl=1.neg;
-
-~levelssss=360.collect{
-
-	level=exp(Complex(0,1)*angle).imag;
-		angle=angle+1.degrad;
-				pl=pl+1;
-		//level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad.round(0.000001)).imag);
-		//	levels=level+(~magy.[pl]/100);
-};
-			env = Env(~levelssss,[1]);
-sig=env.asSignal(1024);
-wt = sig.asWavetable;
-~w2.loadCollection(wt);
-sig.plot;
-}.value;
-	{
-var env,sig,wt,angle=0,level,levels,pl=1.neg;
-
-~levelsssss=360.collect{
-
-	level=exp(Complex(0,1)*angle).imag;
-		angle=angle+1.degrad;
-				pl=pl+1;
-			//	level=level;
-	levels=level.rrand(exp(Complex(0,1)*angle+((360-(360/1.6180339887499))/1000).degrad.round(0.000001)).imag);
-		//	levels=level+(~magz.[pl]/100);
-			};
-			env = Env(~levelsssss,[1]);
-sig=env.asSignal(1024);
-wt = sig.asWavetable;
-~w3.loadCollection(wt);
-sig.plot;
-}.value;
-)*/
+	}.value;
 
 /////////////////////////////////////////////wt envelope sine levels
 /*	 {
@@ -233,26 +226,6 @@ sig.plot;
 	 }.value;*/
 
 	// Env(~levels,[0.04444]).plot;
-
-	//////////////mag phase levels
-	{
-	 	var pl=1.neg;
-		~mag_levels=(720*~time).collect{
-			pl=pl+1;
-			Cartesian(~magx.[pl], ~magy.[pl],~magz.[pl],).rho/(2.sqrt);
-		};
-
-	}.value;
-		{
-	 	var pl=1.neg;
-		~phase_levels=(720*~time).collect{
-			pl=pl+1;
-			Complex(exp(Complex(0,1)*~az.[pl]).real.round(0.000001),exp(Complex(0,1)*~el.[pl]).imag.round(0.000001)).theta;
-
-		};
-	}.value;
-
-	// Env(~phase_levels,[0.01]).plot;
 
 		//////notes
 	({
@@ -277,7 +250,6 @@ SynthDef.new(\ospace1, {
 	var xyz,xyz_array;
 	var n1,n2,n3;
 	var sphere1,sphere2,sphere3;
-	var env_mag,env_phase;
 
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -293,8 +265,6 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
 				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.001);
-			 env_mag=EnvGen.ar(Env(~mag_levels,[0.05],4.neg));
-			 env_phase=EnvGen.ar(Env(~phase_levels,[0.05],4.neg));
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -363,7 +333,7 @@ ton3=2.pow(n3/(2*6));
 
 osc1=VBAP.ar(4,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
-				SinOsc.ar(pitch1,mul:amp1*env_mag,phase:env_phase),
+				SinOsc.ar(pitch1,mul:amp1*In.kr(0),phase:In.kr(1)),
 ~b.bufnum,
 sphere1.theta.raddeg,sphere1.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -372,7 +342,7 @@ sphere1.theta.raddeg,sphere1.phi.raddeg
 
 osc2=VBAP.ar(4,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch2,mul:amp2*env_mag,phase:env_phase),
+						SinOsc.ar(pitch2,mul:amp2*In.kr(0),phase:In.kr(1)),
 ~b.bufnum,
 sphere2.theta.raddeg,sphere2.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -381,7 +351,7 @@ sphere2.theta.raddeg,sphere2.phi.raddeg
 
 osc3=VBAP.ar(4,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3*env_mag,phase:env_phase),
+						SinOsc.ar(pitch3,mul:amp3*In.kr(0),phase:In.kr(1)),
 ~b.bufnum,
 sphere3.theta.raddeg,sphere3.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
