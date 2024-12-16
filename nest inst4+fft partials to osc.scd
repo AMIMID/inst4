@@ -4,7 +4,7 @@
 Buffer.freeAll
 
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh2/source/SPINOS A.wav",channels:0 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
 
 	({
 		var angle=0;
@@ -14,13 +14,17 @@ Buffer.freeAll
 		}.value;
 	);
 
+// Allocate buffers for magnitude and phase
+~magBuffer = Buffer.alloc(s, 1024);  // For magnitude
+~phaseBuffer = Buffer.alloc(s, 1024); // For phase
+
 (
 SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
 	var phase1,phase2,bank1,bank2,frames=1024;
-	var samplerate=44100,mags,phases,complex;
+	var samplerate=48000,mags,phases,complex;
 	var sig1,sig2;
 
 
@@ -35,11 +39,12 @@ SynthDef.new(\o1, {
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
-			mags=K2A.ar(magnitude);
-			phases=K2A.ar(phase);
+			//mags=K2A.ar(magnitude);
+		//	phases=K2A.ar(phase);
 
-			Out.kr(0,magnitude);
-			Out.kr(1,phase);
+	    BufWr.kr(magnitude, ~magBuffer.bufnum);  // Write magnitude to buffer
+        BufWr.kr(phase, ~phaseBuffer.bufnum);  // Write phase to buffer
+
 			[magnitude,phase];
 
 		}, frombin: b, tobin: b, zeroothers: 1);
@@ -55,7 +60,7 @@ Server.default = s = Server.local;
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=6;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*128;
@@ -250,6 +255,7 @@ SynthDef.new(\ospace1, {
 	var xyz,xyz_array;
 	var n1,n2,n3;
 	var sphere1,sphere2,sphere3;
+	var mags,phases;
 
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -265,6 +271,9 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
 				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.001);
+
+		 mags = BufRd.kr(1, ~magBuffer.bufnum);
+    phases = BufRd.kr(1, ~phaseBuffer.bufnum);
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -333,7 +342,7 @@ ton3=2.pow(n3/(2*6));
 
 osc1=VBAP.ar(4,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
-				SinOsc.ar(pitch1,mul:amp1*In.kr(0),phase:In.kr(1)),
+				SinOsc.ar(pitch1,mul:amp1,phase:phases),
 ~b.bufnum,
 sphere1.theta.raddeg,sphere1.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -341,8 +350,8 @@ sphere1.theta.raddeg,sphere1.phi.raddeg
 		);
 
 osc2=VBAP.ar(4,
-				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch2,mul:amp2*In.kr(0),phase:In.kr(1)),
+				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:p0hase+ph_z.theta),
+						SinOsc.ar(pitch2,mul:amp2,phase:phases),
 ~b.bufnum,
 sphere2.theta.raddeg,sphere2.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -351,7 +360,7 @@ sphere2.theta.raddeg,sphere2.phi.raddeg
 
 osc3=VBAP.ar(4,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3*In.kr(0),phase:In.kr(1)),
+						SinOsc.ar(pitch3,mul:amp3,phase:phases),
 ~b.bufnum,
 sphere3.theta.raddeg,sphere3.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -359,13 +368,13 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		);
 
 	//wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+					Out.ar(0,LeakDC.ar(osc3*(mags*10000),mul:env));
 
 	//	wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+					Out.ar(0,LeakDC.ar(osc2*(mags*10000),mul:env));
 
 		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+					Out.ar(0,LeakDC.ar(osc1*(mags*10000),mul:env));
 							//	m=m+1;
 					//pl1=pl1+1;
 
@@ -401,7 +410,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 	\angle_rot5,Prand(~angle1,inf),
 ));
 	);
-	TempoClock.default.tempo_(64/1);
+	TempoClock.default.tempo_(16/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales

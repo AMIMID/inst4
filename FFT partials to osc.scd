@@ -38,6 +38,13 @@ Buffer.freeAll
 		}.value;
 	);
 
+s.boot;
+
+// Allocate buffers for magnitude and phase
+~magBuffer = Buffer.alloc(s, 1024);  // For magnitude
+~phaseBuffer = Buffer.alloc(s, 1024); // For phase
+
+
 (
 SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
@@ -52,32 +59,39 @@ SynthDef.new(\o1, {
 
 	chainx = FFT(LocalBuf(frames), in1);
 
-	bank2=360;
+	bank2=180;
 
    bank2.do{
 
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
-//var mag, phase;
+			//mags=K2A.ar(magnitude);
+		//phases=K2A.ar(phase);
 
-        // Compute magnitude and phase
-   //     mag = hypot(real, imag);  // sqrt(real^2 + imag^2)
-    //    phase = atan2(imag, real);  // atan2(imaginary, real)
-			//K2A.ar(phase).poll;
-		//[mag * cos(phase), mag * sin(phase)];
-			mags=K2A.ar(magnitude);
-			phases=K2A.ar(phase);
+		//	mags=K2A.ar(magnitude.sqrt);
+		//	phases=K2A.ar(magnitude.atan2(phase));
+//
+		//	Out.kr(0,magnitude);
+			//Out.kr(1,phase);
+
+			 BufWr.kr(magnitude, ~magBuffer.bufnum);  // Write magnitude to buffer
+        BufWr.kr(phase, ~phaseBuffer.bufnum);  // Write phase to buffer
+
 			[magnitude,phase];
 
 		}, frombin: b, tobin: b, zeroothers: 1);
 
-		complex=exp(Complex(0,1)*phases);
+		//complex=exp(Complex(0,1)*phases);
 
-	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.real);
+	//	mags = BufRd.kr(1, ~magBuffer.bufnum); // Use MouseX for bin selection
+   // phases = BufRd.kr(1, ~phaseBuffer.bufnum);
+
+	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,In.kr(1),In.kr(0)*0.001),0);
+	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.001),0);
 	//	sig2=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.imag);
 	b=b+1;
-		Out.ar(0,Pan2.ar(IFFT(chainxx),complex.real));
+		//Out.ar(0,Pan2.ar(IFFT(chainxx),complex.real));
 		//Out.ar(0,Pan2.ar(IFFT(chainxx),complex.imag));
 	//	Out.ar(0,sig1);
 	//	Out.ar(0,sig2);
@@ -86,3 +100,5 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 )
 Synth(\o1)
 (44100/(1024*16))*180
+
+{SinOsc.ar(440,BufRd.kr(1, ~phaseBuffer.bufnum),BufRd.kr(1, ~magBuffer.bufnum).poll)}.play
