@@ -292,9 +292,9 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 //	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.001);
-			 env_mag=EnvGen.ar(Env(~mag_levels,[0.05],4.neg));
-			 env_phase=EnvGen.ar(Env(~phase_levels,[0.05],4.neg));
+				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.01);
+			 env_mag=EnvGen.ar(Env(~mag_levels,[0.1],4.neg));
+			 env_phase=EnvGen.ar(Env(~phase_levels,[0.1],4.neg));
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -431,7 +431,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 	\angle_rot5,Prand(~angle1,inf),
 ));
 	);
-	TempoClock.default.tempo_(64/1);
+	TempoClock.default.tempo_(16/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales

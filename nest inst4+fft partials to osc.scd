@@ -103,6 +103,7 @@ Buffer.freeAll;
 
 ///////////////////////////////////////////////////////arrays
 ///////fractal
+	(
 		~time=16;
 //////////////////////////////////////////////////basis
 {
@@ -186,7 +187,7 @@ mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 	};
 }.value;
 
-
+	);
 ////////////////////////////////////////////////////////notes and durs
 {
 var dur=2,ph1,ph2,ph3,ph4,ph5,ph6,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0;
@@ -222,6 +223,7 @@ wt = signal.asWavetable;
 ~t.loadCollection(wt);
 signal.plot;
 	}.value;
+
 
 /////////////////////////////////////////////wt envelope sine levels
 /*	 {
