@@ -145,7 +145,7 @@ var pl10=0,pl11=0,pl12=0,pl13=0,pl14=0,pl15=0;
 ///////////////////////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
 rythm=[1,1/1,1,1,1/1];
 
-~dur = (180*~time).collect{
+~dur = (720*~time).collect{
 			ph1=Cartesian(~magx.[pl1],~magy.[pl1],~magz.[pl1]).rho/(2.sqrt);
 	index1=rythm.wrapAt(pl7);
 	pl7=pl7+1;
@@ -252,7 +252,7 @@ sig.plot;
 		};
 	}.value;
 
-	// Env(~phase_levels,[0.01]).plot;
+	// Env(~phase_levels,[0.01],\sine).plot;
 
 		//////notes
 	({
@@ -293,8 +293,8 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
 				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.01);
-			 env_mag=EnvGen.ar(Env(~mag_levels,[0.1],4.neg));
-			 env_phase=EnvGen.ar(Env(~phase_levels,[0.1],4.neg));
+			 env_mag=EnvGen.ar(Env(~mag_levels,[0.1],\sine));
+			 env_phase=EnvGen.ar(Env(~phase_levels,[0.1],\sine));
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
@@ -431,7 +431,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 	\angle_rot5,Prand(~angle1,inf),
 ));
 	);
-	TempoClock.default.tempo_(16/1);
+	TempoClock.default.tempo_(32/1);
 
 //s.record(numChannels:4);
 	/////////////////////scales
