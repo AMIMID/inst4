@@ -5,6 +5,7 @@ Buffer.freeAll
 
 
 ~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh2/source/SPINOS A.wav",channels:0 );
 
 	({
 		var angle=0;
@@ -20,7 +21,7 @@ Buffer.freeAll
 
 (
 SynthDef.new(\o1, {
-    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1;
+    var in1,in2, chainx,chainy,b=1,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
 	var phase1,phase2,bank1,bank2,frames=128;
@@ -28,7 +29,7 @@ SynthDef.new(\o1, {
 	var m=0,p=16;
 
 
-    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 1, doneAction:2);
 
 	chainx = FFT(LocalBuf(frames), in1);
 
@@ -65,13 +66,13 @@ Server.default = s = Server.local;
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=4;
+s.options.numOutputBusChannels=32;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*128;
-s.options.blockSize = 64*8;
+s.options.blockSize = 64;
 s.options.maxNodes = 1024 * 16;
-s.options.sampleRate= 48000;
+s.options.sampleRate= 44100;
 );
 
 s.waitForBoot{
@@ -262,7 +263,7 @@ SynthDef.new(\ospace1, {
 	var xyz,xyz_array;
 	var n1,n2,n3;
 	var sphere1,sphere2,sphere3;
-	var m=0,p=16,mags,phases;
+	var m=0,p=16,mags,phases,b=1;
 
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -283,13 +284,10 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
   //  phases = BufRd.kr(1, ~phaseBuffer.bufnum);
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
-			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
-fundamental1=fundamental;
-fundamental2=fundamental;
-fundamental3=fundamental;
-freq1=(fundamental1*octave);
-freq2=(fundamental2*octave);
-freq3=(fundamental3*octave);
+	//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+freq1=(44100/128);
+freq2=(44100/128);
+freq3=(44100/128);
 
 
 				mag_o=Cartesian(Select.kr(pl1,~magx), Select.kr(pl1,~magy),Select.kr(pl1,~magz));
@@ -349,7 +347,7 @@ ton3=2.pow(n3/(2*6));
 16.do{
 osc1=VBAP.ar(4,
 				//Osc.ar(~w1.bufnum,pitch1,mul:amp1,phase:phase+ph_x.theta),
-				SinOsc.ar(pitch1,mul:amp1,phase:In.kr(p)),
+				SinOsc.ar(pitch1*b,mul:amp1,phase:In.kr(p)),
 ~b.bufnum,
 sphere1.theta.raddeg,sphere1.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere1.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -358,7 +356,7 @@ sphere1.theta.raddeg,sphere1.phi.raddeg
 
 osc2=VBAP.ar(4,
 				//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:p0hase+ph_z.theta),
-						SinOsc.ar(pitch2,mul:amp2,phase:In.kr(p)),
+						SinOsc.ar(pitch2*b,mul:amp2,phase:In.kr(p)),
 ~b.bufnum,
 sphere2.theta.raddeg,sphere2.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere2.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -367,7 +365,7 @@ sphere2.theta.raddeg,sphere2.phi.raddeg
 
 osc3=VBAP.ar(4,
 					//Osc.ar(~w3.bufnum,pitch3,mul:amp3,phase:phase+ph_z.theta),
-						SinOsc.ar(pitch3,mul:amp3,phase:In.kr(p)),
+						SinOsc.ar(pitch3*b,mul:amp3,phase:In.kr(p)),
 ~b.bufnum,
 sphere3.theta.raddeg,sphere3.phi.raddeg
 //Osc.ar(~t.bufnum,envp,phase:sphere3.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
@@ -383,6 +381,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
 					Out.ar(0,LeakDC.ar(osc1*(In.kr(m)),mul:env));
 							m=m+1;
+				b=b+1;
 		p=p+1;
 					//pl1=pl1+1;
 			}
@@ -407,7 +406,7 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
-			\mult,Prand([48],inf),
+			\mult,Prand([12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
 		\xr,Pbrown(0,1,0.1,inf),
 		\yr,Pbrown(0,1,0.1,inf),

@@ -1,6 +1,6 @@
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=32;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=2;
 TempoClock.default.tempo_(1);
 s.options.memSize = 8192*64;
@@ -47,10 +47,10 @@ s.boot;
 
 (
 SynthDef.new(\o1, {
-    var in1,in2, chainx,chainy,b=1,az1=0,az2=0,el1=0,el2=0,rpr=1;
+    var in1,in2, chainx,chainy,b=128,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=128;
+	var phase1,phase2,bank1,bank2,frames=1024*8;
 	var samplerate=44100,mags,phases,complex;
 	var sig1,sig2,m=0,p=16;
 
@@ -59,21 +59,19 @@ SynthDef.new(\o1, {
 
 	chainx = FFT(LocalBuf(frames), in1);
 
-	bank2=16;
+	bank2=1;
 
    bank2.do{
 
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
-			//mags=K2A.ar(magnitude);
+		//	mags=K2A.ar(magnitude);
 		//phases=K2A.ar(phase);
 
-		//	mags=K2A.ar(magnitude.sqrt);
-		//	phases=K2A.ar(magnitude.atan2(phase));
 //
-			Out.kr(m,magnitude);
-			Out.kr(p,phase);
+		//	Out.kr(m,magnitude);
+		//	Out.kr(p,phase);
 
 		//	 BufWr.kr(magnitude, ~magBuffer.bufnum);  // Write magnitude to buffer
       //  BufWr.kr(phase, ~phaseBuffer.bufnum);  // Write phase to buffer
@@ -88,21 +86,21 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
    // phases = BufRd.kr(1, ~phaseBuffer.bufnum);
 
 	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,BufRd.kr(1,~phaseBuffer.bufnum),BufRd.kr(1, ~magBuffer.bufnum)*0.001),0);
-		sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,In.kr(p),In.kr(m)*0.1),0);
-	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.001),0);
+	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,In.kr(p),In.kr(m)*0.1),0);
+	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.01),0);
 	//	sig2=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.imag);
 	b=b+1;
-		m=m+1;
-		p=p+1;
-		//Out.ar(0,Pan2.ar(IFFT(chainxx),complex.real));
+	//	m=m+1;
+	//	p=p+1;
+		Out.ar(0,Pan2.ar(IFFT(chainxx)*8,0));
 		//Out.ar(0,Pan2.ar(IFFT(chainxx),complex.imag));
-		Out.ar(0,sig1);
+		//Out.ar(0,sig1);
 	//	Out.ar(0,sig2);
 		};
 }).add;
 )
 Synth(\o1)
-(44100/(128))*16
+(44100/(1024))*16
 
 
 ////////////////////////////
