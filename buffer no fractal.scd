@@ -177,10 +177,10 @@ SynthDef.new(\o1, {
 
    bank2.do{
 
-		az1=~az_x.[pl];
-		el1=~el_x.[pl];
-		az2=~az_x.reverse.[pl];
-		el2=~el_x.reverse.[pl];
+		az1=~az.[pl];
+		el1=~el.[pl];
+		az2=~az.reverse.[pl];
+		el2=~el.reverse.[pl];
 	amp1=~mag_x.[pl];
 amp2=~mag_x.reverse.[pl];
 
@@ -226,10 +226,10 @@ SynthDef.new(\o2, {
 
    bank2.do{
 
-		az1=~az_y.[pl];
-		el1=~el_y.[pl];
-		az2=~az_y.reverse.[pl];
-		el2=~el_y.reverse.[pl];
+		az1=~az.[pl];
+		el1=~el.[pl];
+		az2=~az.reverse.[pl];
+		el2=~el.reverse.[pl];
 	amp1=~mag_y.[pl];
 amp2=~mag_y.reverse.[pl];
 
@@ -274,10 +274,10 @@ SynthDef.new(\o3, {
 
    bank2.do{
 
-		az1=~az_z.[pl];
-		el1=~el_z.[pl];
-		az2=~az_z.reverse.[pl];
-		el2=~el_z.reverse.[pl];
+		az1=~az.[pl];
+		el1=~el.[pl];
+		az2=~az.reverse.[pl];
+		el2=~el.reverse.[pl];
 	amp1=~mag_z.[pl];
 amp2=~mag_z.reverse.[pl];
 
