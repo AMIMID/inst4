@@ -3,7 +3,7 @@ Server.default = s = Server.local;
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=6;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*128;
@@ -27,7 +27,7 @@ Buffer.freeAll;
 	 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 
 
-		~time=16;
+		~time=4;
 //////////////////////////////////////////////////basis
 {
 var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=1,m_z=3;
@@ -167,19 +167,15 @@ SynthDef.new(\ospace1, {
 
 var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 
-			 env_mag=EnvGen.ar(Env(~mag_levels,[1],\sine));
-			 env_phase=EnvGen.ar(Env(~phase_levels,[1],\sine));
 
 freq1=(48000/1024);
-freq2=(48000/1024);
-freq3=(48000/1024);
-
-
-
 
 				//	envp=EnvGen.ar(Env.adsr(0.1,0.5,1/2,8,1),gate:gate);
 
-720.do{
+360.do{
+					 env_mag=EnvGen.ar(Env(~mag_levels.scramble,[1/2],\sine));
+			 env_phase=EnvGen.ar(Env(~phase_levels.scramble,[1/2],\sine));
+
 							mag_o=Cartesian(~magx.[pl], ~magy.[pl],~magz.[pl]);
 
 			sphere1=Spherical(mag_o.x,~az.[pl],~el.[pl]);
@@ -196,7 +192,7 @@ Osc.ar(~t.bufnum,1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90
 		);
 
 		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1)));
+					Out.ar(0,LeakDC.ar(osc1));
 								m=m+1;
 				pl=pl+1
 		}
