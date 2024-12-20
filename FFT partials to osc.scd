@@ -24,7 +24,7 @@ Buffer.freeAll
 )
 ~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav");
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh2/source/SPINOS A.wav",channels:0 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh3/samples mix mono.wav",channels:0 );
 
 
 ~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
@@ -100,7 +100,7 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 }).add;
 )
 Synth(\o1)
-(44100/(1024))*16
+(44100/(1024*2))*1024/2
 
 
 ////////////////////////////individual bins with patttern
@@ -171,11 +171,10 @@ s.record(numChannels:4);
 \\////////////////////////////////////multiple synths
 
 (
-10.do{
-	//|i|
-	var i
+100.do{
+	|i|
 (
-SynthDef.new(\obin ++ i, {
+		SynthDef.new(\obin_++i, {
 
     var b=643;
     var in1,chainx,chainy;
@@ -207,4 +206,5 @@ chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 );
 }
 )
-Synth(\obin8)
+Synth(\obin_++(99.rand))
+Synth(\obin_10)
