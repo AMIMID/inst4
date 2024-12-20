@@ -1,6 +1,6 @@
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=4;
+s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=2;
 TempoClock.default.tempo_(1);
 s.options.memSize = 8192*64;
@@ -113,8 +113,7 @@ SynthDef.new(\obin, {
 	var chainxx,chainyy;
 	var bank,frames=1024*2;
 	var samplerate=44100;
-	var env;
-
+	var env,k;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
 
@@ -122,24 +121,28 @@ SynthDef.new(\obin, {
 	chainy = FFT(LocalBuf(frames), in1);
 	//b=500.rand.postln;
 
+	k=b;
+	k.dump;
+
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		if(bin == b,[magnitude,phase],[magnitude*0,phase*0]);
+	//	if(bin == k,[magnitude,phase],[magnitude*0,phase*0]);
+		[magnitude,phase]
 
-});
+}, frombin: k, tobin: k, zeroothers: 1);
 
 chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		if(bin == b,[magnitude,phase+90.degrad],[magnitude*0,phase*0]);
+	//	if(bin == k,[magnitude,phase+90.degrad],[magnitude*0,phase*0]);
+		[magnitude,phase]
 
-});
+}, frombin: k, tobin: k, zeroothers: 1);
 
 		Out.ar(0,IFFT(chainxx)*8);
 		Out.ar(1,IFFT(chainyy)*8);
 }).add;
 )
-
-Synth(\obin)
+Synth(\obin,[\b,16])
 /////bin calc
 (44100/(1024/4))*10
 
@@ -147,7 +150,7 @@ Synth(\obin)
 /////////////////bin list
 	({
 		var n=1.neg;
-		~list=(360*~time).collect{
+	~list=(1024).collect{
 		n=n+1;
 		}
 		}.value
@@ -165,5 +168,43 @@ Synth(\obin)
 
 ~aa.play;
 s.record(numChannels:4);
+\\////////////////////////////////////multiple synths
 
+(
+10.do{
+	//|i|
+	var i
+(
+SynthDef.new(\obin ++ i, {
 
+    var b=643;
+    var in1,chainx,chainy;
+	var chainxx,chainyy;
+	var bank,frames=1024*2;
+	var samplerate=44100;
+	var env,k;
+
+    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+
+	chainx = FFT(LocalBuf(frames), in1);
+	chainy = FFT(LocalBuf(frames), in1);
+
+			b=(frames/2).rand.postln;
+chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
+		[magnitude,phase]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
+
+		[magnitude,phase]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+		Out.ar(0,IFFT(chainxx)*8);
+		Out.ar(1,IFFT(chainyy)*8);
+}).add;
+);
+}
+)
+Synth(\obin8)
