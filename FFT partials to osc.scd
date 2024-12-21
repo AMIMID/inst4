@@ -1,13 +1,14 @@
 (
+s.options.numBuffers=1024*2;
 s.options.numWireBufs = 1024*4;
 s.options.numOutputBusChannels=2;
 s.options.numInputBusChannels=2;
-TempoClock.default.tempo_(1);
-s.options.memSize = 8192*64;
+s.options.memSize = 8192*128*2;
 s.options.blockSize = 64;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 44100;
-s.waitForBoot
+s.options.maxSynthDefs=1024*8;
+s.waitForBoot;
 )
 
 ////////////////buffers
@@ -26,6 +27,10 @@ Buffer.freeAll
 
 ~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh3/samples mix mono.wav",channels:0 );
 
+~c1.numFrames/512
+/////duration(seconds)=number of frames/samplerate
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh2/source/FLOROS A.wav",channels:0 );
 
 ~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
 ~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:1 );
@@ -169,26 +174,28 @@ Synth(\obin,[\b,16])
 ~aa.play;
 s.record(numChannels:4);
 \\////////////////////////////////////multiple synths
-
+(~c1.numFrames/512)*i
 (
-100.do{
+512.do{
 	|i|
 (
 		SynthDef.new(\obin_++i, {
 
-    var b=643;
+    var b=1.neg;
     var in1,chainx,chainy;
 	var chainxx,chainyy;
-	var bank,frames=1024*2;
+	var bank,frames=1024;
 	var samplerate=44100;
 	var env,k;
 
-    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+	in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
+
 
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in1);
 
-			b=(frames/2).rand.postln;
+			b=511.xrand(b).postln;
+
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
 		[magnitude,phase]
 
@@ -196,15 +203,115 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
 chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		[magnitude,phase]
+		[magnitude,phase+90.degrad]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
-		Out.ar(0,IFFT(chainxx)*8);
-		Out.ar(1,IFFT(chainyy)*8);
+		Out.ar(0,IFFT(chainxx)*1);
+		Out.ar(1,IFFT(chainyy)*1);
+			chainx.clear;
+			chainy.clear;
+
 }).add;
 );
 }
 )
-Synth(\obin_++(99.rand))
+
+	/*({
+		var n=1.neg;
+		~list=(1024).collect{
+		n=n+1;
+		}
+		}.value
+	);*/
+
+
+Synth(\obin_++(511.rand))
+
 Synth(\obin_10)
+
+///1024.do{Synth(\obin_++(Pxrand.new(~list, 1).asStream.next))}
+
+(var b=1.neg; 512.do{ b=511.xrand(b); Synth(\obin_++b)})
+
+// 512.do { |i| Synth(\obin_++i, [\startTime, s.latency]); };
+//512.do{ |i| s.bind {Synth(\obin_++(Pxrand.new(~list, 1).asStream.next)); }}
+
+
+512.do{|i| Synth(\obin_++i);}
+
+~dur=((~c1.numFrames/512)/44100)
+
+(~c1.numFrames/512)*8
+
+/*	(
+Tdef.new(\h,{
+//loop({
+			512.do{|i| Synth(\obin_++i);(~dur).wait;}
+
+
+	//})
+})
+);
+
+Tdef(\h).stop;
+Tdef(\h).play;
+Tdef(\h).clear;*/
+
+
+r=Routine{var b=1.neg; 512.do{ b=511.xrand(b);  Synth(\obin_++b).postln; (~dur).wait;}}
+r.play
+////////////////////////////////
+
+~dur=((~c1.numFrames/512)/44100)
+
+({
+		var n=1.neg;
+		~list=(512).collect{
+		n=n+1;
+		}
+		}.value
+	)
+
+r.play
+(
+
+
+r=Routine{
+
+	512.do{
+		{|i|
+				   var b=0;
+    var in1,chainx,chainy;
+	var chainxx,chainyy;
+	var bank,frames=1024;
+	var samplerate=44100;
+
+	in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:(~c1.numFrames/512)*i, loop: 0, doneAction:2);
+
+
+	chainx = FFT(LocalBuf(frames), in1);
+	chainy = FFT(LocalBuf(frames), in1);
+
+			b=Pxrand.new(~list, 1).asStream.next.postln;
+
+chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
+		[magnitude,phase]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
+
+		[magnitude,phase+90.degrad]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+		Out.ar(0,IFFT(chainxx)*1);
+		Out.ar(1,IFFT(chainyy)*1);
+
+
+	}.play;(~dur).wait;};
+
+}
+
+)
