@@ -188,7 +188,7 @@ s.record(numChannels:4);
 	var samplerate=44100;
 	var env,k;
 
-	in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
+	in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:(~c1.numFrames/512)*i, loop: 0, doneAction:2);
 
 
 	chainx = FFT(LocalBuf(frames), in1);
@@ -217,26 +217,12 @@ chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 }
 )
 
-	/*({
-		var n=1.neg;
-		~list=(1024).collect{
-		n=n+1;
-		}
-		}.value
-	);*/
-
 
 Synth(\obin_++(511.rand))
 
 Synth(\obin_10)
 
-///1024.do{Synth(\obin_++(Pxrand.new(~list, 1).asStream.next))}
-
 (var b=1.neg; 512.do{ b=511.xrand(b); Synth(\obin_++b)})
-
-// 512.do { |i| Synth(\obin_++i, [\startTime, s.latency]); };
-//512.do{ |i| s.bind {Synth(\obin_++(Pxrand.new(~list, 1).asStream.next)); }}
-
 
 512.do{|i| Synth(\obin_++i);}
 
@@ -244,19 +230,6 @@ Synth(\obin_10)
 
 (~c1.numFrames/512)*8
 
-/*	(
-Tdef.new(\h,{
-//loop({
-			512.do{|i| Synth(\obin_++i);(~dur).wait;}
-
-
-	//})
-})
-);
-
-Tdef(\h).stop;
-Tdef(\h).play;
-Tdef(\h).clear;*/
 
 
 r=Routine{var b=1.neg; 512.do{ b=511.xrand(b);  Synth(\obin_++b).postln; (~dur).wait;}}
@@ -272,28 +245,28 @@ r.play
 		}
 		}.value
 	)
+Synth(\bin);
 
-r.play
 (
+SynthDef.new(\bin,{
 
-
-r=Routine{
-
-	512.do{
-		{|i|
-				   var b=0;
+	 var b=1.neg;
     var in1,chainx,chainy;
 	var chainxx,chainyy;
 	var bank,frames=1024;
 	var samplerate=44100;
+	var env,dur=((~c1.numFrames/512)/44100);
 
-	in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:(~c1.numFrames/512)*i, loop: 0, doneAction:2);
+	512.do{
 
+	in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
+			env=EnvGen.ar(Env.new([0,0,1],[dur,0.01],\sine));
+			dur=dur+dur;
 
 	chainx = FFT(LocalBuf(frames), in1);
 	chainy = FFT(LocalBuf(frames), in1);
 
-			b=Pxrand.new(~list, 1).asStream.next.postln;
+			b=511.xrand(b).postln;
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
 		[magnitude,phase]
@@ -306,12 +279,11 @@ chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
-		Out.ar(0,IFFT(chainxx)*1);
-		Out.ar(1,IFFT(chainyy)*1);
+		Out.ar(0,IFFT(chainxx)*env);
+		Out.ar(1,IFFT(chainyy)*env);
 
+};
 
-	}.play;(~dur).wait;};
-
-}
+}).add;
 
 )
