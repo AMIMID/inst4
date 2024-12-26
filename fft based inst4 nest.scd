@@ -3,13 +3,13 @@ Server.default = s = Server.local;
 ////server setup
 (
 s.options.numWireBufs = 1024*4;
-s.options.numOutputBusChannels=6;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(0.5);
-s.options.memSize = 8192*128;
-s.options.blockSize = 64*8;
+s.options.memSize = 8192*128*2;
+s.options.blockSize = 64*4;
 s.options.maxNodes = 1024 * 16;
-s.options.sampleRate= 48000;
+s.options.sampleRate= 44100;
 );
 
 s.waitForBoot{
@@ -267,8 +267,8 @@ sig.plot;
 /////synths////
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1,pl1=0;
-	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,octave=1,envp;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=12,xr=1,yr=1,zr=1,gate=1,pl1=0,octave=1;
+	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=2000,fundamental1,fundamental2,fundamental3;
 	var freq1,freq2,freq3,m=1,pitch1,pitch2,pitch3,env,cutt=440;
@@ -292,12 +292,13 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 //	var out2 = NamedControl.kr(\out2, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
-				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.01);
+				env=EnvGen.ar(Env.adsr(0.1,0.5,0.5,8),gate:gate,doneAction:2,levelScale:0.1);
 			 env_mag=EnvGen.ar(Env(~mag_levels,[0.1],\sine));
 			 env_phase=EnvGen.ar(Env(~phase_levels,[0.1],\sine));
 
 //env=EnvGen.ar(Env(~levels,[decay],4.neg),doneAction:2,levelScale:0.1);
 			//	env=EnvGen.ar(Env.perc(0.05,6),doneAction:2,levelScale:0.1);
+			fundamental=(44100/1024);
 fundamental1=fundamental;
 fundamental2=fundamental;
 fundamental3=fundamental;
@@ -411,6 +412,14 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		}.value
 	);
 
+	({
+		var n=0;
+		~list2=(45*~time).collect{
+		n=n+1;
+		}
+		}.value
+	);
+
 //////////pattern for mobius strib of sequential or parallel play of directions
 (
 ~aa=Pdef(\1, Pbind(\instrument, \ospace1,
@@ -419,8 +428,9 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//	\out2,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
 		//	\out3,Pn(Pshuf([0, 1, 2, 3, 4, 5], 1), inf).clump(6).collect([_]),
-			\mult,Prand([48],inf),
+			\mult,Prand([12],inf),
 			\gate,Pseq([1,0,1,1,0,1,0,1,1,0,1,1,1,0],inf),///l system
+			\octav,Prand(~list2,inf),
 		\xr,Pbrown(0,1,0.1,inf),
 		\yr,Pbrown(0,1,0.1,inf),
 		\zr,Pbrown(0,1,0.1,inf),
