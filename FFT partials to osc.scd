@@ -290,7 +290,7 @@ n=n+1;
 		//env=EnvGen.ar(Env.new([1,1,0],[dur,0.01],\sine));
 		///further modulations for presence of indivual bins can be achieved through further variations of the envelope
 		//env=EnvGen.ar(Env.new([0,1,1,0],[dur/1,((~duration-(dur/1))/2),(~duration-((~duration-(dur/1))/2))],\sine));
-		env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
+			env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
 
 b=k.next.postln;
 			//b=511.xrand(b).postln;
@@ -360,26 +360,26 @@ x=x+1;
 n=n+1;
 		//env=EnvGen.ar(Env.new([1,1,0],[dur,0.01],\sine));
 		///further modulations for presence of indivual bins can be achieved through further variations of the envelope
-		env=EnvGen.ar(Env.new([0,1,1,0],[dur/2,(~duration-(dur/2)),dur/2],\sine));
+		env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
 	//	env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur,0.01,dur/3,0.01,dur/3],\sine));
 
 b=k.next.postln;
 			//b=511.xrand(b).postln;
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
-		[magnitude*env*(~magx.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph))]
+		[magnitude*env*(~magx.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph)).theta]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
 chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		[magnitude*env*(~magy.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph))]
+		[magnitude*env*(~magy.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph)).theta]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
 chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		[magnitude*env*(~magz.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph))]
+		[magnitude*env*(~magz.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph)).theta]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
