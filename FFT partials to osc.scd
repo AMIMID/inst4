@@ -30,7 +30,7 @@ Buffer.freeAll
 ~c1.numFrames/512
 /////duration(seconds)=number of frames/samplerate
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/469009__innorecords__relaxing-mountains-rivers-streams-running-water.wav",channels:0 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/inst4/o fractal, rotation through array positions/SC_241210_200412.wav",channels:0 );
 
 ~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
 ~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:1 );
@@ -52,10 +52,10 @@ s.boot;
 
 (
 SynthDef.new(\o1, {
-    var in1,in2, chainx,chainy,b=128,az1=0,az2=0,el1=0,el2=0,rpr=1;
+    var in1,in2, chainx,chainy,b=1,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024*8;
+	var phase1,phase2,bank1,bank2,frames=1024;
 	var samplerate=44100,mags,phases,complex;
 	var sig1,sig2,m=0,p=16;
 
@@ -64,15 +64,15 @@ SynthDef.new(\o1, {
 
 	chainx = FFT(LocalBuf(frames), in1);
 
-	bank2=1;
+	bank2=180;
 
    bank2.do{
 
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
-		//	mags=K2A.ar(magnitude);
-		//phases=K2A.ar(phase);
+			mags=K2A.ar(magnitude);
+		phases=K2A.ar(phase);
 
 //
 		//	Out.kr(m,magnitude);
@@ -92,15 +92,16 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
 	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,BufRd.kr(1,~phaseBuffer.bufnum),BufRd.kr(1, ~magBuffer.bufnum)*0.001),0);
 	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,In.kr(p),In.kr(m)*0.1),0);
-	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.01),0);
+		sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.0001),0);
 	//	sig2=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.imag);
 	b=b+1;
 	//	m=m+1;
 	//	p=p+1;
-		Out.ar(0,Pan2.ar(IFFT(chainxx)*8,0));
+		//Out.ar(0,Pan2.ar(IFFT(chainxx)*8,0));
 		//Out.ar(0,Pan2.ar(IFFT(chainxx),complex.imag));
-		//Out.ar(0,sig1);
+		Out.ar(0,sig1*100);
 	//	Out.ar(0,sig2);
+		chainxx.clear;
 		};
 }).add;
 )
@@ -236,7 +237,12 @@ r=Routine{var b=1.neg; 512.do{ b=511.xrand(b);  Synth(\obin_++b).postln; (~dur).
 r.play
 ////////////////////////////////
 
+
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/recordings/27 Δεκ, 22.08​.wav",channels:0 );
+
 ~dur=((~c1.numFrames/512)/44100)
+~duration=(~c1.numFrames/44100)
+
 ({
 		var n=0;
 	~list=(512).collect{
@@ -277,13 +283,15 @@ SynthDef.new(\bin,{
 	512.do{
 
 m=(x+1)/x;
-dur=~list.[n]/m;
+dur=~list.[n];
 
 x=x+1;
 n=n+1;
 		//env=EnvGen.ar(Env.new([1,1,0],[dur,0.01],\sine));
 		///further modulations for presence of indivual bins can be achieved through further variations of the envelope
-			env=EnvGen.ar(Env.new([0,0,1],[dur,0.01],\sine));
+		//env=EnvGen.ar(Env.new([0,1,1,0],[dur/1,((~duration-(dur/1))/2),(~duration-((~duration-(dur/1))/2))],\sine));
+		env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
+
 b=k.next.postln;
 			//b=511.xrand(b).postln;
 
@@ -298,11 +306,174 @@ chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
-		Out.ar(0,IFFT(chainxx));
-		Out.ar(1,IFFT(chainyy));
+		Out.ar(0,IFFT(chainxx)*0.5);
+		Out.ar(1,IFFT(chainyy)*0.5);
 
 };
 
 }).add;
 
+)
+////////////////////////////////////
+
+(
+s.options.numBuffers=1024*2;
+s.options.numWireBufs = 1024*4;
+s.options.numOutputBusChannels=3;
+s.options.numInputBusChannels=2;
+s.options.memSize = 8192*128*2;
+s.options.blockSize = 64;
+s.options.maxNodes = 1024 * 16;
+s.options.sampleRate= 44100;
+s.options.maxSynthDefs=1024*8;
+s.waitForBoot;
+)
+
+(
+SynthDef.new(\bin,{
+
+	 var b=1.neg;
+    var in1,chainx,chainy,chainz;
+	var chainxx,chainyy,chainzz;
+	var bank,frames=1024;
+	var samplerate=44100;
+	var env,dur,ph;
+	var m=1,x=1,n=0;
+
+		in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
+		chainx = FFT(LocalBuf(frames), in1);
+	chainy = FFT(LocalBuf(frames), in1);
+	chainz = FFT(LocalBuf(frames), in1);
+
+	k=Pxrand(~k,512).asStream;
+
+	512.do{
+
+
+
+		ph=Complex(exp(Complex(0,1)*(~az.[n])).real.round(0.000001),exp(Complex(0,1)*(~el.[n])).imag.round(0.000001)).theta;
+
+m=(x+1)/x;
+dur=~list.[n];
+
+x=x+1;
+n=n+1;
+		//env=EnvGen.ar(Env.new([1,1,0],[dur,0.01],\sine));
+		///further modulations for presence of indivual bins can be achieved through further variations of the envelope
+		env=EnvGen.ar(Env.new([0,1,1,0],[dur/2,(~duration-(dur/2)),dur/2],\sine));
+	//	env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur,0.01,dur/3,0.01,dur/3],\sine));
+
+b=k.next.postln;
+			//b=511.xrand(b).postln;
+
+chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
+		[magnitude*env*(~magx.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph))]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
+
+		[magnitude*env*(~magy.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph))]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
+
+		[magnitude*env*(~magz.[n]/(2.sqrt)),exp(Complex(0,1)*(phase+ph))]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+		Out.ar(0,IFFT(chainxx)*0.5);
+		Out.ar(1,IFFT(chainyy)*0.5);
+		Out.ar(2,IFFT(chainzz)*0.5);
+
+};
+
+}).add;
+
+)
+
+
+	(	~time=16;
+//////////////////////////////////////////////////basis
+{
+var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=3;
+var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
+var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
+
+~az = (720*~time).collect{
+	pl1=pl1+1;
+
+		az1=(az1+(1)).wrap(180.neg,180);
+
+	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
+
+		sph1=Spherical(1,(az1.degrad).wrap(pi.neg,pi),(el1.degrad).wrap((pi/2).neg,(pi/2))).theta.round(0.00001);
+
+	};
+
+~el = (720*~time).collect{
+	pl2=pl2+1;
+
+		az2=(az2+(1)).wrap(180.neg,180);
+
+	el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90);
+
+	sph2=Spherical(1,(az2.degrad).wrap(pi.neg,pi),(el2.degrad).wrap((pi/2).neg,(pi/2))).phi.round(0.00001);
+
+	};
+
+~magx = (720*~time).collect{
+pl3=pl3+1;
+	az3=(az3+(1)).wrap(180.neg,180);
+
+	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
+
+	sph3=Spherical(1,(az3.degrad).wrap(pi.neg,pi),(el3.degrad).wrap((pi/2).neg,(pi/2)));
+
+			//mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+
+////for in-between harmonics multiply sin(phi) after cos, when m is 2 then harm 3/2 is formed in oder 3, when m is 3 harm 4/3 is formed in oder 4 and when m is 3 for theta and 2 for phi harm 4/2 is formed for order4//////same for y axis
+
+		 mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),
+		 	cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
+		 	Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/
+			2).neg,(pi/2)))).rho*
+		 Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+
+};
+
+~magy = (720*~time).collect{
+pl4=pl4+1;
+	az4=(az4+(1)).wrap(180.neg,180);
+
+	el4=(el4+(360-(360/1.6180339887499))).wrap(90.neg,90);
+
+	sph4=Spherical(1,(az3.degrad).wrap(pi.neg,pi),(el4.degrad).wrap((pi/2).neg,(pi/2)));
+
+	mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),
+		sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
+		Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/
+		2)))).rho)*sph4.rho;
+//		mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
+//Complex(sin((sph4.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2))),sin((sph4.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2)))).rho*
+//Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
+};
+
+~magz = (720*~time).collect{
+pl5=pl5+1;
+	az5=(az5+(1)).wrap(180.neg,180);
+
+	el5=(el5+(360-(360/1.6180339887499))).wrap(90.neg,90);
+
+		sph5=Spherical(1,((az5.degrad).wrap(pi.neg,pi)).wrap(pi.neg,pi),((el5.degrad).wrap((pi/2).neg,(pi/2))).wrap((pi/2).neg,(pi/2)));
+
+if(
+m_z.even,
+mag_z=Complex(cos((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph5.rho,
+mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph5.rho
+	);
+////z axis   ambi..  sin for odd numbers, cos for even
+	};
+}.value;
 )
