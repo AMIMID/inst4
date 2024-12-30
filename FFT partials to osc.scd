@@ -25,7 +25,7 @@ Buffer.freeAll
 )
 ~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav");
 
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh3/samples mix mono.wav",channels:0 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/PROJECT  FILES/uni/ksyme:cmrc/askhsh3/5_fft alteration,octaves,reverb.wav",channels:0 );
 
 ~c1.numFrames/512
 /////duration(seconds)=number of frames/samplerate
@@ -117,9 +117,9 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 		};
 }).add;
 )
-Synth(\o1)
-(44100/(1024*2))*1024/2
 
+Synth(\o1);
+s.record
 
 
 (
@@ -466,6 +466,78 @@ n=n+1;
 )
 
 
+
+Synth(\bin);
+
+
+(
+SynthDef.new(\bin,{
+
+	 var b=0;
+    var in1,chainx,chainy,chainz;
+	var chainxx,chainyy,chainzz;
+	var bank,frames=1024;
+	var samplerate=44100;
+	var env,dur,ph;
+	var m=1,x=1,n=0;
+	var sph;
+	var o;
+
+		in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
+		chainx = FFT(LocalBuf(frames), in1);
+	chainy = FFT(LocalBuf(frames), in1);
+	chainz = FFT(LocalBuf(frames), in1);
+
+
+//	k=Pxrand(~k,512).asStream;
+
+	512.do{
+
+
+		o=Cartesian(~magx.[b],~magy.[b],~magz.[b]).rho/(2.sqrt);
+		sph=Spherical(o,~az.[b],~el.[b]);
+
+//m=(x+1)/x;
+//dur=~list.[n];
+
+		//env=EnvGen.ar(Env.new([1,1,0],[dur,0.01],\sine));
+		///further modulations for presence of indivual bins can be achieved through further variations of the envelope
+	//	env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
+	//	env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur,0.01,dur/3,0.01,dur/3],\sine));
+
+//b=k.next.postln;
+			//b=511.xrand(b).postln;
+
+chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
+		[magnitude*sph.x.abs,phase]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
+
+		[magnitude*sph.y.abs,phase]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
+
+		[magnitude*sph.z.abs,phase]
+
+}, frombin: b, tobin: b, zeroothers: 1);
+
+		Out.ar(0,IFFT(chainxx));
+		Out.ar(1,IFFT(chainyy));
+		Out.ar(2,IFFT(chainzz));
+
+//x=x+1;
+//n=n+1;
+		b=b+1;
+
+};
+
+}).add;
+
+)
 
 	(	~time=16;
 //////////////////////////////////////////////////basis
