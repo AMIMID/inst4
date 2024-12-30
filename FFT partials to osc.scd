@@ -49,30 +49,42 @@ s.boot;
 ~magBuffer = Buffer.alloc(s, 1024);  // For magnitude
 ~phaseBuffer = Buffer.alloc(s, 1024); // For phase
 
+({
+		var angle=0;
+		~angle=(720).collect{
+		angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
+		}
+		}.value;
+	)
+(exp(Complex(0,1)*~angle.[0]).real)
 
 (
 SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=1,az1=0,az2=0,el1=0,el2=0,rpr=1;
 	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2,bank1,bank2,frames=1024;
+	var phase1,phase2,bank1,bank2,frames=2048;
 	var samplerate=44100,mags,phases,complex;
 	var sig1,sig2,m=0,p=16;
+	var amplitude;
 
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
 
 	chainx = FFT(LocalBuf(frames), in1);
 
-	bank2=180;
+	bank2=512;
 
    bank2.do{
 
+	//	amplitude=~angle.[b].degrad.linlin(0,2pi,1,2);
+
+		amplitude=exp(Complex(0,1)*~angle.[b]).real.abs;
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
-			mags=K2A.ar(magnitude);
-		phases=K2A.ar(phase);
+		//	mags=K2A.ar(magnitude);
+		//phases=K2A.ar(phase);
 
 //
 		//	Out.kr(m,magnitude);
@@ -81,7 +93,7 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 		//	 BufWr.kr(magnitude, ~magBuffer.bufnum);  // Write magnitude to buffer
       //  BufWr.kr(phase, ~phaseBuffer.bufnum);  // Write phase to buffer
 
-			[magnitude,phase];
+			[magnitude*amplitude,phase];
 
 		}, frombin: b, tobin: b, zeroothers: 1);
 
@@ -92,21 +104,70 @@ chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
 
 	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,BufRd.kr(1,~phaseBuffer.bufnum),BufRd.kr(1, ~magBuffer.bufnum)*0.001),0);
 	//	sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,In.kr(p),In.kr(m)*0.1),0);
-		sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.0001),0);
+		//sig1=Pan2.ar(SinOsc.ar((samplerate/frames)*b,phases,mags*0.0001),0);
 	//	sig2=Pan2.ar(SinOsc.ar((samplerate/frames)*b,0,mags*0.001),complex.imag);
 	b=b+1;
 	//	m=m+1;
 	//	p=p+1;
-		//Out.ar(0,Pan2.ar(IFFT(chainxx)*8,0));
+		Out.ar(0,Pan2.ar(IFFT(chainxx),0));
 		//Out.ar(0,Pan2.ar(IFFT(chainxx),complex.imag));
-		Out.ar(0,sig1*100);
+		//Out.ar(0,sig1*100);
 	//	Out.ar(0,sig2);
-		chainxx.clear;
+		//chainxx.clear;
 		};
 }).add;
 )
 Synth(\o1)
 (44100/(1024*2))*1024/2
+
+
+
+(
+SynthDef.new(\o1, {
+    var in1,in2, chainx,chainy,b=1,az1=0,az2=0,el1=0,el2=0,rpr=1;
+	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
+	var angle1=0,angle2=90;
+	var phase1,phase2,bank1,bank2,frames=2048;
+	var samplerate=44100,mags,phases,complex;
+	var sig1,sig2,m=0,p=16;
+	var amplitude1,amplitude2;
+
+
+    in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+
+	chainx = FFT(LocalBuf(frames), in1);
+	chainy = FFT(LocalBuf(frames), in1);
+
+	bank2=512;
+
+   bank2.do{
+
+	//	amplitude=~angle.[b].degrad.linlin(0,2pi,1,2);
+
+		amplitude1=exp(Complex(0,1)*~angle.[b]).real.abs;
+		amplitude2=exp(Complex(0,1)*~angle.[b]).imag.abs;
+
+chainxx = chainx.pvcollect(frames, {|magnitude, phase, index|
+
+			[magnitude*amplitude1,phase];
+
+		}, frombin: b, tobin: b, zeroothers: 1);
+
+chainyy = chainy.pvcollect(frames, {|magnitude, phase, index|
+
+			[magnitude*amplitude2,phase];
+
+		}, frombin: b, tobin: b, zeroothers: 1);
+
+
+	b=b+1;
+
+		Out.ar(0,IFFT(chainxx));
+		Out.ar(1,IFFT(chainyy));
+
+		};
+}).add;
+)
 
 
 ////////////////////////////individual bins with patttern
@@ -330,6 +391,11 @@ s.waitForBoot;
 )
 
 (
+Synth(\bin);
+s.record(numChannels:3);
+)
+
+(
 SynthDef.new(\bin,{
 
 	 var b=1.neg;
@@ -339,6 +405,7 @@ SynthDef.new(\bin,{
 	var samplerate=44100;
 	var env,dur,ph;
 	var m=1,x=1,n=0;
+	var pos1,pos2,pos3;
 
 		in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
 		chainx = FFT(LocalBuf(frames), in1);
@@ -356,8 +423,6 @@ SynthDef.new(\bin,{
 m=(x+1)/x;
 dur=~list.[n];
 
-x=x+1;
-n=n+1;
 		//env=EnvGen.ar(Env.new([1,1,0],[dur,0.01],\sine));
 		///further modulations for presence of indivual bins can be achieved through further variations of the envelope
 		env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
@@ -383,15 +448,23 @@ chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
-		Out.ar(0,IFFT(chainxx)*0.5);
-		Out.ar(1,IFFT(chainyy)*0.5);
-		Out.ar(2,IFFT(chainzz)*0.5);
+		pos1=Spherical(1,~az.[n],~el.[n]).x.linlin(1.neg,1,2pi.neg,2pi);
+		pos2=Spherical(1,~az.[n],~el.[n]).y.linlin(1.neg,1,2pi.neg,2pi);
+		pos3=Spherical(1,~az.[n],~el.[n]).z.linlin(1.neg,1,2pi.neg,2pi);
+
+		Out.ar(0,PanAz.ar(3,IFFT(chainxx),pos:SinOsc.ar(1,phase:pos1),level:0.5));
+		Out.ar(1,PanAz.ar(3,IFFT(chainyy),pos:SinOsc.ar(1,phase:pos2),level:0.5));
+		Out.ar(2,PanAz.ar(3,IFFT(chainzz),pos:SinOsc.ar(1,phase:pos3),level:0.5));
+
+x=x+1;
+n=n+1;
 
 };
 
 }).add;
 
 )
+
 
 
 	(	~time=16;
@@ -404,7 +477,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 ~az = (720*~time).collect{
 	pl1=pl1+1;
 
-		az1=(az1+(1)).wrap(180.neg,180);
+		az1=(az1+(2)).wrap(180.neg,180);
 
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
@@ -415,7 +488,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 ~el = (720*~time).collect{
 	pl2=pl2+1;
 
-		az2=(az2+(1)).wrap(180.neg,180);
+		az2=(az2+(2)).wrap(180.neg,180);
 
 	el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
@@ -425,7 +498,7 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 ~magx = (720*~time).collect{
 pl3=pl3+1;
-	az3=(az3+(1)).wrap(180.neg,180);
+	az3=(az3+(2)).wrap(180.neg,180);
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
@@ -445,7 +518,7 @@ pl3=pl3+1;
 
 ~magy = (720*~time).collect{
 pl4=pl4+1;
-	az4=(az4+(1)).wrap(180.neg,180);
+	az4=(az4+(2)).wrap(180.neg,180);
 
 	el4=(el4+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
@@ -462,7 +535,7 @@ pl4=pl4+1;
 
 ~magz = (720*~time).collect{
 pl5=pl5+1;
-	az5=(az5+(1)).wrap(180.neg,180);
+	az5=(az5+(2)).wrap(180.neg,180);
 
 	el5=(el5+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
