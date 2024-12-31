@@ -482,6 +482,7 @@ SynthDef.new(\bin,{
 	var m=1,x=1,n=0;
 	var sph;
 	var o;
+	var p1,p2, p3;
 
 		in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum),startPos:0, loop: 0, doneAction:2);
 		chainx = FFT(LocalBuf(frames), in1);
@@ -489,13 +490,16 @@ SynthDef.new(\bin,{
 	chainz = FFT(LocalBuf(frames), in1);
 
 
-//	k=Pxrand(~k,512).asStream;
+	k=Pxrand(~k,512).asStream;
 
 	512.do{
 
 
-		o=Cartesian(~magx.[b],~magy.[b],~magz.[b]).rho/(2.sqrt);
-		sph=Spherical(o,~az.[b],~el.[b]);
+		o=Cartesian(~magy.[n],~magy.[n],~magy.[n]).rho/(2.sqrt);
+		sph=Spherical(o*12,~az.[n],~el.[n]);
+		p1=2.pow(sph.x/12);
+		p2=2.pow(sph.y/12);
+		p3=2.pow(sph.z/12);
 
 //m=(x+1)/x;
 //dur=~list.[n];
@@ -505,23 +509,23 @@ SynthDef.new(\bin,{
 	//	env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur/1,0.01,((~duration-(dur/1))/2),0.01,(~duration-((~duration-(dur/1))/2))],\sine));
 	//	env=EnvGen.ar(Env.new([0,0,1,1,0,0],[dur,0.01,dur/3,0.01,dur/3],\sine));
 
-//b=k.next.postln;
+b=k.next.postln;
 			//b=511.xrand(b).postln;
 
 chainxx = chainx.pvcollect(frames, {|magnitude, phase, bin|
-		[magnitude*sph.x.abs,phase]
+		[magnitude*p1.reciprocal,phase]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
 chainyy = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		[magnitude*sph.y.abs,phase]
+		[magnitude*p2.reciprocal,phase]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
 chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
-		[magnitude*sph.z.abs,phase]
+		[magnitude*p3.reciprocal,phase]
 
 }, frombin: b, tobin: b, zeroothers: 1);
 
@@ -530,8 +534,8 @@ chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
 		Out.ar(2,IFFT(chainzz));
 
 //x=x+1;
-//n=n+1;
-		b=b+1;
+n=n+1;
+		//b=b+1;
 
 };
 
@@ -539,10 +543,30 @@ chainzz = chainx.pvcollect(frames, {|magnitude, phase, bin|
 
 )
 
+~dur=((~c1.numFrames/512)/44100)
+~duration=(~c1.numFrames/44100)
+
+({
+		var n=0;
+	~list=(512).collect{
+		n=n+~dur;
+		}
+		}.value
+	)
+
+({
+		var n=1.neg;
+	~k=(512).collect{
+		n=n+1;
+		}
+		}.value
+	)
+
+
 	(	~time=16;
 //////////////////////////////////////////////////basis
 {
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=3;
+var  sph1,sph2,sph3,sph4,sph5,m_x=2,m_y=2,m_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -576,15 +600,15 @@ pl3=pl3+1;
 
 	sph3=Spherical(1,(az3.degrad).wrap(pi.neg,pi),(el3.degrad).wrap((pi/2).neg,(pi/2)));
 
-			//mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+			mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
 ////for in-between harmonics multiply sin(phi) after cos, when m is 2 then harm 3/2 is formed in oder 3, when m is 3 harm 4/3 is formed in oder 4 and when m is 3 for theta and 2 for phi harm 4/2 is formed for order4//////same for y axis
-
-		 mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),
-		 	cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
-		 	Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/
-			2).neg,(pi/2)))).rho*
-		 Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+			//
+			// mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),
+			// 	cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
+			// 	Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/
+			// 	2).neg,(pi/2)))).rho*
+			// Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
 };
 
