@@ -230,12 +230,12 @@ s.boot
 
 
 (
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=2;
+var  sph1,sph2,sph3,sph4,sph5,m_x=2,m_y=2,m_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 var angle = 0;
 
-~tempo=0.05;
+~tempo=0.1;
 
 
 ~az =  Routine({
@@ -354,7 +354,7 @@ signal.plot;
 )
 (
 SynthDef.new(\ospace1, {
-	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=48,xr=1,yr=1,zr=1,gate=1,pl1=0,octave=1;
+	arg angle_rot1=0,angle_rot2=0,angle_rot3=0,angle_rot4=0,angle_rot5=0,mult=24,xr=1,yr=1,zr=1,gate=1,pl1=0,octave=1;
 	var phase,osc1,osc2,osc3,sphere,mag_o,amp1,amp2,amp3,decay=0.04444,pl2=0,envp;
 	var ton1,ton2,ton3,rq1=1,rq2=1,rq3=1,cutt_freq1=1,cutt_freq2=1,cutt_freq3=1;
 	var fundamental=220;
@@ -379,36 +379,36 @@ var out1 = NamedControl.kr(\out1, [0, 1, 2, 3]);  // multiple buses!
 //	var out3 = NamedControl.kr(\out3, [0, 1, 2, 3, 4, 5]);  // multiple buses!
 
 freq=(fundamental*octave);
-	mag_o=Cartesian(In.kr(~controlBus_magx),In.kr(~controlBus_magy),In.kr(~controlBus_magz));
+	mag_o=Cartesian(In.kr(~controlBus_magx).lag(0.01),In.kr(~controlBus_magy).lag(0.01),In.kr(~controlBus_magz).lag(0.01));
 
-	sphere1=Spherical(mag_o.x,In.kr(~controlBus_az),In.kr(~controlBus_el));
-	sphere2=Spherical(mag_o.y,In.kr(~controlBus_az),In.kr(~controlBus_el));
-	sphere3=Spherical(mag_o.z,In.kr(~controlBus_az),In.kr(~controlBus_el));
-	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),In.kr(~controlBus_az),In.kr(~controlBus_el));
+	sphere1=Spherical(mag_o.x,In.kr(~controlBus_az).lag(0.01),In.kr(~controlBus_el).lag(0.01));
+	sphere2=Spherical(mag_o.y,In.kr(~controlBus_az).lag(0.01),In.kr(~controlBus_el).lag(0.01));
+	sphere3=Spherical(mag_o.z,In.kr(~controlBus_az).lag(0.01),In.kr(~controlBus_el).lag(0.01));
+	sphere=Spherical(mag_o.rho.round(0.00000001)/(2.sqrt),In.kr(~controlBus_az).lag(0.01),In.kr(~controlBus_el).lag(0.01));
 
 	xyz=Spherical(mult*mag_o.rho.round(0.00000001)/(2.sqrt),sphere.theta,sphere.phi);
 	xyz_array=[xyz.x.round(0.000001),xyz.y.round(0.000001),xyz.z.round(0.000001)];
 
 v6=Quaternion(0, xyz_array.[0], xyz_array.[1], xyz_array.[2]);
-v0=Quaternion(0,0.57735026918963,0.57735026918963,0.57735026918963);
-
-axis=[xr,yr,zr].normalizeSum.sqrt;
-i=Quaternion(0, axis.[0], 0, 0);
-j=Quaternion(0, 0,  axis.[1], 0);
-k=Quaternion(0, 0, 0,  axis.[2]);
-v=(i+j+k);
-
-	q1=((v0*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
-v=q1*v*q1.conjugate;
-q2=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
-v=q2*v*q2.conjugate;
-q3=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
-v=q3*v*q3.conjugate;
-q4=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
-v=q4*v*q4.conjugate;
-q5=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
-v6=q5*v6*q5.conjugate;
-
+	// v0=Quaternion(0,0.57735026918963,0.57735026918963,0.57735026918963);
+	//
+	// axis=[xr,yr,zr].normalizeSum.sqrt;
+	// i=Quaternion(0, axis.[0], 0, 0);
+	// j=Quaternion(0, 0,  axis.[1], 0);
+	// k=Quaternion(0, 0, 0,  axis.[2]);
+	// v=(i+j+k);
+	//
+	// q1=((v0*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
+	// v=q1*v*q1.conjugate;
+	// q2=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
+	// v=q2*v*q2.conjugate;
+	// q3=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
+	// v=q3*v*q3.conjugate;
+	// q4=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
+	// v=q4*v*q4.conjugate;
+	// q5=((v*exp(Complex(0,1)*In.kr(~controlBus_angle)).imag)+exp(Complex(0,1)*In.kr(~controlBus_angle)).real);
+	// v6=q5*v6*q5.conjugate;
+	//
 
 	pitch=Cartesian(v6.b,v6.c,v6.d);
 
@@ -419,13 +419,13 @@ ton2=2.pow(n2/(2*6));
 ton3=2.pow(n3/(2*6));
 
 
-	    amp1=(ton1.reciprocal*octave.reciprocal).round(0.0000000000001);
-		amp2=(ton2.reciprocal*octave.reciprocal).round(0.0000000000001);
-		amp3=(ton3.reciprocal*octave.reciprocal).round(0.0000000000001);
+	    amp1=(ton1.reciprocal*octave.reciprocal*sphere1.rho).round(0.0000000000001);
+		amp2=(ton2.reciprocal*octave.reciprocal*sphere2.rho).round(0.0000000000001);
+		amp3=(ton3.reciprocal*octave.reciprocal*sphere3.rho).round(0.0000000000001);
 
-	pitch1=(freq*ton1).round(0.0000000000001);
-	pitch2=(freq*ton2).round(0.0000000000001);
-	pitch3=(freq*ton3).round(0.0000000000001);
+	pitch1=(freq*ton1*sphere1.rho.reciprocal).round(0.0000000000001);
+	pitch2=(freq*ton2*sphere2.rho.reciprocal).round(0.0000000000001);
+	pitch3=(freq*ton3*sphere3.rho.reciprocal).round(0.0000000000001);
 
 				phase=Complex(exp(Complex(0,1)*(sphere.theta)).real.round(0.000001),exp(Complex(0,1)*(sphere.phi)).imag.round(0.000001)).theta;
 
