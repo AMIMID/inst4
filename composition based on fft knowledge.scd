@@ -222,11 +222,11 @@ s.boot
 (
 ~controlBus_az = Bus.control(s, 1);
 ~controlBus_el = Bus.control(s, 1);
-~controlBus_az = Bus.control(s, 1);
-~controlBus_el = Bus.control(s, 1);
-~controlBus_az = Bus.control(s, 1);
-~controlBus_el = Bus.control(s, 1);
+~controlBus_magx = Bus.control(s, 1);
+~controlBus_magy = Bus.control(s, 1);
+~controlBus_magz = Bus.control(s, 1);
 )
+
 
 (
 var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=2;
@@ -237,20 +237,15 @@ var az4=0,el4=0,az5=0,el5=0,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
 ~az =  Routine({
 		loop{
-
 		az1=(az1+(1)).wrap(180.neg,180);
-
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
-
 	sph1=Spherical(1,(az1.degrad).wrap(pi.neg,pi),(el1.degrad).wrap((pi/2).neg,(pi/2))).theta.round(0.00001);
-
+		"az".postln;
+		sph1.postln;
+		~controlBus_az.set(sph1);
 	pl1=pl1+1;
-
 	0.1.wait;
-
-		}
-
-});
+		}});
 
 ~el = (360*100).collect{
 	pl2=pl2+1;
@@ -320,5 +315,13 @@ mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 ~magy=~magy/(2.sqrt);
 ~magz=~magz/(2.sqrt);
  );
+)
+
+(
+~az.play;
+~el.play
+~magx.play;
+~magy.play;
+~magz.play
 )
 
