@@ -390,13 +390,13 @@ sphere3.theta.raddeg,sphere3.phi.raddeg
 		);
 
 	//wrappedOut3.value(out1,LeakDC.ar(osc3,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc3,mul:env)));
+					Out.ar(0,LeakDC.ar(osc3,mul:env));
 
 	//	wrappedOut2.value(out1,LeakDC.ar(osc2,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc2,mul:env)));
+					Out.ar(0,LeakDC.ar(osc2,mul:env));
 
 		//wrappedOut1.value(out1,LeakDC.ar(osc1,mul:env));
-					Out.ar(0,LeakDC.ar(LeakDC.ar(osc1,mul:env)));
+					Out.ar(0,LeakDC.ar(osc1,mul:env));
 							//	m=m+1;
 					//pl1=pl1+1;
 
